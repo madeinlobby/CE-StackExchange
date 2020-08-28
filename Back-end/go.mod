@@ -2,4 +2,7 @@ module github.com/madeinlobby/CE-StackExchange/Back-end/src
 
 go 1.14
 
-require github.com/gorilla/mux v1.8.0 // indirect
+require (
+	github.com/gorilla/mux v1.8.0
+	gopkg.in/yaml.v2 v2.3.0
+)
