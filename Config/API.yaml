@@ -1,3 +1,7 @@
+# This file is devoted to specifying an API between front-end and back-end.
+# some notes about this file:
+#   * data structures passed in the body of requests should be serialized in "yaml" format
+
 account managing services:
   signup:
     service description: used to create a new user in the system.
@@ -12,6 +16,7 @@ account managing services:
       - first name
       - last name
     response:
+      - error message # only if an error occurs
 
   login:
     service description: provides logging-in service.
@@ -22,6 +27,8 @@ account managing services:
       - username
       - password
     response:
+      - error message # only if an error occurs
+      - authentication token.
 
   logout:
     service description: logs-out the authenticated user. the given token is no longer valid.
@@ -30,6 +37,7 @@ account managing services:
     header: [token]
     parameters: [] # non required
     response:
+      - error message # only if an error occurs
 
 ---
 
@@ -41,17 +49,18 @@ community managing services:
     header: [] # non required
     parameters: [] # non required
     response:
+      - error message # only if an error occurs
+      - array of community names
 
   create new community:
-    service description: >
-      privileged users (most likely admins)
-      can use this to crate a new community.
+    service description: privileged users (most likely admins) can use this to crate a new community.
     url: /communities/new
     http method: POST
     header: [token] # only admin would be authorized
     parameters:
       - community name
     response:
+      - error message # only if an error occurs
 
 ---
 
@@ -63,14 +72,25 @@ post management services:
     header: [] # non required
     parameters: [] # non required
     response:
+      - error message # only if an error occurs
+      - asker id
+      - asker name
+      - question id
+      - question title
+      - question body
+      - number of downvotes
+      - number of upvotes
+      - date of issue
 
   get answers of a question:
-    service description: returns an array of answer's id s.
+    service description: returns an array of answer's basic infos.
     url: /posts/questions/$id/answers # $id is a variable indicating the question's id
     http method: GET
     header: [] # non required
     parameters: [] # non required
     reponse:
+      - error message # only if an error occurs
+      - array of basic information of answers
 
   get basic informations of an answer:
     service description: returns information required to create an answer's post.
@@ -79,6 +99,14 @@ post management services:
     header: [] # non required
     parameters: [] #non required
     response:
+      - error message # only if an error occurs
+      - answering user's id
+      - answering user's username
+      - answer's body
+      - number of upvotes
+      - number of downvotes
+      - was answer helpful
+      - date of issue
 
   # needs revisions. the aim is to make this service -
   # the only service used for retrieving a group of posts.
@@ -105,9 +133,9 @@ post management services:
       - tags array (currently not available)
       - key words array
     response:
-      - response type # error/successful.
+      - error message # only if an error occurs
       - number of posts returned
-      - array of posts
+      - array of basic information of questions
 
 ---
 
@@ -124,6 +152,7 @@ user actions management services:
       - question body
       - tags array (currently not available)
     response:
+      - error message # only if an error occurs
 
   answer a question:
     service description: used to answer a question.
@@ -135,6 +164,7 @@ user actions management services:
     parameters:
       - answer body
     response:
+      - error message # only if an error occurs
 
   comment on a post:
     service description: used to comment on a post
@@ -146,6 +176,7 @@ user actions management services:
     parameters:
       - comment body
     response:
+      - error message # only if an error occurs
 
   comment on a comment:
     service description: used to comment on a comment
@@ -157,5 +188,6 @@ user actions management services:
     parameters:
       - comment body
     response:
+      - error message # only if an error occurs
 
 
