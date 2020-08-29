@@ -6,14 +6,14 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetAnswersOfAQuestion(w http.ResponseWriter, r *http.Request) {
+func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetAnswerBasicInfo(w http.ResponseWriter, r *http.Request) {
+func GetAnswerInfo(w http.ResponseWriter, r *http.Request) {
 
 }
 
-func GetPostCloud(w http.ResponseWriter, r *http.Request) {
+func GetPostCluster(w http.ResponseWriter, r *http.Request) {
 
 }

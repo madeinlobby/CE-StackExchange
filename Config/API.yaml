@@ -2,45 +2,6 @@
 # some notes about this file:
 #   * data structures passed in the body of requests should be serialized in "yaml" format
 
-account managing services:
-  signup:
-    service description: used to create a new user in the system.
-    url: /accounts/signup
-    http method: POST
-    header: [] # non required
-    parameters:
-      - username
-      - password
-      - email
-      - student number
-      - first name
-      - last name
-    response:
-      - error message # only if an error occurs
-
-  login:
-    service description: provides logging-in service.
-    url: /accounts/login
-    http method: POST
-    header: [] # non required
-    parameters:
-      - username
-      - password
-    response:
-      - error message # only if an error occurs
-      - authentication token.
-
-  logout:
-    service description: logs-out the authenticated user. the given token is no longer valid.
-    url: /accounts/logout
-    http method: POST
-    header: [token]
-    parameters: [] # non required
-    response:
-      - error message # only if an error occurs
-
----
-
 community managing services:
   get all communities:
     service description: returns the id,name key value of all available communities.
@@ -120,7 +81,7 @@ post management services:
       * note that the number of returned posts is also returned in the response.
       the maximum number is 100 and is always counted from the start index.
       ultimately, one can use tags and key words, therefore the search service is implemented by this request. (not available)
-    url: /posts/cloud
+    url: /posts/cluster
     http method: GET
     header:
       - community # optional. default: all communities.
@@ -139,7 +100,7 @@ post management services:
 
 ---
 
-user actions management services:
+user management services:
   ask a question:
     service description: used to ask a new question in a community.
     url: /user/actions/ask
@@ -156,7 +117,7 @@ user actions management services:
 
   answer a question:
     service description: used to answer a question.
-    url: user/actions/answer
+    url: /user/actions/answer
     http method: POST
     header:
       - token # request would resolve only upon authentication.
@@ -168,7 +129,7 @@ user actions management services:
 
   comment on a post:
     service description: used to comment on a post
-    url: user/actions/comment/on_post
+    url: /user/actions/comment/on_post
     http method: POST
     header:
       - token # request would resolve only upon authentication.
@@ -180,7 +141,7 @@ user actions management services:
 
   comment on a comment:
     service description: used to comment on a comment
-    url: user/actions/comment/on_comment
+    url: /user/actions/comment/on_comment
     http method: POST
     header:
       - token # request would resolve only upon authentication.
@@ -189,3 +150,39 @@ user actions management services:
       - comment body
     response:
       - error message # only if an error occurs
+
+  signup:
+    service description: used to create a new user in the system.
+    url: /user/signup
+    http method: POST
+    header: [] # non required
+    parameters:
+      - username
+      - password
+      - email
+      - student number
+      - first name
+      - last name
+    response:
+      - error message # only if an error occurs
+
+    login:
+      service description: provides logging-in service.
+      url: /user/login
+      http method: POST
+      header: [] # non required
+      parameters:
+        - username
+        - password
+      response:
+        - error message # only if an error occurs
+        - authentication token.
+
+    logout:
+      service description: logs-out the authenticated user. the given token is no longer valid.
+      url: /user/logout
+      http method: POST
+      header: [token]
+      parameters: [] # non required
+      response:
+        - error message # only if an error occurs
