@@ -189,5 +189,3 @@ user actions management services:
       - comment body
     response:
       - error message # only if an error occurs
-
-
