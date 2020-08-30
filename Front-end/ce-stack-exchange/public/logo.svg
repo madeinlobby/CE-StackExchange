@@ -1,0 +1,21 @@
+<svg width="270" height="270" xmlns="http://www.w3.org/2000/svg">
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="272" width="272" y="-1" x="-1"/>
+  <g display="none" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%" id="svg_5"/>
+  </g>
+ </g>
+
+ <g>
+  <title>Layer 1</title>
+  <rect id="rect_1" height="31" width="165" y="32.05" x="51.5" stroke-width="1.5" stroke="#064c64" fill="#064c64"/>
+  <rect id="rect_2" height="31" width="165" y="72" x="52" stroke-width="1.5" stroke="#99222e" fill="#99222e"/>
+  <rect id="rect_3" height="31" width="165" y="112" x="52" stroke-width="1.5" stroke="#f47318" fill="#f47318"/>
+  <rect id="rect_4" height="31" width="165" y="152" x="52" stroke-width="1.5" stroke="#f4af54" fill="#f4af54"/>
+  <rect id="rect_5" height="31" width="165" y="192" x="52" stroke-width="1.5" stroke="#e9ddba" fill="#e9ddba"/>
+  <rect id="svg_1" fill="#b1aa97" stroke-width="1.5" stroke-opacity="null" x="19.5" y="71.05" width="19" height="183" class="box_side" stroke="#b1aa97"/>
+  <rect id="svg_2" fill="#b1aa97" stroke-width="1.5" stroke-opacity="null" x="19.5" y="236.04999" width="228.5" height="19" class="box_bottom" stroke="#b1aa97"/>
+  <rect id="svg_3" fill="#b1aa97" stroke-width="1.5" stroke-opacity="null" x="229" y="71.05" width="19" height="183" class="box_side" stroke="#b1aa97"/>
+ </g>
+</svg>
