@@ -215,3 +215,8 @@ user management services:
         - mode (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
       response:
         - an array of posts
+         
+         
+#todo : get user reputation log 
+     #header including start date, end date, start index, end index and their default values
+     #response : total reputation, list of reputation logs
