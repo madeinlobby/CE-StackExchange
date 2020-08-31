@@ -1,6 +1,8 @@
 # This file is devoted to specifying an API between front-end and back-end.
 # some notes about this file:
 #   * data structures passed in the body of requests should be serialized in "yaml" format
+#   * at any point, if you felt that you need to add something (additional info or sth like that),
+#     feel free to add it here with a TODO tag!
 
 community managing services:
   get all communities:
@@ -186,3 +188,30 @@ user management services:
       parameters: [] # non required
       response:
         - error message # only if an error occurs
+
+    user profile:
+      service description: >
+        returns the basic information of the user.
+        essentially the same info used to register the user.
+      url: /user/profile
+      http method: GET
+      header: [] # non required
+      parameters: [username] # can later be changed to user ID
+      response:
+        - username
+        - first name
+        - last name
+        - email
+        - student number
+        - profile image (not available)
+
+    get user posts:
+      service description: returns the posts that user asked and/or answered on.
+      url: /user/posts
+      http method: GET
+      header: [] # non required
+      parameters:
+        - username # can later be changed to user ID
+        - mode (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
+      response:
+        - an array of posts
