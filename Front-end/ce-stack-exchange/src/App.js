@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-import React from "react";
-import "./App.css";
-import DashboardPage from "./pages/DashboardPage/dashboard";
-=======
 import React from 'react';
 // import logo from './logo.svg';
 import './App.css';
@@ -18,15 +13,10 @@ const useStyles = makeStyles((theme) => ({
     },
   },
 }));
->>>>>>> da1e4137fffc613f0a241aa300be6b3e9c10a299
 
 function App() {
   const classes = useStyles();
   return (
-<<<<<<< HEAD
-    <div className="App">
-      <DashboardPage></DashboardPage>
-=======
     <div className={classes.root}>
       <PrimarySearchAppBar />
       {/* all content in this div */}
@@ -73,8 +63,8 @@ function App() {
         </Box>
         {/* </Paper> */}
       </div>
+      
       <Footer />
->>>>>>> da1e4137fffc613f0a241aa300be6b3e9c10a299
     </div>
   );
 }
