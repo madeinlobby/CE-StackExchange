@@ -8,20 +8,49 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { create } from "jss";
 import rtl from "jss-rtl";
 import { StylesProvider, jssPreset } from "@material-ui/core/styles";
+import Vazir from './Vazir.woff'
+import { CssBaseline } from "@material-ui/core";
 
 //configure jss
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
+const vazir = {
+  fontFamily: 'Vazir',
+  fontStyle: 'normal',
+  fontDisplay: 'swap',
+  fontWeight: 400,
+  src: `
+    url(${Vazir}) format('woff')
+  `,
+};
+
 const theme = createMuiTheme({
   direction: "rtl",
+  typography: {
+    fontFamily: 'Vazir'
+  },
+  overrides: {
+    MuiCssBaseline: {
+      '@global': {
+        '@font-face': [vazir],
+      },
+    },
+  },
+  palette: {
+    primary: {
+      main: "#ffb300",
+    },
+  },
 });
 
 ReactDOM.render(
   <StylesProvider jss={jss}>
     <ThemeProvider theme={theme}>
-      <React.StrictMode>
-        <App />
-      </React.StrictMode>
+      <CssBaseline /> {
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      }
     </ThemeProvider>
   </StylesProvider>,
   document.getElementById("root")
