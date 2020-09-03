@@ -1,0 +1,171 @@
+.logo {
+    margin-bottom: 1em;
+}
+
+@keyframes rect_1 {
+    from {
+        y: 42.25;
+    }
+    13% {
+        y: 12.5;
+        transform: rotate(22deg);
+        transform-origin: 20% center;
+    }
+    18% {
+        y: 12.5;
+        transform: rotate(22deg);
+        transform-origin: 20% center;
+    }
+    21% {
+        transform: rotate(0deg);
+        y: 45.25;
+    }
+}
+
+@keyframes rect_2 {
+    from {
+        y: 65
+    }
+    13% {
+        y: 40;
+        transform: rotate(17deg);
+        transform-origin: 25% center;
+    }
+    18% {
+        y: 40;
+        transform: rotate(17deg);
+        transform-origin: 25% center;
+    }
+    21% {
+        transform: rotate(0deg);
+        y: 65;
+    }
+}
+
+@keyframes rect_3 {
+    from {
+        y: 85;
+    }
+    13% {
+        y: 60;
+        transform: rotate(12deg);
+        transform-origin: 25% center;
+    }
+    18% {
+        y: 60;
+        transform: rotate(12deg);
+        transform-origin: 25% center;
+    }
+    21% {
+        transform: rotate(0deg);
+        y: 85;
+    }
+}
+
+@keyframes rect_4 {
+    from {
+        y: 105;
+    }
+    13% {
+        y: 82.5;
+        transform: rotate(7deg);
+        transform-origin: 30% center;
+    }
+    18% {
+        y: 82.5;
+        transform: rotate(7deg);
+        transform-origin: 30% center;
+    }
+    21% {
+        transform: rotate(0deg);
+        y: 105;
+    }
+}
+
+@keyframes rect_5 {
+    from {
+        y: 125;
+    }
+    13% {
+        y: 102.5;
+        transform: rotate(2.5deg);
+        transform-origin: 40% center;
+    }
+    18% {
+        y: 102.5;
+        transform: rotate(2.5deg);
+        transform-origin: 40% center;
+    }
+    21% {
+        transform: rotate(0deg);
+        y: 125;
+    }
+}
+
+@keyframes box-side {
+    from {}
+    21% {
+        y: 80;
+    }
+    23% {
+        y: 85;
+    }
+    25% {
+        y: 80;
+    }
+}
+
+@keyframes box-bottom {
+    from {}
+    21% {
+        y: 140;
+    }
+    23% {
+        y: 145;
+    }
+    25% {
+        y: 140;
+    }
+}
+
+#rect_1 {
+    animation-duration: 5s;
+    animation-name: rect_1;
+    animation-iteration-count: 2;
+}
+
+#rect_2 {
+    animation-duration: 5s;
+    animation-name: rect_2;
+    animation-iteration-count: 2;
+}
+
+#rect_3 {
+    animation-duration: 5s;
+    animation-name: rect_3;
+    animation-iteration-count: 2;
+}
+
+#rect_4 {
+    animation-duration: 5s;
+    animation-name: rect_4;
+    animation-iteration-count: 2;
+}
+
+#rect_5 {
+    animation-duration: 5s;
+    animation-name: rect_5;
+    animation-iteration-count: 2;
+}
+
+.box_side {
+    animation-duration: 5s;
+    animation-name: box-side;
+    animation-iteration-count: 2;
+}
+
+.box_bottom {
+    animation-duration: 5s;
+    animation-name: box-bottom;
+    animation-iteration-count: 2;
+}
