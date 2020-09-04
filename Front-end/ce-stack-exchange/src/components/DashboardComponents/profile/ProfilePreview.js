@@ -6,13 +6,17 @@ import PersonalInfoPreview from "../PersonalInfoPreview";
 //sample description
 const description = "ورودی ارشد 98 م از خیلی وقته عاشق AI بودم :)";
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  card : {
+    marginTop: -15,
+  }
+}));
 
 export default function ProfilePreview() {
   const classes = useStyles();
 
   return (
-    <Card>
+    <Card className={classes.card}>
       <CardContent>
         <PersonalInfoPreview />
         <Divider />

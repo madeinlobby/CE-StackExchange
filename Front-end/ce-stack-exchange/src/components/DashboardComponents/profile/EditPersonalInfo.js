@@ -2,12 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
-  Card,
-  CardContent,
   Paper,
-  Divider,
-  Typography,
-  TextField,
+  TextField
 } from "@material-ui/core";
 import ProfilePreview from "../profile/ProfilePreview";
 
