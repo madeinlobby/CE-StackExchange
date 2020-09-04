@@ -1,5 +1,4 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
     Grid,
     Paper,
@@ -7,10 +6,7 @@ import {
   } from "@material-ui/core";
 import ProfilePreview from "../profile/ProfilePreview";
 
-const useStyles = makeStyles((theme) => ({}));
-
 export default function PersonalInfo() {
-  const classes = useStyles();
 
   return (
     <Grid container spacing={2}>
@@ -19,8 +15,8 @@ export default function PersonalInfo() {
       </Grid>
       <Grid item lg={8} xs={12}>
         <Paper>
-          <Grid container style={{ padding: 60 }} spacing={4}>
-            <Grid item lg={6}>
+          <Grid container style={{ padding: 60 , display:'flex', alignItems:'center' }} spacing={4}>
+            <Grid item lg={6} md={6} xs={12}>
               <TextField
                 style={{ width: "100%" }}
                 InputProps={{
@@ -31,7 +27,7 @@ export default function PersonalInfo() {
                 defaultValue="علی"
               />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={6} md={6} xs={12}>
               <TextField
                 style={{ width: "100%" }}
                 InputProps={{
@@ -42,7 +38,7 @@ export default function PersonalInfo() {
                 defaultValue="علوی"
               />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={6} md={6} xs={12} >
               <TextField
                 style={{ width: "100%" }}
                 InputProps={{
@@ -53,7 +49,7 @@ export default function PersonalInfo() {
                 defaultValue="ارشد هوش مصنوعی"
               />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={12} md={12} xs={12}>
               <TextField
                 style={{ width: "100%" }}
                 multiline

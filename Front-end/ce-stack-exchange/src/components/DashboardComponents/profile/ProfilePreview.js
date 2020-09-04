@@ -9,6 +9,7 @@ const description = "ورودی ارشد 98 م از خیلی وقته عاشق A
 const useStyles = makeStyles((theme) => ({
   card : {
     marginTop: -15,
+    marginBottom : 10
   }
 }));
 

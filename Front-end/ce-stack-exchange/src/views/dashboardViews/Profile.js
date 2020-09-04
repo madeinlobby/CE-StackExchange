@@ -33,7 +33,12 @@ export default function Profile() {
 
   return (
     <>
-      <Tabs className={classes.tabView} value={value} onChange={handleChange}>
+      <Tabs
+        className={classes.tabView}
+        value={value}
+        onChange={handleChange}
+        variant="scrollable"
+      >
         <Tab label="مشخصات فردی" />
         <Tab label="ویرایش مشخصات فردی" />
         <Tab label="تغییر رمز عبور" />

@@ -1,16 +1,13 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import {
   Grid,
   Paper,
-  TextField
+  TextField,
+  Button
 } from "@material-ui/core";
 import ProfilePreview from "../profile/ProfilePreview";
 
-const useStyles = makeStyles((theme) => ({}));
-
 export default function EditPresonalInfo() {
-  const classes = useStyles();
 
   return (
     <Grid container spacing={2}>
@@ -19,8 +16,8 @@ export default function EditPresonalInfo() {
       </Grid>
       <Grid item lg={8} xs={12}>
         <Paper>
-          <Grid container style={{ padding: 60 }} spacing={4}>
-            <Grid item lg={6}>
+          <Grid container style={{ padding: 60 , display:'flex', alignItems:'center'}} spacing={4}>
+            <Grid item lg={6} md={6} xs={12}>
               <TextField
                 style={{ width: "100%" }}
                 required
@@ -29,7 +26,7 @@ export default function EditPresonalInfo() {
                 defaultValue="علی"
               />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={6} md={6} xs={12}>
               <TextField
                 style={{ width: "100%" }}
                 required
@@ -38,7 +35,7 @@ export default function EditPresonalInfo() {
                 defaultValue="علوی"
               />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={6} md={6} xs={12}>
               <TextField
                 style={{ width: "100%" }}
                 variant="outlined"
@@ -46,7 +43,7 @@ export default function EditPresonalInfo() {
                 defaultValue="ارشد هوش مصنوعی"
               />
             </Grid>
-            <Grid item lg={6}>
+            <Grid item lg={6} md={6} xs={12}>
               <TextField
                 style={{ width: "100%" }}
                 required
@@ -55,7 +52,7 @@ export default function EditPresonalInfo() {
                 defaultValue="alialavi@gmail.com"
               />
             </Grid>
-            <Grid item lg={12}>
+            <Grid item lg={12} md={12} xs={12}>
               <TextField
                 style={{ width: "100%" }}
                 multiline
@@ -63,6 +60,11 @@ export default function EditPresonalInfo() {
                 label="دیگه چه خبر ؟"
                 defaultValue=" ارشد 98 م از خیلی وقته عاشق AI بودم :)"
               />
+            </Grid>
+            <Grid item xs={12} style={{display:'flex', justifyContent : 'flex-end'}}>
+              <Button>
+                ثبت تغییرات
+              </Button>
             </Grid>
           </Grid>
         </Paper>
