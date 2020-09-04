@@ -14,19 +14,19 @@ type Account struct {
 }
 
 func GetAllAccounts(deleted ...bool) []Account {
-
+	return nil
 }
 
 func GetAccountById(accountId string, deleted ...bool) Account {
-
+	return Account{}
 }
 
 func GetAccountByUsername(username string, deleted ...bool) Account {
-
+	return Account{}
 }
 
 func NewAccount(username string, password string, isAdmin bool, fullName string, email string, imageUrl string) Account {
-
+	return Account{}
 }
 
 func DeleteAccount(accountId string) {

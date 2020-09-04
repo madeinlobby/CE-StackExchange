@@ -9,11 +9,11 @@ type Vote struct {
 }
 
 func GetAllVotes(deleted ...bool) []Vote {
-
+	return nil
 }
 
 func GetVoteById(voteId string, deleted ...bool) Vote {
-
+	return Vote{}
 }
 
 func NewVote(accountId string, qaId string, isUp bool) {
@@ -22,4 +22,9 @@ func NewVote(accountId string, qaId string, isUp bool) {
 
 func DeleteVote(voteId string) {
 
+}
+
+//TODO: notice me senpai!
+func GetPostVotes(qaId string) (upvotes int, downvotes int) {
+	return 0, 0
 }

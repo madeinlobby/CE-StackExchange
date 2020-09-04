@@ -1,10 +1,15 @@
 # This file is devoted to specifying an API between front-end and back-end.
 # some notes about this file:
-#   * data structures passed in the body of requests should be serialized in "yaml" format
+#   * data structures passed in the body of requests and responses should be serialized in "yaml" format
 #   * at any point, if you felt that you need to add something (additional info or sth like that),
 #     feel free to add it here with a TODO tag!
+#   * keep in mind that in all of the requests (whether its mentioned or not) one should specify two fields in header:
+#     1- user token: if you have one, you should always send it with each request. otherwise the key value may not exist.
+#         key: token
+#     2- body size (in bytes): both as a convention and as an important field, body size in bytes should always be given in the header.
+#         key: size
 
-community managing services:
+community service:
   get all communities:
     service description: returns the id,name key value of all available communities.
     url: /communities/all
@@ -22,12 +27,13 @@ community managing services:
     header: [token] # only admin would be authorized
     parameters:
       - community name
+      - description
     response:
       - error message # only if an error occurs
 
 ---
 
-post management services:
+post service:
   get basic information of a question:
     service description: returns basic info (info used to create a summary of a post i.e in home pages).
     url: /posts/questions/$id/basic_info # $id is a variable indicating the question's id
@@ -63,8 +69,8 @@ post management services:
     parameters: [] #non required
     response:
       - error message # only if an error occurs
-      - answering user's id
-      - answering user's username
+      - user's id
+      - user's username
       - answer's body
       - number of upvotes
       - number of downvotes
@@ -85,14 +91,14 @@ post management services:
       ultimately, one can use tags and key words, therefore the search service is implemented by this request. (not available)
     url: /posts/cluster
     http method: GET
-    header:
+    header: [] # non required
+    parameters:
       - community # optional. default: all communities.
       - is related to user # this can only be used when the token given in the header is authenticated. note that this service can be used anonymously.
       - start date # optional. default: dawn of time :).
       - end date # optional. default: now.
       - start index # optional. default: 0.
       - end index # optional. default: foundPosts.length.
-    parameters:
       - tags array (currently not available)
       - key words array
     response:
@@ -102,7 +108,7 @@ post management services:
 
 ---
 
-user management services:
+user service:
   ask a question:
     service description: used to ask a new question in a community.
     url: /user/actions/ask

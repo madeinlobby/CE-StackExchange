@@ -8,15 +8,15 @@ type Approval struct {
 }
 
 func GetAllApprovals(deleted ...bool) []Approval {
-
+	return nil
 }
 
 func GetApprovalById(approvalId string, deleted ...bool) Approval {
-
+	return Approval{}
 }
 
 func NewApproval(answerId string) Approval {
-
+	return Approval{}
 }
 
 func DeleteApproval(approvalId string) {
