@@ -1,10 +1,10 @@
 package Model
 
 type Community struct {
-	Id       string `json:"id"`
-	Name     string `json:"name"`
-	InfoText string `json:"info_text"`
-	Deleted  bool   `json:"deleted"`
+	Id       string `json:"id" yaml:"-"`
+	Name     string `json:"name" yaml:"name"`
+	InfoText string `json:"info_text" yaml:"-"`
+	Deleted  bool   `json:"deleted" yaml:"-"`
 }
 
 func GetAllCommunities(deleted ...bool) []Community {

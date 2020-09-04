@@ -12,10 +12,10 @@ func GetAllCommunities(w http.ResponseWriter, r *http.Request) {
 	communities := Model.GetAllCommunities(false)
 	response, err := yaml.Marshal(communities)
 	if err != nil {
-		w.WriteHeader(500)
+		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("error: could not serialize the result."))
 	} else {
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 		w.Write(response)
 	}
 }
@@ -28,7 +28,7 @@ func CreateNewCommunity(w http.ResponseWriter, r *http.Request) {
 			w.WriteHeader(411)
 			w.Write([]byte("error: " + err.Error()))
 		} else {
-			w.WriteHeader(500)
+			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("error: could not read the body"))
 		}
 		return
@@ -40,18 +40,18 @@ func CreateNewCommunity(w http.ResponseWriter, r *http.Request) {
 		description   string
 	}{}
 	if yaml.Unmarshal(body, &params) != nil {
-		w.WriteHeader(200)
+		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("error: body format is not yaml."))
 		return
 	}
 
 	// process and return the result
 	if cmp.Equal(Model.GetCommunityByName(params.communityName), Model.Community{}) {
-		w.WriteHeader(409)
+		w.WriteHeader(http.StatusConflict)
 		w.Write([]byte("error: Community with given name already exists"))
 		return
 	}
 
 	Model.NewCommunity(params.communityName, params.description)
-	w.WriteHeader(204)
+	w.WriteHeader(http.StatusNoContent)
 }
