@@ -69,8 +69,8 @@ post service:
     parameters: [] #non required
     response:
       - error message # only if an error occurs
-      - answering user's id
-      - answering user's username
+      - user's id
+      - user's username
       - answer's body
       - number of upvotes
       - number of downvotes

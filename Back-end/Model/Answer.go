@@ -7,6 +7,9 @@ type Answer struct {
 	Text       string `json:"text"`
 	Date       string `json:"date"`
 	Deleted    bool   `json:"deleted"`
+
+	//TODO: notice me senpai!
+	WasHelpful bool `json:"was_helpful"`
 }
 
 func GetAllAnswers(deleted ...bool) []Answer {
@@ -31,4 +34,9 @@ func GetAnswerAccount(answerId string) Account {
 
 func GetAnswerQuestion(answerId string) Question {
 	return GetQuestionById(GetAnswerById(answerId).QuestionId)
+}
+
+//TODO: notice me senpai!
+func GetQuestionAnswers(questionId string) []Answer {
+	return nil
 }
