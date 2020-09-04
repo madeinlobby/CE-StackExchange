@@ -17,14 +17,16 @@ const useStyles = makeStyles((theme) => ({
     boxSizing: "border-box",
     display: 'flex',
     flexDirection : 'column',
-    justifyContent : 'space-between'
+    justifyContent : 'space-between',
   },
   innerPaper :{
     height: "80%",
+    width : '100%',
     backgroundImage : 'linear-gradient(#00fff2,#68c0d9)',
     display: 'flex',
     flexDirection : 'column',
     justifyContent : 'center',
+    alignItems : 'center',
     marginTop : 10
   }
 }));

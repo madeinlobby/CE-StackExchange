@@ -35,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
     height: theme.spacing(10),
     backgroundColor: bgColor,
     fontSize: 35,
-    marginBottom : 20
+    marginBottom : 20,
+    [theme.breakpoints.up('lg')] : {
+      marginTop : 60
+    }
   },
 }));
 
