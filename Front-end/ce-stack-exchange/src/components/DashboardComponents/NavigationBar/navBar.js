@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
-import { Hidden, Button } from "@material-ui/core";
+import { Hidden } from "@material-ui/core";
 import NavBarContent from "./NavBarContent";
 
 const useStyles = makeStyles((theme) => ({
@@ -10,14 +10,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function NavBar() {
+export default function NavBar({openState, setNavOpenState}) {
   const classes = useStyles();
-
-  const [navOpen, setNavOpen] = React.useState(false);
-
-  const setNavOpenState = (openState) => () => {
-    setNavOpen(openState);
-  };
 
   return (
     <>
@@ -33,10 +27,9 @@ export default function NavBar() {
         </Drawer>
       </Hidden>
       <Hidden lgUp>
-      <Button onClick={setNavOpenState(true)}>☰</Button>
         <Drawer
           onClose={setNavOpenState(false)}
-          open={navOpen}
+          open={openState}
           variant="temporary"
           classes={{
             paper: classes.drawerPaper,
