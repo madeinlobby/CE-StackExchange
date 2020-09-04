@@ -1,12 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import NotificationsIcon from "@material-ui/icons/Notifications";
+import InboxIcon from '@material-ui/icons/Inbox';
 import MenuIcon from "@material-ui/icons/Menu";
-import { AppBar, Hidden, Button, IconButton } from "@material-ui/core";
+import { AppBar, Hidden, IconButton, Tooltip, Badge } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   appBar: {
-    position: "relative",
     zIndex: theme.zIndex.drawer + 1,
     height: 50,
     dispaly: "flex",
@@ -20,15 +19,19 @@ export default function DashboardPage({ setNavOpenState }) {
   const classes = useStyles();
 
   return (
-    <AppBar className={classes.appBar}>
+    <AppBar position='fixed' className={classes.appBar}>
       <Hidden lgUp>
         <IconButton onClick={setNavOpenState(true)}>
           <MenuIcon />
         </IconButton>
       </Hidden>
+      <Tooltip title='Inbox'>
       <IconButton>
-        <NotificationsIcon />
+      <Badge color='secondary' max={10} badgeContent={9}>
+        <InboxIcon />
+        </Badge>
       </IconButton>
+      </Tooltip>
     </AppBar>
   );
 }
