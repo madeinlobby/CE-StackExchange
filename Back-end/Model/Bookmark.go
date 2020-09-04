@@ -9,15 +9,15 @@ type Bookmark struct {
 }
 
 func GetAllBookmarks(deleted ...bool) []Bookmark {
-
+	return nil
 }
 
 func GetBookmarkById(bookmarkId string, deleted ...bool) Bookmark {
-
+	return Bookmark{}
 }
 
 func NewBookmark(accountId string, questionId string) Bookmark {
-
+	return Bookmark{}
 }
 
 func DeleteBookmark(bookmarkId string) {

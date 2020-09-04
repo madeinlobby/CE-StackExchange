@@ -9,15 +9,15 @@ type Token struct {
 }
 
 func GetAllTokens(deleted ...bool) []Token {
-
+	return nil
 }
 
 func GetTokenById(tokenId string, deleted ...bool) Token {
-
+	return Token{}
 }
 
 func NewToken(accountId string) Token {
-
+	return Token{}
 }
 
 func generateRandomCode() {

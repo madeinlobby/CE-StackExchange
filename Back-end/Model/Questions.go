@@ -12,15 +12,15 @@ type Question struct {
 }
 
 func GetAllQuestions(deleted ...bool) []Question {
-
+	return nil
 }
 
 func GetQuestionById(questionId string, deleted ...bool) Question {
-
+	return Question{}
 }
 
 func NewQuestion(accountId string, communityId string, title string, text string) Question {
-
+	return Question{}
 }
 
 func DeleteQuestion(questionId string) {

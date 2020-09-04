@@ -10,15 +10,15 @@ type Comment struct {
 }
 
 func GetAllComments(deleted ...bool) []Comment {
-
+	return nil
 }
 
 func GetCommentById(commentId string, deleted ...bool) Comment {
-
+	return Comment{}
 }
 
 func NewComment(accountId string, qaId string, text string) Comment {
-
+	return Comment{}
 }
 
 func DeleteComment(commentId string) {
