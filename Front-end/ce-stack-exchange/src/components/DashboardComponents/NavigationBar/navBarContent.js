@@ -5,20 +5,14 @@ import {
   List,
   ListItemIcon,
   Divider,
-  Avatar,
   Box,
-  Typography,
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/core/styles";
 import BarChartIcon from "@material-ui/icons/BarChart";
 import PersonIcon from "@material-ui/icons/Person";
 import ListAltIcon from "@material-ui/icons/ListAlt";
-
-//some sample data
-const username = "علی علوی";
-const description = "ارشد هوش مصنوعی";
-const bgColor = "AQUA";
+import PersonalInfoPreview from "../PersonalInfoPreview";
 
 const navItems = [
   { href: "dashboard/reputation", icon: <BarChartIcon />, title: "اعتبارات" },
@@ -30,27 +24,15 @@ const useStyles = makeStyles((theme) => ({
   list: {
     alignItems: "center",
   },
-  avatar: {
-    width: theme.spacing(10),
-    height: theme.spacing(10),
-    backgroundColor: bgColor,
-    fontSize: 35,
-    marginBottom : 20,
-    [theme.breakpoints.up('lg')] : {
-      marginTop : 60
-    }
+  personalInfoPreview: {
+    [theme.breakpoints.up("lg")]: {
+      marginTop: 60,
+    },
   },
 }));
 
 export default function NavBarContent() {
   const classes = useStyles();
-
-  const getAvatarText = (name) => {
-    return username
-      .split(" ")
-      .map((str) => (str ? str[0] : ""))
-      .join(" ");
-  };
 
   const navBarItems = (
     <List className={classes.list}>
@@ -67,11 +49,9 @@ export default function NavBarContent() {
 
   return (
     <>
-      <Box display="flex" alignItems="center"  p={2} flexDirection="column">
-        <Avatar className={classes.avatar}>{getAvatarText()}</Avatar>
-        <Typography variant="h5" gutterBottom >{username}</Typography>
-        <Typography variant="body2" gutterBottom >{description}</Typography>
-      </Box>
+      <div className={classes.personalInfoPreview}>
+        <PersonalInfoPreview />
+      </div>
       <Divider />
       {navBarItems}
     </>

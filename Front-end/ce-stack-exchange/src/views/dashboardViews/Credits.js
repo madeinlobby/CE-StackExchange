@@ -11,7 +11,6 @@ const reputation = 69;
 const useStyles = makeStyles((theme) => ({
   grid: {
     padding: 50,
-    marginTop: 20,
   },
   paper: {
     height: "100%",

@@ -4,12 +4,14 @@ import NavBar from "../../components/DashboardComponents/NavigationBar/NavBar";
 import Credits from "../../views/dashboardViews/Credits";
 import { makeStyles } from "@material-ui/core/styles";
 import DashboardHeader from "../../components/DashboardComponents/DashboardHeader";
+import Profile from '../../views/dashboardViews/Profile'
 
 const useStyles = makeStyles((theme) => ({
   content: {
     [theme.breakpoints.up("lg")]: {
       paddingLeft: 256,
       overflow: "hidden",
+      marginTop : 30
     },
   },
 }));
@@ -28,7 +30,7 @@ export default function DashboardPage() {
       <DashboardHeader setNavOpenState={setNavOpenState} />
       <NavBar openState={navOpen} setNavOpenState={setNavOpenState} />
       <div className={classes.content}>
-        <Credits></Credits>
+       <Profile></Profile>
       </div>
     </Box>
   );
