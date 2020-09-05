@@ -18,7 +18,19 @@ const tags = [
   },
 ];
 
-const useStyles = makeStyles((theme) => ({}));
+const useStyles = makeStyles((theme) => ({
+  container :{
+    [theme.breakpoints.down('sm')]:{
+        flexDirection:'column'
+    }
+  },
+  card : {
+    [theme.breakpoints.down('sm')]:{
+        flexDirection :'row-reverse',
+        height : 'auto'
+    }
+  }
+}));
 
 export default function QListItem() {
   const classes = useStyles();
@@ -34,6 +46,7 @@ export default function QListItem() {
       borderRadius={3}
       width={70}
       height={70}
+      className={classes.card}
     >
       <body1 style={{ color: color }}>{value}</body1>
       <body1 style={{ color: color }}>{label}</body1>
@@ -49,7 +62,7 @@ export default function QListItem() {
       display="flex"
       flexDirection="row"
       justifyContent="space-evenly"
-      width={"20%"}
+      width={225}
       mr={2}
     >
       {QCardInfo("#919993", "transparent", "vote", 0)}
@@ -63,7 +76,7 @@ export default function QListItem() {
       display="flex"
       flexDirection="column"
       justifyContent="space-evenly"
-      style={{ width: "80%" }}
+      style={{ flexGrow: 1 }}
     >
       <Typography>"چرا جاوا امکان ارث بری از چند کلاس را نمیدهد؟"</Typography>
       <Grid container spacing={2} style={{ width: "100%" }}>
@@ -88,9 +101,10 @@ export default function QListItem() {
         width="100%"
         justifyContent="flex-start"
         height="80"
+        className={classes.container}
       >
-        <QInfo/>
-        <QContext/>
+        {QInfo}
+        {QContext}
       </Box>
     </div>
   );
