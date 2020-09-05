@@ -15,8 +15,8 @@ export default function EditPresonalInfo() {
         <ProfilePreview/>
       </Grid>
       <Grid item lg={8} xs={12}>
-        <Paper>
-          <Grid container style={{ padding: 60 , display:'flex', alignItems:'center'}} spacing={4}>
+        <Paper style={{marginBottom:60}}>
+          <Grid container style={{ padding: 60}} alignItems='center' spacing={4}>
             <Grid item lg={6} md={6} xs={12}>
               <TextField
                 style={{ width: "100%" }}
