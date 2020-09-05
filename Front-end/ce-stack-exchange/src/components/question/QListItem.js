@@ -24,10 +24,11 @@ const useStyles = makeStyles((theme) => ({
         flexDirection:'column'
     }
   },
-  card : {
+  cardsContainer : {
     [theme.breakpoints.down('sm')]:{
         flexDirection :'row-reverse',
-        height : 'auto'
+        height : 'auto',
+        marginBottom : 5
     }
   }
 }));
@@ -46,7 +47,7 @@ export default function QListItem() {
       borderRadius={3}
       width={70}
       height={70}
-      className={classes.card}
+      className={classes.cardsContainer}
     >
       <body1 style={{ color: color }}>{value}</body1>
       <body1 style={{ color: color }}>{label}</body1>
@@ -78,7 +79,7 @@ export default function QListItem() {
       justifyContent="space-evenly"
       style={{ flexGrow: 1 }}
     >
-      <Typography>"چرا جاوا امکان ارث بری از چند کلاس را نمیدهد؟"</Typography>
+      <Typography gutterBottom>"چرا جاوا امکان ارث بری از چند کلاس را نمیدهد؟"</Typography>
       <Grid container spacing={2} style={{ width: "100%" }}>
         <Grid item>{tags.map((tag) => Tag(tag.label, tag.href))}</Grid>
         <Grid item style={{ flexGrow: 1 }}>
