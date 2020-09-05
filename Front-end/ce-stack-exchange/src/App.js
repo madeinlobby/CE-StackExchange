@@ -1,10 +1,10 @@
-import React from "react";
+import React from 'react';
 // import logo from './logo.svg';
-import "./App.css";
+import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Footer from "./components/general/website_footer"
 import PrimarySearchAppBar from "./components/general/website_header"
-import { Box } from '@material-ui/core';
+import { Paper, Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => ({
   root: {
