@@ -5,6 +5,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import Footer from "./components/general/website_footer"
 import PrimarySearchAppBar from "./components/general/website_header"
 import { Paper, Box } from '@material-ui/core';
+import SignUpWindow from "./components/login_and_signup/signup-window"
+import LoginWindow from './components/login_and_signup/login-window';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -21,47 +23,16 @@ function App() {
       <PrimarySearchAppBar />
       {/* all content in this div */}
       <div>
-        {/* <Paper> */}
-        <Box minHeight={window.innerHeight - 300}>
-          {/* //TODO you should change this minHeight responsively */}
-          <center>
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-            content is here<br />
-          </center>
-        </Box>
-        {/* </Paper> */}
+        <Paper elevation={6}>
+          <Box minHeight={window.innerHeight - 300}>
+            {/* //TODO you should change this minHeight responsively */}
+            <br />
+            <center>
+              <LoginWindow />
+            </center>
+            <br />
+          </Box>
+        </Paper>
       </div>
       <Footer />
     </div>

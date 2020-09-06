@@ -175,7 +175,7 @@ export default function PrimarySearchAppBar() {
                         <MenuIcon />
                     </IconButton> */}
                     <IconButton>
-                        <svg width="112" height="180" xmlns="http://www.w3.org/2000/svg" onClick={goSomewhere}>
+                        <svg width="112" height="152" xmlns="http://www.w3.org/2000/svg" onClick={goSomewhere}>
                             <g>
                                 <title>:)</title>
                                 <rect x="-1" y="-1" id="canvas_background" fill="transparent" />

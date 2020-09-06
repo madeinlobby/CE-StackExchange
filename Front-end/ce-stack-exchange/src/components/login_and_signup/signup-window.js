@@ -1,5 +1,5 @@
 import React from 'react'
-import { Paper, Container, ThemeProvider } from '@material-ui/core';
+import { Paper, Container, ThemeProvider, Collapse, CircularProgress } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import { makeStyles } from "@material-ui/core/styles";
@@ -79,6 +79,7 @@ class SignUpWindow extends React.Component {
             confirmPasswordBorder: "outlined-password-input",
             isConfirmPasswordError: false,
             confirmPasswordHelper: "",
+            successAlertOpen: false,
         }
     }
 
@@ -127,6 +128,10 @@ class SignUpWindow extends React.Component {
         if (this.state.username.length < 4) {
             this.setState({ usernameBorder: "outlined-error-helper-text", isUsernameError: true, usernameHelper: "طول نام کاربری باید حداقل ۴ کاراکتر باشد" })
             someError = true
+        }
+        else if (this.state.username.match(/^([A-Z]|[a-z]|[0-9])+$/g) == null) {
+            this.setState({ usernameBorder: "outlined-error-helper-text", isUsernameError: true, usernameHelper: "تنها از حروف و اعداد انگلیسی استفاده کنید" })
+            someError = true
         } else if (this.usernameIsUnique()) {
             this.setState({ usernameBorder: "outlined-required", isUsernameError: false, usernameHelper: "" })
         } else {
@@ -171,7 +176,13 @@ class SignUpWindow extends React.Component {
             someError = true
         }
         if (someError === false) {
-            alert("success")
+            this.setState({
+                successAlertOpen: true
+            })
+        } else {
+            this.setState({
+                successAlertOpen: false
+            })
         }
     }
 
@@ -188,12 +199,18 @@ class SignUpWindow extends React.Component {
             <ThemeProvider theme={theme}>
                 <div style={{ width: "80%" }}>
                     <Container>
-                        <Alert style={{ margin: 20 }} severity="success">ثبت نام با موفقیت انجام شد!</Alert>
+                        <Collapse in={this.state.successAlertOpen}>
+                            <Alert style={{ margin: 20 }} severity="success">
+                                <CircularProgress color="inherit" size={20} style={{ marginLeft: 10 }} />
+                                ثبت نام با موفقیت انجام شد!
+                            </Alert>
+                        </Collapse>
                         <form className={this.state.classes.root} noValidate autoComplete="off">
                             <div>
                                 <Grid container spacing={5}>
                                     <Grid container item xs={12} spacing={3}>
                                         <TextField
+                                            autoComplete
                                             color="secondary"
                                             style={{ margin: 10 }}
                                             onChange={this.handleUsernameChange}
@@ -206,6 +223,7 @@ class SignUpWindow extends React.Component {
                                             variant="outlined"
                                         />
                                         <TextField
+                                            autoComplete
                                             color="secondary"
                                             style={{ margin: 10 }}
                                             onChange={this.handleEmailChange}
@@ -220,6 +238,7 @@ class SignUpWindow extends React.Component {
                                     </Grid>
                                     <Grid container item xs={12} spacing={3}>
                                         <TextField
+                                            autoComplete
                                             color="secondary"
                                             style={{ margin: 10 }}
                                             onChange={this.handleFirstnameChange}
@@ -232,6 +251,7 @@ class SignUpWindow extends React.Component {
                                             variant="outlined"
                                         />
                                         <TextField
+                                            autoComplete
                                             color="secondary"
                                             style={{ margin: 10 }}
                                             onChange={this.handleLastnameChange}
@@ -246,6 +266,7 @@ class SignUpWindow extends React.Component {
                                     </Grid>
                                     <Grid container item xs={12} spacing={3}>
                                         <TextField
+                                            autoComplete
                                             color="secondary"
                                             style={{ margin: 10 }}
                                             onChange={this.handlePasswordChange}
@@ -260,6 +281,7 @@ class SignUpWindow extends React.Component {
                                         />
 
                                         <TextField
+                                            autoComplete
                                             color="secondary"
                                             style={{ margin: 10 }}
                                             onChange={this.handleConfirmPasswordChange}
