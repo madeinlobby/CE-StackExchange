@@ -3,6 +3,7 @@ package Controller
 import (
 	"github.com/gorilla/mux"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/View"
+	"net/http"
 )
 
 //This function registers all services endpoints to the given Router
@@ -27,9 +28,10 @@ func routePostManagementServices(sr *mux.Router) {
 func routeUserManagementServices(sr *mux.Router) {
 	sr.HandleFunc("/signup", View.Signup).Methods("POST")
 	sr.HandleFunc("/login", View.Login).Methods("POST")
-	sr.HandleFunc("/logout", View.Logout).Methods("POST")
-	sr.HandleFunc("/actions/ask", View.AskQuestion).Methods("POST")
-	sr.HandleFunc("/actions/answer", View.AnswerQuestion).Methods("POST")
-	sr.HandleFunc("/actions/comment/on_post", View.CommentOnPost).Methods("POST")
-	sr.HandleFunc("/actions/comment/on_comment", View.CommentOnComment).Methods("POST")
+	// routes that require authorization
+	sr.Handle("/logout", JwtMiddleWare.Handler(http.HandlerFunc(View.Logout))).Methods("POST")
+	sr.Handle("/actions/ask", JwtMiddleWare.Handler(http.HandlerFunc(View.AskQuestion))).Methods("POST")
+	sr.Handle("/actions/answer", JwtMiddleWare.Handler(http.HandlerFunc(View.AnswerQuestion))).Methods("POST")
+	sr.Handle("/actions/comment/on_post", JwtMiddleWare.Handler(http.HandlerFunc(View.CommentOnPost))).Methods("POST")
+	sr.Handle("/actions/comment/on_comment", JwtMiddleWare.Handler(http.HandlerFunc(View.CommentOnComment))).Methods("POST")
 }
