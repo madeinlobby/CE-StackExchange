@@ -39,8 +39,9 @@ export default function EditPresonalInfo() {
               <TextField
                 style={{ width: "100%" }}
                 variant="outlined"
-                label="چیکاره ای ؟"
-                defaultValue="ارشد هوش مصنوعی"
+                required
+                label="نام کاربری "
+                defaultValue="علی76"
               />
             </Grid>
             <Grid item lg={6} md={6} xs={12}>

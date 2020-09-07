@@ -2,7 +2,8 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Chip, Grid } from "@material-ui/core";
 const green = "#32a852";
-const gray = "#919993";
+const darkGray = "#919993";
+const gray = "#f0f0f0"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -22,13 +23,13 @@ const useStyles = makeStyles((theme) => ({
 export default function QListItem({Q}) {
   const classes = useStyles();
 
-  const QCardInfo = (color, bgColor, label, value) => (
+  const QCardInfo = (borderColor, color, bgColor, label, value) => (
     <Box
       display="flex"
       alignItems="center"
       justifyContent="space-evenly"
       flexDirection="column"
-      borderColor={color}
+      borderColor={borderColor}
       border={2}
       borderRadius={3}
       width={70}
@@ -53,14 +54,15 @@ export default function QListItem({Q}) {
       width={225}
       mr={2}
     >
-      {QCardInfo(gray, "transparent", "vote", Q.votes)}
+      {QCardInfo(gray, darkGray, "transparent", "vote", Q.votes)}
       {QCardInfo(
         Q.answered ? green : gray,
+        Q.answered ? green : darkGray,
         Q.approved ? green : "transparent",
         "answer",
         Q.answers
       )}
-      {QCardInfo(gray, "transparent", "bounty", Q.bounty)}
+      {QCardInfo(gray,darkGray, "transparent", "bounty", Q.bounty)}
     </Box>
   );
 

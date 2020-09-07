@@ -6,6 +6,7 @@ import {
   TableRow,
   Typography,
   Grid,
+  Divider,
 } from "@material-ui/core";
 import QListItem from "../../components/question/QListItem";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
@@ -123,9 +124,12 @@ export default function Activities() {
           <TableContainer style={{ width: "100%" }}>
             <Table style={{ overflow: "hidden" }}>
               {Qs.map((q) => (
-                <TableRow style={{ height: "auto" }}>
+                <>
+                <TableRow>
                   <QListItem Q={q} />
                 </TableRow>
+                <Divider light/>
+                </>
               ))}
             </Table>
           </TableContainer>
@@ -139,9 +143,12 @@ export default function Activities() {
           <TableContainer style={{ width: "100%" }}>
             <Table style={{ overflow: "hidden" }}>
               {Qs.map((q) => (
-                <TableRow style={{ height: "auto" }}>
+                <>
+                <TableRow>
                   <QListItem Q={q} />
                 </TableRow>
+                <Divider light/>
+                </>
               ))}
             </Table>
           </TableContainer>

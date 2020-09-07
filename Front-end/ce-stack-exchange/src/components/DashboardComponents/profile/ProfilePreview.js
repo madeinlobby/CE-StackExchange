@@ -18,10 +18,10 @@ export default function ProfilePreview() {
 
   return (
     <Card className={classes.card}>
-      <CardContent>
+      <CardContent style={{display:'flex', flexDirection:'column'}}>
         <PersonalInfoPreview />
         <Divider />
-        <Typography variant="overline">{description}</Typography>
+        <Typography variant="overline" style={{alignSelf:'center'}}>{description}</Typography>
       </CardContent>
     </Card>
   );
