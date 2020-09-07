@@ -41,6 +41,7 @@ post service:
     header: [] # non required
     parameters: [] # non required
     response:
+      - isAnswerApproved
       - error message # only if an error occurs
       - asker id
       - asker name

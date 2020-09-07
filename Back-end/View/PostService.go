@@ -19,14 +19,15 @@ type answerBasicInfo struct {
 }
 
 type questionBasicInfo struct {
-	AskerId       string `yaml:"asker id"`
-	AskerName     string `yaml:"asker name"`
-	QuestionId    string `yaml:"question id"`
-	QuestionTitle string `yaml:"question title"`
-	QuestionBody  string `yaml:"question body"`
-	Downvotes     int    `yaml:"number of downvotes"`
-	Upvotes       int    `yaml:"number of upvotes"`
-	date          string `yaml:"date of issue"`
+	IsAnswerApproved string `yaml:is answer approved`
+	AskerId          string `yaml:"asker id"`
+	AskerName        string `yaml:"asker name"`
+	QuestionId       string `yaml:"question id"`
+	QuestionTitle    string `yaml:"question title"`
+	QuestionBody     string `yaml:"question body"`
+	Downvotes        int    `yaml:"number of downvotes"`
+	Upvotes          int    `yaml:"number of upvotes"`
+	date             string `yaml:"date of issue"`
 }
 
 func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
@@ -42,6 +43,7 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 	// returning the result
 	upvotes, downvotes := Model.GetPostVotes(q.Id)
 	result, err := yaml.Marshal(questionBasicInfo{
+		q.IsAnswerApproved,
 		q.AccountId,
 		Model.GetAccountById(q.AccountId).Username,
 		q.Id,
