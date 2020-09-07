@@ -99,7 +99,7 @@ export default function Activities() {
       <Grid item xs={12} md={6} lg={3}>
         <Paper className={classes.paper}>
           <Typography style={{marginBottom : 20}}>
-            <QuestionAnswerIcon /> سوالات
+            <QuestionAnswerIcon/> سوالات
           </Typography>
           <Typography variant='h4'>
             {Qs.length}
