@@ -8,28 +8,6 @@ import (
 	"net/http"
 )
 
-type answerBasicInfo struct {
-	AccountId       string `yaml:"user id"`
-	AccountUsername string `yaml:"user username"`
-	AnswerBody      string `yaml:"answer body"`
-	Downvotes       int    `yaml:"number of downvotes"`
-	Upvotes         int    `yaml:"number of upvotes"`
-	WasHelpful      bool   `yaml:"was helpful"`
-	date            string `yaml:"date of issue"`
-}
-
-type questionBasicInfo struct {
-	IsAnswerApproved string `yaml:is answer approved`
-	AskerId          string `yaml:"asker id"`
-	AskerName        string `yaml:"asker name"`
-	QuestionId       string `yaml:"question id"`
-	QuestionTitle    string `yaml:"question title"`
-	QuestionBody     string `yaml:"question body"`
-	Downvotes        int    `yaml:"number of downvotes"`
-	Upvotes          int    `yaml:"number of upvotes"`
-	date             string `yaml:"date of issue"`
-}
-
 func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 	// checking if the question exists or not
 	id := mux.Vars(r)["id"]
@@ -41,18 +19,7 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// returning the result
-	upvotes, downvotes := Model.GetPostVotes(q.Id)
-	result, err := yaml.Marshal(questionBasicInfo{
-		q.IsAnswerApproved,
-		q.AccountId,
-		Model.GetAccountById(q.AccountId).Username,
-		q.Id,
-		q.Title,
-		q.Text,
-		downvotes,
-		upvotes,
-		q.Date,
-	})
+	result, err := yaml.Marshal(getQuestionInfo(q))
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("error: failed at marshaling the result: " + err.Error()))
@@ -74,9 +41,10 @@ func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// processing and returning the result
-	qAnswers := make([]answerBasicInfo, 5)
+	qAnswers := answersOfQuestion{}
+	qAnswers.question = getQuestionInfo(q)
 	for _, answer := range Model.GetQuestionAnswers(q.Id) {
-		qAnswers = append(qAnswers, getAnswerInfo(answer))
+		qAnswers.answers = append(qAnswers.answers, getAnswerInfo(answer))
 	}
 
 	result, err := yaml.Marshal(qAnswers)
@@ -122,6 +90,21 @@ func getAnswerInfo(answer Model.Answer) answerBasicInfo {
 		Upvotes:         upvotes,
 		WasHelpful:      answer.WasHelpful,
 		date:            answer.Date,
+	}
+}
+
+func getQuestionInfo(q Model.Question) questionBasicInfo{
+	upvotes, downvotes := Model.GetPostVotes(q.Id)
+	return questionBasicInfo{
+		q.IsAnswerApproved,
+		q.AccountId,
+		Model.GetAccountById(q.AccountId).Username,
+		q.Id,
+		q.Title,
+		q.Text,
+		downvotes,
+		upvotes,
+		q.Date,
 	}
 }
 

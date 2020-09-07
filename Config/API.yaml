@@ -41,8 +41,8 @@ post service:
     header: [] # non required
     parameters: [] # non required
     response:
-      - isAnswerApproved
       - error message # only if an error occurs
+      - isAnswerApproved
       - asker id
       - asker name
       - question id
@@ -53,13 +53,14 @@ post service:
       - date of issue
 
   get answers of a question:
-    service description: returns an array of answer's basic infos.
+    service description: returns an array of answer's basic infos plus basic info of the question itself.
     url: /posts/questions/$id/answers # $id is a variable indicating the question's id
     http method: GET
     header: [] # non required
     parameters: [] # non required
     reponse:
       - error message # only if an error occurs
+      - question basic info
       - array of basic information of answers
 
   get basic informations of an answer:
