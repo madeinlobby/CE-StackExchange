@@ -3,8 +3,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography, Avatar, Box } from "@material-ui/core";
 
 //some sample data
-const username = "علی علوی";
-const description = "ارشد هوش مصنوعی";
+const username = "علی76";
+const fullname = "علی علوی";
 const bgColor = "AQUA";
 
 const useStyles = makeStyles((theme) => ({
@@ -31,7 +31,7 @@ export default function Profile() {
     <Box display="flex" alignItems="center"  p={2} flexDirection="column">
         <Avatar className={classes.avatar}>{getAvatarText()}</Avatar>
         <Typography variant="h5" gutterBottom >{username}</Typography>
-        <Typography variant="body2" gutterBottom >{description}</Typography>
+        <Typography variant="body2" gutterBottom >{fullname}</Typography>
         </Box>
   );
 }

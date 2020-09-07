@@ -45,8 +45,8 @@ export default function PersonalInfo() {
                     readOnly: true,
                   }}
                 variant="outlined"
-                label="چیکاره ای ؟"
-                defaultValue="ارشد هوش مصنوعی"
+                label="نام کاربری"
+                defaultValue="علی76"
               />
             </Grid>
             <Grid item lg={12} md={12} xs={12}>
