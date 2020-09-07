@@ -6,6 +6,8 @@ import (
 	"strconv"
 )
 
+var secretKey = []byte("Xp2s5v8y/B?E(H+MbQeThVmYq3t6w9z$C&F)J@NcRfUjXnZr4u7x!A%D*G-KaPdS")
+
 // post service message protocol definition
 type answerBasicInfo struct {
 	AccountId       string `yaml:"user id"`

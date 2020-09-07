@@ -175,6 +175,7 @@ user service:
       - last name
     response:
       - error message # only if an error occurs
+      - JWT token
 
     login:
       service description: provides logging-in service.
@@ -186,7 +187,7 @@ user service:
         - password
       response:
         - error message # only if an error occurs
-        - authentication token.
+        - JWT token
 
     logout:
       service description: logs-out the authenticated user. the given token is no longer valid.
@@ -198,14 +199,17 @@ user service:
         - error message # only if an error occurs
 
     user profile:
-      service description: >
+      service description: |
         returns the basic information of the user.
-        essentially the same info used to register the user.
+        essentially the same info used to create the profile info page.
+        if the user asks for their own username, their own profile page would be returned
+        if the user for another user profile, slightly different page would be returned
       url: /user/profile
       http method: GET
-      header: [] # non required
+      header: [token] # non required
       parameters: [username] # can later be changed to user ID
       response:
+        - isForOwn # specifies whether if the user asked for their own page or not
         - username
         - first name
         - last name
