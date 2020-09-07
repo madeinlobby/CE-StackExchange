@@ -1,31 +1,60 @@
 package View
 
-import "net/http"
+import (
+	"fmt"
+	"github.com/auth0/go-jwt-middleware"
+	"github.com/dgrijalva/jwt-go"
+	"net/http"
+)
 
 func Signup(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("signup"))
+	token, _ := jwtmiddleware.FromAuthHeader(r)
+	fmt.Println("this is invalid??: " + token)
+	result, err := jwt.Parse(token, func(token2 *jwt.Token) (interface{}, error) {
+		return secretKey, nil
+	})
+	if err != nil {
+		fmt.Println(err)
+	} else {
+		fmt.Println(result)
+	}
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("login"))
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["username"] = "test"
+	claims["just fa fun"] = "test"
+	result, _ := token.SignedString(secretKey)
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(result))
+	fmt.Println("sent: " + result)
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("logout"))
+
 }
 
 func AskQuestion(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("ask"))
+
 }
 
 func AnswerQuestion(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("answer"))
+
 }
 
 func CommentOnPost(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("comment on post"))
+
 }
 
 func CommentOnComment(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("comment on comment"))
+
+}
+
+func GetUserPosts(w http.ResponseWriter, r *http.Request) {
+
+}
+
+func GetUserProfileInfo(w http.ResponseWriter, r *http.Request) {
+
 }
