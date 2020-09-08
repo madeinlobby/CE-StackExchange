@@ -11,7 +11,7 @@ import (
 
 func GetAllCommunities(w http.ResponseWriter, r *http.Request) {
 	communities := Model.GetAllCommunities(false)
-	response, err := yaml.Marshal(communities)
+	response, err := yaml.Marshal(&communities)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("error: could not serialize the result."))

@@ -36,8 +36,10 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	newAcc := Model.NewAccount(signupCredentials.Username,
 		signupCredentials.Password,
 		false,
-		signupCredentials.FirstName+" "+signupCredentials.LastName,
+		signupCredentials.FirstName,
+		signupCredentials.LastName,
 		signupCredentials.Email,
+		signupCredentials.StudentNumber,
 		"")
 
 	if cmp.Equal(newAcc, Model.Account{}) {
@@ -55,7 +57,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: add token to redis
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(token))
+	_, _ = w.Write([]byte(token))
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
@@ -93,7 +95,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 
 	// TODO: add token to redis
 	w.WriteHeader(http.StatusOK)
-	w.Write([]byte(token))
+	_, _ = w.Write([]byte(token))
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
@@ -303,7 +305,7 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 	if cmp.Equal(user, Model.Account{}) {
 		http.Error(w, "error: no such user exists", http.StatusNotFound)
 		return
-	} else if requestInfo.Opt != "q" || requestInfo.Opt != "a" || requestInfo.Opt != "all" {
+	} else if requestInfo.Opt != "q" && requestInfo.Opt != "a" && requestInfo.Opt != "all" {
 		http.Error(w, "error: incorrect option", http.StatusBadRequest)
 		return
 	}
@@ -311,7 +313,7 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 	// get the posts. uses the getQuestionInfo and getAnswerInfo functions in PostService.go
 	posts := struct {
 		Questions []questionBasicInfo `yaml:"questions"`
-		Answers []answerBasicInfo `yaml:"answers"`
+		Answers   []answerBasicInfo   `yaml:"answers"`
 	}{}
 	if requestInfo.Opt != "a" {
 		// adds all questions
@@ -341,16 +343,64 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 
 	// returns the result
 	var out []byte
-	out, err = yaml.Marshal(posts)
+	out, err = yaml.Marshal(&posts)
 	if err != nil {
 		http.Error(w, "error: could not serialize the result", http.StatusInternalServerError)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write(out)
+	_, _ = w.Write(out)
 }
 
 func GetUserProfileInfo(w http.ResponseWriter, r *http.Request) {
+	// extract the current user
+	currAcc, err := getCurrentAccount(r)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusUnauthorized)
+		return
+	}
 
+	// extract and translate body
+	var body []byte
+	body, err = ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+		return
+	}
+
+	request := getUserProfileInfoRequest{}
+	err = yaml.Unmarshal(body, &request)
+	if err != nil {
+		http.Error(w, "error: could not parse body", http.StatusBadRequest)
+		return
+	}
+
+	// validate the request
+	user := Model.GetAccountByUsername(request.Username)
+	if cmp.Equal(user, Model.Account{}) {
+		http.Error(w, "error: no such user exists", http.StatusNotFound)
+		return
+	}
+
+	// return the result
+	response := userProfileInfo{
+		IsForOwn:      currAcc.Username == user.Username,
+		Username:      user.Username,
+		FirstName:     user.FirstName,
+		LastName:      user.LastName,
+		Email:         user.Email,
+		StudentNumber: user.StudentNumber,
+		AboutMe:       user.AboutMe,
+	}
+
+	var result []byte
+	result, err = yaml.Marshal(&response)
+	if err != nil {
+		http.Error(w, "error: could not serialize the result", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	_, _ = w.Write(result)
 }

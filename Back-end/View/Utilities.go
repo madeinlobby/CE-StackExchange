@@ -68,19 +68,33 @@ type answerQuestionRequest struct {
 }
 
 type commentOnPostRequest struct {
-	AnswerId string `yaml:"answer id"`
+	AnswerId   string `yaml:"answer id"`
 	QuestionId string `yaml:"question id"`
-	Comment string `yaml:"comment body"`
+	Comment    string `yaml:"comment body"`
 }
 
 type commentOnCommentRequest struct {
-	ParentId string `yaml:"parent comment id"`
+	ParentId  string `yaml:"parent comment id"`
 	ChildBody string `yaml:"new comment body"`
 }
 
 type getUserPostsRequest struct {
 	Username string `yaml:"username"`
-	Opt string `yaml:"option"`
+	Opt      string `yaml:"option"`
+}
+
+type getUserProfileInfoRequest struct {
+	Username string `yaml:"username"`
+}
+
+type userProfileInfo struct {
+	IsForOwn      bool   `yaml:"is for own"`
+	Username      string `yaml:"username"`
+	FirstName     string `yaml:"first name"`
+	LastName      string `yaml:"last name"`
+	Email         string `yaml:"email"`
+	StudentNumber string `yaml:"student number"`
+	AboutMe       string `yaml:"about me"`
 }
 
 // checks sign up credentials and returns error if one occurred

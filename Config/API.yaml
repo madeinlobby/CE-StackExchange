@@ -213,21 +213,21 @@ user service:
       service description: |
         returns the basic information of the user.
         essentially the same info used to create the profile info page.
-        if the user asks for their own username, their own profile page would be returned
-        if the user for another user profile, slightly different page would be returned
+        if the user asks for their own username, their own profile info would be returned
+        if the user for another user profile, slightly different info would be returned
       url: /user/profile
       http method: GET
       header: [token] # non required
       parameters: [username] # can later be changed to user ID
       response:
-        - isForOwn # specifies whether if the user asked for their own page or not
+        - is for own # specifies whether if the user asked for their own page or not
         - username
         - first name
         - last name
         - email
         - student number
         - profile image (not available)
-        - acount me
+        - about me
 
     get user posts:
       service description: returns the posts that user asked and/or answered on.
