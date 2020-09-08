@@ -136,15 +136,27 @@ user service:
     response:
       - error message # only if an error occurs
 
-  comment on a post:
-    service description: used to comment on a post
-    url: /user/actions/comment/on_post
+  comment on a question:
+    service description: used to comment on a question
+    url: /user/actions/comment/on_question
     http method: POST
     header:
       - token # request would resolve only upon authentication.
-      - post id
     parameters:
       - comment body
+      - question id
+    response:
+      - error message # only if an error occurs
+
+  comment on an answer :
+    service description: used to comment on an answer
+    url: /user/actions/comment/on_answer
+    http method: POST
+    header:
+      - token # request would resolve only upon authentication.
+    parameters:
+      - comment body
+      - answer id
     response:
       - error message # only if an error occurs
 
