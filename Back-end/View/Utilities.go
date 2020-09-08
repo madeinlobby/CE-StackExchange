@@ -48,6 +48,11 @@ type signupRequest struct {
 	LastName      string `yaml:"last name"`
 }
 
+type loginRequest struct {
+	Username string `yaml:"username"`
+	Password string `yaml:"password"`
+}
+
 // checks sign up credentials and returns error if one occurred
 func checkSignupCredentials(credentials signupRequest) error {
 	if !cmp.Equal(Model.GetAccountByUsername(credentials.Username), Model.Account{}) {

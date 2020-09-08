@@ -8,7 +8,7 @@ import (
 	"net/http"
 )
 
-//func encode() {
+//func decode() {
 //	token, _ := jwtmiddleware.FromAuthHeader(r)
 //	fmt.Println("this is invalid??: " + token)
 //	result, err := jwt.Parse(token, func(token2 *jwt.Token) (interface{}, error) {
@@ -21,9 +21,7 @@ import (
 //	}
 //}
 //
-//func decode() {
-
-//}
+//func encode()
 
 func Signup(w http.ResponseWriter, r *http.Request) {
 	// extract body
@@ -33,7 +31,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	var signupCredentials signupRequest
+	signupCredentials := signupRequest{}
 	err = yaml.Unmarshal(body, &signupCredentials)
 	if err != nil {
 		http.Error(w, "error: could not parse request's body", http.StatusBadRequest)
@@ -68,12 +66,47 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// TODO: add token to redis
 	w.WriteHeader(http.StatusOK)
 	w.Write([]byte(token))
 }
 
 func Login(w http.ResponseWriter, r *http.Request) {
+	// extract body
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error: could not read the body "+err.Error(), http.StatusInternalServerError)
+		return
+	}
 
+	loginCredentials := loginRequest{}
+	err = yaml.Unmarshal(body, &loginCredentials)
+	if err != nil {
+		http.Error(w, "error: could not parse body "+err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// check credentials
+	user := Model.GetAccountByUsername(loginCredentials.Username)
+	if cmp.Equal(user, Model.Account{}) {
+		http.Error(w, "error: invalid username", http.StatusNotFound)
+		return
+	} else if user.Password != loginCredentials.Password {
+		http.Error(w, "error: invalid password", http.StatusForbidden)
+		return
+	}
+
+	// logs in successfully and returns the result
+	var token string
+	token, err = createJWTToken(loginCredentials.Username)
+	if err != nil {
+		http.Error(w, "error: could not create token", http.StatusInternalServerError)
+		return
+	}
+
+	// TODO: add token to redis
+	w.WriteHeader(http.StatusOK)
+	w.Write([]byte(token))
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
