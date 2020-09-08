@@ -65,12 +65,3 @@ func GetAccountByStudentNumber(accountStudentNumber string) Account {
 	return Account{}
 }
 
-//TODO: notice me senpai!
-func GetAccountQuestions(accountId string) {
-
-}
-
-//TODO: notice me senpai!
-func GetAccountAnswers(accountId string) {
-
-}

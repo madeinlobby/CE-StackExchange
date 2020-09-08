@@ -227,7 +227,7 @@ user service:
         - email
         - student number
         - profile image (not available)
-        #todo  :would make better ux to have "about me"
+        - acount me
 
     get user posts:
       service description: returns the posts that user asked and/or answered on.
@@ -236,9 +236,9 @@ user service:
       header: [] # non required
       parameters:
         - username # can later be changed to user ID
-        - mode (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
+        - option (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
       response:
-        - an array of posts
+        - an array of posts (post basic info)
          
          
 #todo: get list of tags (users must be prompted to insert valid tags)

@@ -78,6 +78,11 @@ type commentOnCommentRequest struct {
 	ChildBody string `yaml:"new comment body"`
 }
 
+type getUserPostsRequest struct {
+	Username string `yaml:"username"`
+	Opt string `yaml:"option"`
+}
+
 // checks sign up credentials and returns error if one occurred
 func checkSignupCredentials(credentials signupRequest) error {
 	if !cmp.Equal(Model.GetAccountByUsername(credentials.Username), Model.Account{}) {

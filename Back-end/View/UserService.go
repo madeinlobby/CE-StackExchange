@@ -283,7 +283,72 @@ func CommentOnComment(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserPosts(w http.ResponseWriter, r *http.Request) {
+	// extract and translate body
+	var body []byte
+	body, err := ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+		return
+	}
 
+	requestInfo := getUserPostsRequest{}
+	err = yaml.Unmarshal(body, &requestInfo)
+	if err != nil {
+		http.Error(w, "error: could not parse body", http.StatusBadRequest)
+		return
+	}
+
+	// validate the request info
+	user := Model.GetAccountByUsername(requestInfo.Username)
+	if cmp.Equal(user, Model.Account{}) {
+		http.Error(w, "error: no such user exists", http.StatusNotFound)
+		return
+	} else if requestInfo.Opt != "q" || requestInfo.Opt != "a" || requestInfo.Opt != "all" {
+		http.Error(w, "error: incorrect option", http.StatusBadRequest)
+		return
+	}
+
+	// get the posts. uses the getQuestionInfo and getAnswerInfo functions in PostService.go
+	posts := struct {
+		Questions []questionBasicInfo `yaml:"questions"`
+		Answers []answerBasicInfo `yaml:"answers"`
+	}{}
+	if requestInfo.Opt != "a" {
+		// adds all questions
+		questions, err := Model.GetAccountQuestions(user.Id)
+		if err != nil {
+			http.Error(w, "error: could not retrieve questions", http.StatusInternalServerError)
+			return
+		}
+
+		for _, q := range questions {
+			posts.Questions = append(posts.Questions, getQuestionInfo(q))
+		}
+	}
+
+	if requestInfo.Opt != "q" {
+		// adds all answers
+		answers, err := Model.GetAccountAnswers(user.Id)
+		if err != nil {
+			http.Error(w, "error: could not retrieve answers", http.StatusInternalServerError)
+			return
+		}
+
+		for _, a := range answers {
+			posts.Answers = append(posts.Answers, getAnswerInfo(a))
+		}
+	}
+
+	// returns the result
+	var out []byte
+	out, err = yaml.Marshal(posts)
+	if err != nil {
+		http.Error(w, "error: could not serialize the result", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(out)
 }
 
 func GetUserProfileInfo(w http.ResponseWriter, r *http.Request) {
