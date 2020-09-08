@@ -10,12 +10,6 @@ import (
 	"time"
 )
 
-//func decode() {
-//
-//}
-//
-//func encode()
-
 func Signup(w http.ResponseWriter, r *http.Request) {
 	// extract body
 	body, err := ioutil.ReadAll(r.Body)
@@ -122,7 +116,37 @@ func Logout(w http.ResponseWriter, r *http.Request) {
 }
 
 func AskQuestion(w http.ResponseWriter, r *http.Request) {
+	// extract the current account
+	currAcc, err := getCurrentAccount(r)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusUnauthorized)
+	}
 
+	// extract and translate body
+	var body []byte
+	body, err = ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+		return
+	}
+
+	askQuestionInfo := askQuestionRequest{}
+	err = yaml.Unmarshal(body, &askQuestionInfo)
+	if err != nil {
+		http.Error(w, "error: could not parse body", http.StatusBadRequest)
+		return
+	}
+
+	// ask the question and return the result
+	q := Model.NewQuestion(currAcc.Id, askQuestionInfo.Community,
+		askQuestionInfo.Title, askQuestionInfo.Body, askQuestionInfo.TagArr)
+
+	if cmp.Equal(q, Model.Question{}) {
+		http.Error(w, "error: could not ask the question", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func AnswerQuestion(w http.ResponseWriter, r *http.Request) {

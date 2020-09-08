@@ -20,7 +20,7 @@ func GetQuestionById(questionId string, deleted ...bool) Question {
 	return Question{}
 }
 
-func NewQuestion(accountId string, communityId string, title string, text string) Question {
+func NewQuestion(accountId string, communityName string, title string, text string, tagArr []string) Question {
 	return Question{}
 }
 

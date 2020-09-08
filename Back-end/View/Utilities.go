@@ -55,6 +55,13 @@ type loginRequest struct {
 	Password string `yaml:"password"`
 }
 
+type askQuestionRequest struct {
+	Community string   `yaml:"community"`
+	Title     string   `yaml:"title"`
+	Body      string   `yaml:"question body"`
+	TagArr    []string `yaml:"tags array"`
+}
+
 // checks sign up credentials and returns error if one occurred
 func checkSignupCredentials(credentials signupRequest) error {
 	if !cmp.Equal(Model.GetAccountByUsername(credentials.Username), Model.Account{}) {
@@ -98,4 +105,23 @@ func extractJWTToken(r *http.Request) (*jwt.Token, error) {
 	}
 
 	return result, nil
+}
+
+// util function to current account from JWT token
+func getCurrentAccount(r *http.Request) (Model.Account, error) {
+	// get the token
+	token, err := extractJWTToken(r)
+	if err != nil {
+		return Model.Account{}, err
+	}
+
+	username := token.Claims.(jwt.MapClaims)["username"].(string)
+
+	var currentAcc Model.Account
+	currentAcc = Model.GetAccountByUsername(username, false)
+	if cmp.Equal(currentAcc, Model.Account{}) {
+		return Model.Account{}, errors.New("no such account")
+	}
+
+	return currentAcc, nil
 }

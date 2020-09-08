@@ -116,8 +116,8 @@ user service:
     http method: POST
     header:
       - token # request would resolve only upon authentication.
-      - community
     parameters:
+      - community
       - title
       - question body
       - tags array (currently not available)
