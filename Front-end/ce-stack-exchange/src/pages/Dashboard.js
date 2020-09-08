@@ -1,10 +1,10 @@
 import React from "react";
 import { Box, AppBar } from "@material-ui/core";
-import NavBar from "../../components/DashboardComponents/NavigationBar/NavBar";
-import Credits from "../../views/dashboardViews/Credits";
+import NavBar from "../components/DashboardComponents/NavigationBar/NavBar";
+import Credits from "../views/dashboardViews/Credits";
 import { makeStyles } from "@material-ui/core/styles";
-import DashboardHeader from "../../components/DashboardComponents/DashboardHeader";
-import Profile from '../../views/dashboardViews/Profile'
+import DashboardHeader from "../components/DashboardComponents/DashboardHeader";
+import Profile from '../views/dashboardViews/Profile'
 
 const useStyles = makeStyles((theme) => ({
   content: {
