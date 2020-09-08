@@ -2,9 +2,11 @@ package View
 
 import (
 	"errors"
+	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/google/go-cmp/cmp"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
+	"net/http"
 	"time"
 )
 
@@ -78,4 +80,22 @@ func createJWTToken(username string) (string, error) {
 	// token is valid for an hour
 	claims["exp"] = time.Now().Add(time.Hour)
 	return token.SignedString(secretKey)
+}
+
+// util function to extract data from a token and returning the structure
+func extractJWTToken(r *http.Request) (*jwt.Token, error) {
+	token, err := jwtmiddleware.FromAuthHeader(r)
+	if err != nil {
+		return nil, err
+	}
+
+	var result *jwt.Token
+	result, err = jwt.Parse(token, func(token2 *jwt.Token) (interface{}, error) {
+		return secretKey, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+
+	return result, nil
 }
