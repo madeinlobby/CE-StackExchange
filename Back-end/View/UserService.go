@@ -150,7 +150,37 @@ func AskQuestion(w http.ResponseWriter, r *http.Request) {
 }
 
 func AnswerQuestion(w http.ResponseWriter, r *http.Request) {
+	// extract the current user
+	currAcc, err := getCurrentAccount(r)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusUnauthorized)
+		return
+	}
 
+	// extract and translate body
+	var body []byte
+	body, err = ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+		return
+	}
+
+	answerQuestionInfo := answerQuestionRequest{}
+	err = yaml.Unmarshal(body, &answerQuestionInfo)
+	if err != nil {
+		http.Error(w, "error: could not parse body", http.StatusBadRequest)
+		return
+	}
+
+	// answer the question and return the result
+	a := Model.NewAnswer(currAcc.Id, answerQuestionInfo.QuestionId, answerQuestionInfo.AnswerBody)
+
+	if cmp.Equal(a, Model.Answer{}) {
+		http.Error(w, "error: could not answer the question", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func CommentOnPost(w http.ResponseWriter, r *http.Request) {

@@ -130,9 +130,9 @@ user service:
     http method: POST
     header:
       - token # request would resolve only upon authentication.
-      - question id
     parameters:
       - answer body
+      - question id
     response:
       - error message # only if an error occurs
 
