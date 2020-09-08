@@ -1,24 +1,17 @@
 package View
 
 import (
+	"github.com/dgrijalva/jwt-go"
 	"github.com/google/go-cmp/cmp"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
+	"time"
 )
 
 //func decode() {
-//	token, _ := jwtmiddleware.FromAuthHeader(r)
-//	fmt.Println("this is invalid??: " + token)
-//	result, err := jwt.Parse(token, func(token2 *jwt.Token) (interface{}, error) {
-//		return secretKey, nil
-//	})
-//	if err != nil {
-//		fmt.Println(err)
-//	} else {
-//		fmt.Println(result)
-//	}
+//
 //}
 //
 //func encode()
@@ -110,7 +103,22 @@ func Login(w http.ResponseWriter, r *http.Request) {
 }
 
 func Logout(w http.ResponseWriter, r *http.Request) {
+	// extracting the token
+	token, err := extractJWTToken(r)
+	if err != nil {
+		http.Error(w, "error: invalid token header", http.StatusUnauthorized)
+		return
+	}
 
+	// check if the token has expired
+	if token.Claims.(jwt.MapClaims)["exp"].(time.Time).Before(time.Now()) {
+		http.Error(w, "error: token has expired", http.StatusUnauthorized)
+		return
+	}
+
+	// invalidate the token and return the result
+	//TODO: invalidate the token from redis
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func AskQuestion(w http.ResponseWriter, r *http.Request) {
