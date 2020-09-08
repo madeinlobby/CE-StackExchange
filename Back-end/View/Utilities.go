@@ -2,8 +2,10 @@ package View
 
 import (
 	"errors"
-	"net/http"
-	"strconv"
+	"github.com/dgrijalva/jwt-go"
+	"github.com/google/go-cmp/cmp"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
+	"time"
 )
 
 var secretKey = []byte("Xp2s5v8y/B?E(H+MbQeThVmYq3t6w9z$C&F)J@NcRfUjXnZr4u7x!A%D*G-KaPdS")
@@ -37,22 +39,38 @@ type answersOfQuestion struct {
 }
 
 // user service message protocol definition
+type signupRequest struct {
+	Username      string `yaml:"username"`
+	Password      string `yaml:"password"`
+	Email         string `yaml:"email"`
+	StudentNumber string `yaml:"student number"`
+	FirstName     string `yaml:"first name"`
+	LastName      string `yaml:"last name"`
+}
 
-// community service message protocol definition
-
-// util function to read the body of a request
-func readBody(r *http.Request) ([]byte, error) {
-	size, err := strconv.Atoi(r.Header.Get("size"))
-	if err != nil {
-		return nil, errors.New("size is not provided in header correctly")
+// checks sign up credentials and returns error if one occurred
+func checkSignupCredentials(credentials signupRequest) error {
+	if !cmp.Equal(Model.GetAccountByUsername(credentials.Username), Model.Account{}) {
+		return errors.New("error: username is already taken")
 	}
 
-	p := make([]byte, size)
-	read, err2 := r.Body.Read(p)
-
-	if read == 0 && err2 != nil {
-		return nil, err2
+	if !cmp.Equal(Model.GetAccountByEmail(credentials.Email), Model.Account{}) {
+		return errors.New("error: email is already used")
 	}
 
-	return p, nil
+	if !cmp.Equal(Model.GetAccountByStudentNumber(credentials.StudentNumber), Model.Account{}) {
+		return errors.New("error: student number is already used")
+	}
+
+	return nil
+}
+
+// util function to create and return a JWT token when a user logs in or signs up
+func createJWTToken(username string) (string, error) {
+	token := jwt.New(jwt.SigningMethodHS256)
+	claims := token.Claims.(jwt.MapClaims)
+	claims["username"] = username
+	// token is valid for an hour
+	claims["exp"] = time.Now().Add(time.Hour)
+	return token.SignedString(secretKey)
 }

@@ -5,9 +5,7 @@
 #     feel free to add it here with a TODO tag!
 #   * keep in mind that in all of the requests (whether its mentioned or not) one should specify two fields in header:
 #     1- user token: if you have one, you should always send it with each request. otherwise the key value may not exist.
-#         key: token
-#     2- body size (in bytes): both as a convention and as an important field, body size in bytes should always be given in the header.
-#         key: size
+#         Authorization: Bearer <Token>
 
 community service:
   get all communities:

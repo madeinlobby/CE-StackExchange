@@ -53,6 +53,18 @@ func AddAccountReputation(accountId string, addAmount int) {
 
 }
 
+// email cannot be repeated for signup. so we need one.
+//TODO: notice me senpai
+func GetAccountByEmail(accountEmail string) Account {
+	return Account{}
+}
+
+// student number cannot be repeated for signup. so we need one.
+//TODO: notice me senpai
+func GetAccountByStudentNumber(accountStudentNumber string) Account {
+	return Account{}
+}
+
 //TODO: notice me senpai!
 func GetAccountQuestions(accountId string) {
 

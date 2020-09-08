@@ -4,6 +4,7 @@ import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
 	"gopkg.in/yaml.v2"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 )
@@ -22,7 +23,7 @@ func GetAllCommunities(w http.ResponseWriter, r *http.Request) {
 
 func CreateNewCommunity(w http.ResponseWriter, r *http.Request) {
 	// read the body
-	body, err := readBody(r)
+	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
 		if _, ok := err.(*strconv.NumError); ok {
 			w.WriteHeader(411)
