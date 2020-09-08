@@ -17,12 +17,16 @@ func GetCommentById(commentId string, deleted ...bool) Comment {
 	return Comment{}
 }
 
-func CommentOnQuestion(accountId string, qId string, text string) Comment {
+func CommentOnQuestion(accountId string, questionId string, text string) Comment {
 	return Comment{}
 }
 
-func CommentOnAnswer(accountId string, aId string, text string) Comment {
+func CommentOnAnswer(accountId string, answerId string, text string) Comment {
 	return Comment{}
+}
+
+func CommentOnComment(accountId string, parentId string, childComment string) error {
+	return nil
 }
 
 func DeleteComment(commentId string) {

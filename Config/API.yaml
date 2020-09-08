@@ -166,9 +166,9 @@ user service:
     http method: POST
     header:
       - token # request would resolve only upon authentication.
-      - comment id
     parameters:
-      - comment body
+      - parent comment id
+      - new comment body
     response:
       - error message # only if an error occurs
 
