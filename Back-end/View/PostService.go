@@ -19,7 +19,8 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// returning the result
-	result, err := yaml.Marshal(getQuestionInfo(q))
+	info := getQuestionInfo(q)
+	result, err := yaml.Marshal(&info)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("error: failed at marshaling the result: " + err.Error()))
@@ -47,7 +48,7 @@ func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 		qAnswers.answers = append(qAnswers.answers, getAnswerInfo(answer))
 	}
 
-	result, err := yaml.Marshal(qAnswers)
+	result, err := yaml.Marshal(&qAnswers)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("error: failed at marshaling the result."))
@@ -69,7 +70,8 @@ func GetAnswerInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// processing and returning the result
-	response, err := yaml.Marshal(getAnswerInfo(a))
+	info := getAnswerInfo(a)
+	response, err := yaml.Marshal(&info)
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte("error: failed at marshaling the result."))
@@ -93,7 +95,7 @@ func getAnswerInfo(answer Model.Answer) answerBasicInfo {
 	}
 }
 
-func getQuestionInfo(q Model.Question) questionBasicInfo{
+func getQuestionInfo(q Model.Question) questionBasicInfo {
 	upvotes, downvotes := Model.GetPostVotes(q.Id)
 	return questionBasicInfo{
 		q.IsAnswerApproved,

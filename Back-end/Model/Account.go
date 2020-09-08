@@ -5,8 +5,11 @@ type Account struct {
 	Username        string `json:"username"`
 	Password        string `json:"password"`
 	IsAdmin         bool   `json:"is_admin"`
-	FullName        string `json:"full_name"`
+	FirstName       string `json:"first_name"`
+	LastName        string `json:"last_name"`
 	Email           string `json:"email"`
+	StudentNumber   string `json:"student_number"`
+	AboutMe         string `json:"about_me"`
 	CreationDate    string `json:"creation_date"`
 	ProfileImageUrl string `json:"profile_image_url"`
 	Reputation      int    `json:"reputation"`
@@ -25,8 +28,12 @@ func GetAccountByUsername(username string, deleted ...bool) Account {
 	return Account{}
 }
 
-func NewAccount(username string, password string, isAdmin bool, fullName string, email string, imageUrl string) Account {
+func NewAccount(username string, password string, isAdmin bool, firstName string, lastName string, email string, studentNumber string, imageUrl string) Account {
 	return Account{}
+}
+
+func EditAboutMe(new string) {
+
 }
 
 func DeleteAccount(accountId string) {
@@ -37,7 +44,11 @@ func EditAccountPassword(accountId string, password string) {
 
 }
 
-func EditAccountFullName(accountId string, fullName string) {
+func EditAccountFirstName(accountId string, firstName string) {
+
+}
+
+func EditAccountLastName(accountId string, lastName string) {
 
 }
 
@@ -53,12 +64,14 @@ func AddAccountReputation(accountId string, addAmount int) {
 
 }
 
-//TODO: notice me senpai!
-func GetAccountQuestions(accountId string) {
-
+// email cannot be repeated for signup. so we need one.
+//TODO: notice me senpai
+func GetAccountByEmail(accountEmail string) Account {
+	return Account{}
 }
 
-//TODO: notice me senpai!
-func GetAccountAnswers(accountId string) {
-
+// student number cannot be repeated for signup. so we need one.
+//TODO: notice me senpai
+func GetAccountByStudentNumber(accountStudentNumber string) Account {
+	return Account{}
 }

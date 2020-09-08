@@ -5,9 +5,7 @@
 #     feel free to add it here with a TODO tag!
 #   * keep in mind that in all of the requests (whether its mentioned or not) one should specify two fields in header:
 #     1- user token: if you have one, you should always send it with each request. otherwise the key value may not exist.
-#         key: token
-#     2- body size (in bytes): both as a convention and as an important field, body size in bytes should always be given in the header.
-#         key: size
+#         Authorization: Bearer <Token>
 
 community service:
   get all communities:
@@ -118,8 +116,8 @@ user service:
     http method: POST
     header:
       - token # request would resolve only upon authentication.
-      - community
     parameters:
+      - community
       - title
       - question body
       - tags array (currently not available)
@@ -132,21 +130,33 @@ user service:
     http method: POST
     header:
       - token # request would resolve only upon authentication.
-      - question id
     parameters:
       - answer body
+      - question id
     response:
       - error message # only if an error occurs
 
-  comment on a post:
-    service description: used to comment on a post
-    url: /user/actions/comment/on_post
+  comment on a question:
+    service description: used to comment on a question
+    url: /user/actions/comment/on_question
     http method: POST
     header:
       - token # request would resolve only upon authentication.
-      - post id
     parameters:
       - comment body
+      - question id
+    response:
+      - error message # only if an error occurs
+
+  comment on an answer :
+    service description: used to comment on an answer
+    url: /user/actions/comment/on_answer
+    http method: POST
+    header:
+      - token # request would resolve only upon authentication.
+    parameters:
+      - comment body
+      - answer id
     response:
       - error message # only if an error occurs
 
@@ -156,9 +166,9 @@ user service:
     http method: POST
     header:
       - token # request would resolve only upon authentication.
-      - comment id
     parameters:
-      - comment body
+      - parent comment id
+      - new comment body
     response:
       - error message # only if an error occurs
 
@@ -203,21 +213,21 @@ user service:
       service description: |
         returns the basic information of the user.
         essentially the same info used to create the profile info page.
-        if the user asks for their own username, their own profile page would be returned
-        if the user for another user profile, slightly different page would be returned
+        if the user asks for their own username, their own profile info would be returned
+        if the user for another user profile, slightly different info would be returned
       url: /user/profile
       http method: GET
       header: [token] # non required
       parameters: [username] # can later be changed to user ID
       response:
-        - isForOwn # specifies whether if the user asked for their own page or not
+        - is for own # specifies whether if the user asked for their own page or not
         - username
         - first name
         - last name
         - email
         - student number
         - profile image (not available)
-        #todo  :would make better ux to have "about me"
+        - about me
 
     get user posts:
       service description: returns the posts that user asked and/or answered on.
@@ -226,9 +236,9 @@ user service:
       header: [] # non required
       parameters:
         - username # can later be changed to user ID
-        - mode (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
+        - option (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
       response:
-        - an array of posts
+        - an array of posts (post basic info)
          
          
 #todo: get list of tags (users must be prompted to insert valid tags)

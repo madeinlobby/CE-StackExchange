@@ -20,7 +20,7 @@ func GetQuestionById(questionId string, deleted ...bool) Question {
 	return Question{}
 }
 
-func NewQuestion(accountId string, communityId string, title string, text string) Question {
+func NewQuestion(accountId string, communityName string, title string, text string, tagArr []string) Question {
 	return Question{}
 }
 
@@ -30,4 +30,12 @@ func DeleteQuestion(questionId string) {
 
 func AddViewCount(questionId string, addAmount int) {
 
+}
+//TODO: notice me senpai!
+func GetAccountQuestions(accountId string) ([]Question, error) {
+	return nil, nil
+}
+
+func GetQuestionOfAnswer(answerId string) Question {
+	return GetQuestionById(GetAnswerById(answerId).QuestionId)
 }
