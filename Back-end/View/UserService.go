@@ -183,8 +183,70 @@ func AnswerQuestion(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusNoContent)
 }
 
-func CommentOnPost(w http.ResponseWriter, r *http.Request) {
+func CommentOnQuestion(w http.ResponseWriter, r *http.Request) {
+	// extract the current user
+	currAcc, err := getCurrentAccount(r)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusUnauthorized)
+		return
+	}
 
+	// extract and translate body
+	var body []byte
+	body, err = ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+		return
+	}
+
+	commentInfo := commentOnPostRequest{}
+	err = yaml.Unmarshal(body, &commentInfo)
+	if err != nil {
+		http.Error(w, "error: could not parse body", http.StatusBadRequest)
+		return
+	}
+
+	// commenting and returning the result
+	comment := Model.CommentOnQuestion(currAcc.Id, commentInfo.QuestionId, commentInfo.Comment)
+	if cmp.Equal(comment, Model.Comment{}) {
+		http.Error(w, "error: could not submit the comment", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}
+
+func CommentOnAnswer(w http.ResponseWriter, r *http.Request) {
+	// extract the current user
+	currAcc, err := getCurrentAccount(r)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusUnauthorized)
+		return
+	}
+
+	// extract and translate body
+	var body []byte
+	body, err = ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+		return
+	}
+
+	commentInfo := commentOnPostRequest{}
+	err = yaml.Unmarshal(body, &commentInfo)
+	if err != nil {
+		http.Error(w, "error: could not parse body", http.StatusBadRequest)
+		return
+	}
+
+	// commenting and returning the result
+	comment := Model.CommentOnAnswer(currAcc.Id, commentInfo.QuestionId, commentInfo.Comment)
+	if cmp.Equal(comment, Model.Comment{}) {
+		http.Error(w, "error: could not submit the comment", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
 }
 
 func CommentOnComment(w http.ResponseWriter, r *http.Request) {

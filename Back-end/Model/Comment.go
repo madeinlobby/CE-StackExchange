@@ -17,7 +17,11 @@ func GetCommentById(commentId string, deleted ...bool) Comment {
 	return Comment{}
 }
 
-func NewComment(accountId string, qaId string, text string) Comment {
+func CommentOnQuestion(accountId string, qId string, text string) Comment {
+	return Comment{}
+}
+
+func CommentOnAnswer(accountId string, aId string, text string) Comment {
 	return Comment{}
 }
 

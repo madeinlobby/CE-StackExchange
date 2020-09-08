@@ -32,6 +32,7 @@ func routeUserManagementServices(sr *mux.Router) {
 	sr.Handle("/logout", myJwtMiddleWare.Handler(http.HandlerFunc(View.Logout))).Methods("POST")
 	sr.Handle("/actions/ask", myJwtMiddleWare.Handler(http.HandlerFunc(View.AskQuestion))).Methods("POST")
 	sr.Handle("/actions/answer", myJwtMiddleWare.Handler(http.HandlerFunc(View.AnswerQuestion))).Methods("POST")
-	sr.Handle("/actions/comment/on_post", myJwtMiddleWare.Handler(http.HandlerFunc(View.CommentOnPost))).Methods("POST")
+	sr.Handle("/actions/comment/on_question", myJwtMiddleWare.Handler(http.HandlerFunc(View.CommentOnQuestion))).Methods("POST")
+	sr.Handle("/actions/comment/on_answer", myJwtMiddleWare.Handler(http.HandlerFunc(View.CommentOnAnswer))).Methods("POST")
 	sr.Handle("/actions/comment/on_comment", myJwtMiddleWare.Handler(http.HandlerFunc(View.CommentOnComment))).Methods("POST")
 }

@@ -67,6 +67,12 @@ type answerQuestionRequest struct {
 	QuestionId string `yaml:"question id"`
 }
 
+type commentOnPostRequest struct {
+	AnswerId string `yaml:"answer id"`
+	QuestionId string `yaml:"question id"`
+	Comment string `yaml:"comment body"`
+}
+
 // checks sign up credentials and returns error if one occurred
 func checkSignupCredentials(credentials signupRequest) error {
 	if !cmp.Equal(Model.GetAccountByUsername(credentials.Username), Model.Account{}) {
