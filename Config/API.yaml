@@ -49,7 +49,7 @@ post service:
       - number of downvotes
       - number of upvotes
       - date of issue
-      #todo : array of tags on this question
+      - tags array
 
   get answers of a question:
     service description: returns an array of answer's basic infos plus basic info of the question itself.
@@ -106,7 +106,6 @@ post service:
       - error message # only if an error occurs
       - number of posts returned
       - array of basic information of questions
-
 ---
 
 user service:

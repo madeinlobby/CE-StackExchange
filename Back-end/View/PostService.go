@@ -107,6 +107,7 @@ func getQuestionInfo(q Model.Question) questionBasicInfo {
 		downvotes,
 		upvotes,
 		q.Date,
+		Model.GetQuestionTags(q.Id),
 	}
 }
 

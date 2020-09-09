@@ -24,15 +24,16 @@ type answerBasicInfo struct {
 }
 
 type questionBasicInfo struct {
-	IsAnswerApproved string `yaml:is answer approved`
-	AskerId          string `yaml:"asker id"`
-	AskerName        string `yaml:"asker name"`
-	QuestionId       string `yaml:"question id"`
-	QuestionTitle    string `yaml:"question title"`
-	QuestionBody     string `yaml:"question body"`
-	Downvotes        int    `yaml:"number of downvotes"`
-	Upvotes          int    `yaml:"number of upvotes"`
-	date             string `yaml:"date of issue"`
+	IsAnswerApproved string   `yaml:is answer approved`
+	AskerId          string   `yaml:"asker id"`
+	AskerName        string   `yaml:"asker name"`
+	QuestionId       string   `yaml:"question id"`
+	QuestionTitle    string   `yaml:"question title"`
+	QuestionBody     string   `yaml:"question body"`
+	Downvotes        int      `yaml:"number of downvotes"`
+	Upvotes          int      `yaml:"number of upvotes"`
+	Date             string   `yaml:"date of issue"`
+	Tags             []string `yaml:"tags array"`
 }
 
 type answersOfQuestion struct {
