@@ -40,16 +40,19 @@ const fields = [
         <br />
       </>
     ),
+    autoComplete : 'current-password'
   },
   {
     labelWidth: 60,
     label: "رمز جدید",
     bottomSeparator: <br />,
+    autoComplete : 'new-password'
   },
   {
     labelWidth: 90,
     label: "تکرار رمز جدید",
     bottomSeparator: <br />,
+    autoComplete : ''
   },
 ];
 
@@ -64,6 +67,7 @@ export default function InputAdornments() {
 
     visible1: false,
     value1: "",
+    helper1: "",
     error1: false,
 
     visible2: false,
@@ -98,6 +102,16 @@ export default function InputAdornments() {
       return;
     }
 
+    if(passFields.value1.length < 6){
+      setPassFields({
+        ...passFields,
+        error2: true,
+        error1: true,
+        helper1: "طول رمز عبور باید حداقل ۶ کاراکتر باشد" ,
+      });
+      return;
+    }
+
     //TODO
   };
 
@@ -115,7 +129,7 @@ export default function InputAdornments() {
     });
   };
 
-  const passField = (index, label, labelWidth, bottomSeparator) => (
+  const passField = (index, label, labelWidth, bottomSeparator, autoComplete) => (
     <>
       <FormControl
         variant="outlined"
@@ -125,6 +139,8 @@ export default function InputAdornments() {
         <InputLabel>{label}</InputLabel>
         <OutlinedInput
           required
+          autoComplete={autoComplete}
+          name={"password"+index}
           value={passFields["value" + index]}
           onChange={handleChange("value" + index)}
           type={passFields["visible" + index] ? "text" : "password"}
@@ -150,7 +166,7 @@ export default function InputAdornments() {
 
   return (
     <Paper style={{ marginBottom: 60 }}>
-      <form onSubmit={submitForm} noValidate>
+      <form onSubmit={submitForm}>
         <Box
           display="flex"
           flexDirection="column"
@@ -162,7 +178,8 @@ export default function InputAdornments() {
               index,
               field.label,
               field.labelWidth,
-              field.bottomSeparator
+              field.bottomSeparator,
+              field.autoComplete
             )
           )}
           <br />
