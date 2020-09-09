@@ -219,6 +219,7 @@ user service:
       header: [token] # non required
       parameters: [username] # can later be changed to user ID
       response:
+        - error message # only if an error occurs
         - is for own # specifies whether if the user asked for their own page or not
         - username
         - first name
@@ -234,13 +235,37 @@ user service:
       http method: GET
       header: [] # non required
       parameters:
+        - error message # only if an error occurs
         - username # can later be changed to user ID
         - option (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
       response:
         - an array of posts (post basic info)
-         
-         
-#todo: get list of tags (users must be prompted to insert valid tags)
+
+---
+
+tag service:
+  get list of tags:
+    service description: |
+     used to retrieve available tags. because upon issuing a question, only valid tags are allowed.
+     you can also pass a keyword by which tags would be filtered. only tags with a meaningfull distance from the keyword would be returned.
+    url: /tags
+    http method: GET
+    header: [] # non required
+    parameters:
+      - keyword
+    response:
+      - error message # only if an error occurs
+      - tag array
+
+  create a new tag:
+    service description: used to create a new tag. this service is only available to the users with a certain minimum amount of reputation (will be specified later)
+    url: /tags/new
+    http method: POST
+    header: [token] # need authorization
+    parameters:
+      - tag name
+    response:
+      - error message # only if an error occurs
 
 #todo : get user reputation log 
      #header including start date, end date, start index, end index and their default values

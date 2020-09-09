@@ -312,8 +312,8 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 
 	// get the posts. uses the getQuestionInfo and getAnswerInfo functions in PostService.go
 	posts := struct {
-		Questions []questionBasicInfo `yaml:"questions"`
-		Answers   []answerBasicInfo   `yaml:"answers"`
+		Questions []questionBasicInfo `yaml:"array of questions"`
+		Answers   []answerBasicInfo   `yaml:"array of answers"`
 	}{}
 	if requestInfo.Opt != "a" {
 		// adds all questions
