@@ -248,7 +248,7 @@ func CommentOnAnswer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func CommentOnComment(w http.ResponseWriter, r *http.Request) {

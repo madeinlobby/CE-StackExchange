@@ -14,7 +14,7 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 	q := Model.GetQuestionById(id)
 	if cmp.Equal(q, Model.Question{}) {
 		w.WriteHeader(404)
-		w.Write([]byte("error: no such question exists."))
+		_, _ = w.Write([]byte("error: no such question exists."))
 		return
 	}
 
@@ -22,13 +22,12 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 	info := getQuestionInfo(q)
 	result, err := yaml.Marshal(&info)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("error: failed at marshaling the result: " + err.Error()))
+		http.Error(w, "error: failed at marshaling the result", http.StatusInternalServerError)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write(result)
+	_, _ = w.Write(result)
 }
 
 func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
@@ -37,7 +36,7 @@ func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 	q := Model.GetQuestionById(id)
 	if cmp.Equal(q, Model.Question{}) {
 		w.WriteHeader(404)
-		w.Write([]byte("error: no such question exists."))
+		_, _ = w.Write([]byte("error: no such question exists."))
 		return
 	}
 
@@ -50,13 +49,12 @@ func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 
 	result, err := yaml.Marshal(&qAnswers)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("error: failed at marshaling the result."))
+		http.Error(w, "error: failed at marshaling the result.", http.StatusInternalServerError)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write(result)
+	_, _ = w.Write(result)
 }
 
 func GetAnswerInfo(w http.ResponseWriter, r *http.Request) {
@@ -64,8 +62,7 @@ func GetAnswerInfo(w http.ResponseWriter, r *http.Request) {
 	id := mux.Vars(r)["id"]
 	a := Model.GetAnswerById(id)
 	if cmp.Equal(a, Model.Question{}) {
-		w.WriteHeader(404)
-		w.Write([]byte("error: no such answer exists."))
+		http.Error(w, "error: no such answer exists.", http.StatusNotFound)
 		return
 	}
 
@@ -73,13 +70,12 @@ func GetAnswerInfo(w http.ResponseWriter, r *http.Request) {
 	info := getAnswerInfo(a)
 	response, err := yaml.Marshal(&info)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("error: failed at marshaling the result."))
+		http.Error(w, "error: failed at marshaling the result.", http.StatusInternalServerError)
 		return
 	}
 
 	w.WriteHeader(http.StatusOK)
-	w.Write(response)
+	_, _ = w.Write(response)
 }
 
 func getAnswerInfo(answer Model.Answer) answerBasicInfo {

@@ -6,18 +6,17 @@ import (
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
-	"strconv"
 )
 
-func GetAllCommunities(w http.ResponseWriter, r *http.Request) {
+func GetAllCommunities(w http.ResponseWriter, _ *http.Request) {
 	communities := Model.GetAllCommunities(false)
 	response, err := yaml.Marshal(&communities)
 	if err != nil {
-		w.WriteHeader(http.StatusInternalServerError)
-		w.Write([]byte("error: could not serialize the result."))
+		http.Error(w, "error: could not serialize the result.", http.StatusInternalServerError)
+		return
 	} else {
 		w.WriteHeader(http.StatusOK)
-		w.Write(response)
+		_, _ = w.Write(response)
 	}
 }
 
@@ -25,13 +24,7 @@ func CreateNewCommunity(w http.ResponseWriter, r *http.Request) {
 	// read the body
 	body, err := ioutil.ReadAll(r.Body)
 	if err != nil {
-		if _, ok := err.(*strconv.NumError); ok {
-			w.WriteHeader(411)
-			w.Write([]byte("error: " + err.Error()))
-		} else {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("error: could not read the body"))
-		}
+		http.Error(w, "error: could not read the body", http.StatusInternalServerError)
 		return
 	}
 
@@ -41,15 +34,13 @@ func CreateNewCommunity(w http.ResponseWriter, r *http.Request) {
 		description   string
 	}{}
 	if yaml.Unmarshal(body, &params) != nil {
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte("error: body format is not yaml."))
+		http.Error(w, "error: could not read body", http.StatusBadRequest)
 		return
 	}
 
 	// process and return the result
 	if cmp.Equal(Model.GetCommunityByName(params.communityName), Model.Community{}) {
-		w.WriteHeader(http.StatusConflict)
-		w.Write([]byte("error: Community with given name already exists"))
+		http.Error(w, "error: Community with given name already exists", http.StatusConflict)
 		return
 	}
 
