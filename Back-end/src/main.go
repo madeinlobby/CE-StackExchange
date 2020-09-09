@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/madeinlobby/CE-StackExchange/Back-end/Controller"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Controller"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
@@ -30,7 +30,7 @@ type config struct {
 var ServerConfig config = config{}
 
 func getConfigs() error {
-	configFile, fileErr := ioutil.ReadFile("../Config/Back-end.yaml")
+	configFile, fileErr := ioutil.ReadFile("../../Config/Back-end.yaml")
 	if fileErr != nil {
 		return fileErr
 	}

@@ -5,7 +5,7 @@ import (
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/google/go-cmp/cmp"
-	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"net/http"
 	"time"
 )
@@ -24,7 +24,7 @@ type answerBasicInfo struct {
 }
 
 type questionBasicInfo struct {
-	IsAnswerApproved string   `yaml:is answer approved`
+	IsAnswerApproved string   `yaml:"is answer approved"`
 	AskerId          string   `yaml:"asker id"`
 	AskerName        string   `yaml:"asker name"`
 	QuestionId       string   `yaml:"question id"`

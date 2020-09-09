@@ -2,7 +2,7 @@ package Controller
 
 import (
 	"github.com/gorilla/mux"
-	"github.com/madeinlobby/CE-StackExchange/Back-end/View"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/View"
 	"net/http"
 )
 

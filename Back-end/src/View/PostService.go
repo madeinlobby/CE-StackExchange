@@ -3,7 +3,7 @@ package View
 import (
 	"github.com/google/go-cmp/cmp"
 	"github.com/gorilla/mux"
-	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"gopkg.in/yaml.v2"
 	"net/http"
 )

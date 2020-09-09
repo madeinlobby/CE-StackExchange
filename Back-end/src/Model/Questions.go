@@ -31,6 +31,7 @@ func DeleteQuestion(questionId string) {
 func AddViewCount(questionId string, addAmount int) {
 
 }
+
 //TODO: notice me senpai!
 func GetAccountQuestions(accountId string) ([]Question, error) {
 	return nil, nil

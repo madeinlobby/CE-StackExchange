@@ -2,7 +2,7 @@ package View
 
 import (
 	"github.com/google/go-cmp/cmp"
-	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
