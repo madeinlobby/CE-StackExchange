@@ -10,6 +10,10 @@ func GetAllTags(deleted ...bool) []Tag {
 	return nil
 }
 
+func GetTagsByKeyword(keyword string) ([]Tag, error) {
+	return nil, nil
+}
+
 func GetTagById(tagId string, deleted ...bool) Tag {
 	return Tag{}
 }

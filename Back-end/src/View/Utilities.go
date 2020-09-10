@@ -98,6 +98,11 @@ type userProfileInfo struct {
 	AboutMe       string `yaml:"about me"`
 }
 
+// tag service message protocol definition
+type getListOfTagsRequest struct {
+	Keyword string `yaml:"keyword"`
+}
+
 // checks sign up credentials and returns error if one occurred
 func checkSignupCredentials(credentials signupRequest) error {
 	if !cmp.Equal(Model.GetAccountByUsername(credentials.Username), Model.Account{}) {

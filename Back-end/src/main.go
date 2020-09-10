@@ -30,7 +30,7 @@ type config struct {
 var ServerConfig config = config{}
 
 func getConfigs() error {
-	configFile, fileErr := ioutil.ReadFile("../../Config/Back-end.yaml")
+	configFile, fileErr := ioutil.ReadFile("../Config/Back-end.yaml")
 	if fileErr != nil {
 		return fileErr
 	}

@@ -41,7 +41,7 @@ func routeUserService(sr *mux.Router) {
 }
 
 func routeTagService(sr *mux.Router) {
-	sr.HandleFunc("/", View.GetListOfTags).Methods(http.MethodGet)
+	sr.HandleFunc("", View.GetListOfTags).Methods(http.MethodGet)
 	// routes that require authorization
 	sr.Handle("/new", myJwtMiddleWare.Handler(http.HandlerFunc(View.CreateNewTag))).Methods(http.MethodPost)
 }
