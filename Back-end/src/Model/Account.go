@@ -16,62 +16,62 @@ type Account struct {
 	Deleted         bool   `json:"deleted"`
 }
 
-func GetAllAccounts(deleted ...bool) []Account {
+func GetAllAccounts(deleted ...bool) ([]Account, error) {
+	return nil, nil
+}
+
+func GetAccountById(accountId string, deleted ...bool) (*Account, error) {
+	return nil, nil
+}
+
+func GetAccountByUsername(username string, deleted ...bool) (*Account, error) {
+	return nil, nil
+}
+
+func GetAccountByEmail(accountEmail string) (*Account, error) {
+	return nil, nil
+}
+
+func GetAccountByStudentNumber(accountStudentNumber string) (*Account, error) {
+	return nil, nil
+}
+
+func NewAccount(username string, password string, isAdmin bool, firstName string, lastName string, email string, studentNumber string, imageUrl string) (*Account, error) {
+	return nil, nil
+}
+
+func (user *Account) EditAboutMe(new string) error {
 	return nil
 }
 
-func GetAccountById(accountId string, deleted ...bool) Account {
-	return Account{}
+func (user *Account) DeleteAccount() error {
+	return nil
 }
 
-func GetAccountByUsername(username string, deleted ...bool) Account {
-	return Account{}
+func (user *Account) EditAccountPassword(password string) error {
+	return nil
 }
 
-func NewAccount(username string, password string, isAdmin bool, firstName string, lastName string, email string, studentNumber string, imageUrl string) Account {
-	return Account{}
+func (user *Account) EditAccountFirstName(firstName string) error {
+	return nil
 }
 
-func EditAboutMe(new string) {
-
+func (user *Account) EditAccountLastName(lastName string) error {
+	return nil
 }
 
-func DeleteAccount(accountId string) {
-
+func (user *Account) EditAccountEmail(email string) error {
+	return nil
 }
 
-func EditAccountPassword(accountId string, password string) {
-
+func (user *Account) EditAccountImage(imageUrl string) error {
+	return nil
 }
 
-func EditAccountFirstName(accountId string, firstName string) {
-
+func (user *Account) AddAccountReputation(addAmount int) error {
+	return nil
 }
 
-func EditAccountLastName(accountId string, lastName string) {
-
-}
-
-func EditAccountEmail(accountId string, email string) {
-
-}
-
-func EditAccountImage(accountId string, imageUrl string) {
-
-}
-
-func AddAccountReputation(accountId string, addAmount int) {
-
-}
-
-// email cannot be repeated for signup. so we need one.
-//TODO: notice me senpai
-func GetAccountByEmail(accountEmail string) Account {
-	return Account{}
-}
-
-// student number cannot be repeated for signup. so we need one.
-//TODO: notice me senpai
-func GetAccountByStudentNumber(accountStudentNumber string) Account {
-	return Account{}
+func (answer *Answer) GetAnswerAccount() (*Account, error) {
+	return nil, nil
 }

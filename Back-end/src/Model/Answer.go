@@ -7,37 +7,29 @@ type Answer struct {
 	Text       string `json:"text"`
 	Date       string `json:"date"`
 	Deleted    bool   `json:"deleted"`
-
-	//TODO: notice me senpai!
-	WasHelpful bool `json:"was_helpful"`
+	WasHelpful bool   `json:"was_helpful"`
 }
 
-func GetAllAnswers(deleted ...bool) []Answer {
+func GetAllAnswers(deleted ...bool) ([]Answer, error) {
+	return nil, nil
+}
+
+func GetAnswerById(answerId string, deleted ...bool) (*Answer, error) {
+	return nil, nil
+}
+
+func NewAnswer(accountId string, questionId string, text string) (*Answer, error) {
+	return nil, nil
+}
+
+func (answer *Answer) DeleteAnswer() error {
 	return nil
 }
 
-func GetAnswerById(answerId string, deleted ...bool) Answer {
-	return Answer{}
+func (question *Question) GetQuestionAnswers() ([]Answer, error) {
+	return nil, nil
 }
 
-func NewAnswer(accountId string, questionId string, text string) Answer {
-	return Answer{}
-}
-
-func DeleteAnswer(answerId string) {
-
-}
-
-func GetAnswerAccount(answerId string) Account {
-	return GetAccountById(GetAnswerById(answerId).QuestionId)
-}
-
-//TODO: notice me senpai!
-func GetQuestionAnswers(questionId string) []Answer {
-	return nil
-}
-
-//TODO: notice me senpai!
-func GetAccountAnswers(accountId string) ([]Answer, error) {
+func (user *Account) GetAccountAnswers() ([]Answer, error) {
 	return nil, nil
 }

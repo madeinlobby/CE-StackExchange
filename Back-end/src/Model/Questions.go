@@ -12,31 +12,30 @@ type Question struct {
 	Deleted          bool   `json:"deleted"`
 }
 
-func GetAllQuestions(deleted ...bool) []Question {
-	return nil
-}
-
-func GetQuestionById(questionId string, deleted ...bool) Question {
-	return Question{}
-}
-
-func NewQuestion(accountId string, communityName string, title string, text string, tagArr []string) Question {
-	return Question{}
-}
-
-func DeleteQuestion(questionId string) {
-
-}
-
-func AddViewCount(questionId string, addAmount int) {
-
-}
-
-//TODO: notice me senpai!
-func GetAccountQuestions(accountId string) ([]Question, error) {
+func GetAllQuestions(deleted ...bool) ([]Question, error) {
 	return nil, nil
 }
 
-func GetQuestionOfAnswer(answerId string) Question {
-	return GetQuestionById(GetAnswerById(answerId).QuestionId)
+func GetQuestionById(questionId string, deleted ...bool) (*Question, error) {
+	return nil, nil
+}
+
+func NewQuestion(accountId string, communityName string, title string, text string, tagArr []string) (*Question, error) {
+	return nil, nil
+}
+
+func (question *Question) DeleteQuestion() error {
+	return nil
+}
+
+func (question *Question) AddViewCount(addAmount int) error {
+	return nil
+}
+
+func (user *Account) GetAccountQuestions() ([]Question, error) {
+	return nil, nil
+}
+
+func (answer *Answer) GetQuestionOfAnswer() (*Question, error) {
+	return nil, nil
 }

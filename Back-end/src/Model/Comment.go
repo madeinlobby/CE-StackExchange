@@ -9,26 +9,26 @@ type Comment struct {
 	Deleted   bool   `json:"deleted"`
 }
 
-func GetAllComments(deleted ...bool) []Comment {
+func GetAllComments(deleted ...bool) ([]Comment, error) {
+	return nil, nil
+}
+
+func GetCommentById(commentId string, deleted ...bool) (*Comment, error) {
+	return nil, nil
+}
+
+func (question *Question) CommentOnQuestion(accountId string, text string) (*Comment, error) {
+	return nil, nil
+}
+
+func (answer *Answer) CommentOnAnswer(accountId string, text string) (*Comment, error) {
+	return nil, nil
+}
+
+func (comment *Comment) CommentOnComment(accountId string, childComment string) error {
 	return nil
 }
 
-func GetCommentById(commentId string, deleted ...bool) Comment {
-	return Comment{}
-}
-
-func CommentOnQuestion(accountId string, questionId string, text string) Comment {
-	return Comment{}
-}
-
-func CommentOnAnswer(accountId string, answerId string, text string) Comment {
-	return Comment{}
-}
-
-func CommentOnComment(accountId string, parentId string, childComment string) error {
+func (comment *Comment) DeleteComment() error {
 	return nil
-}
-
-func DeleteComment(commentId string) {
-
 }

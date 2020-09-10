@@ -7,18 +7,18 @@ type Approval struct {
 	Deleted  bool   `json:"deleted"`
 }
 
-func GetAllApprovals(deleted ...bool) []Approval {
+func GetAllApprovals(deleted ...bool) ([]Approval, error) {
+	return nil, nil
+}
+
+func GetApprovalById(approvalId string, deleted ...bool) (*Approval, error) {
+	return nil, nil
+}
+
+func NewApproval(answerId string) (*Approval, error) {
+	return nil, nil
+}
+
+func (app *Approval) DeleteApproval() error {
 	return nil
-}
-
-func GetApprovalById(approvalId string, deleted ...bool) Approval {
-	return Approval{}
-}
-
-func NewApproval(answerId string) Approval {
-	return Approval{}
-}
-
-func DeleteApproval(approvalId string) {
-
 }

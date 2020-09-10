@@ -8,18 +8,18 @@ type Bookmark struct {
 	Deleted    bool   `json:"deleted"`
 }
 
-func GetAllBookmarks(deleted ...bool) []Bookmark {
+func GetAllBookmarks(deleted ...bool) ([]Bookmark, error) {
+	return nil, nil
+}
+
+func GetBookmarkById(bookmarkId string, deleted ...bool) (*Bookmark, error) {
+	return nil, nil
+}
+
+func NewBookmark(accountId string, questionId string) (*Bookmark, error) {
+	return nil, nil
+}
+
+func (bm *Bookmark) DeleteBookmark() error {
 	return nil
-}
-
-func GetBookmarkById(bookmarkId string, deleted ...bool) Bookmark {
-	return Bookmark{}
-}
-
-func NewBookmark(accountId string, questionId string) Bookmark {
-	return Bookmark{}
-}
-
-func DeleteBookmark(bookmarkId string) {
-
 }

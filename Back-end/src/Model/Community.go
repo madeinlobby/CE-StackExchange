@@ -7,23 +7,22 @@ type Community struct {
 	Deleted  bool   `json:"deleted" yaml:"-"`
 }
 
-func GetAllCommunities(deleted ...bool) []Community {
+func GetAllCommunities(deleted ...bool) ([]Community, error) {
+	return nil, nil
+}
+
+func GetCommunityById(communityId string, deleted ...bool) (*Community, error) {
+	return nil, nil
+}
+
+func GetCommunityByName(communityName string, deleted ...bool) (*Community, error) {
+	return nil, nil
+}
+
+func NewCommunity(name string, infoText string) (*Community, error) {
+	return nil, nil
+}
+
+func (Community *Community) DeleteCommunity() error {
 	return nil
-}
-
-func GetCommunityById(communityId string, deleted ...bool) Community {
-	return Community{}
-}
-
-// TODO: notice me senpai!
-func GetCommunityByName(communityName string, deleted ...bool) Community {
-	return Community{}
-}
-
-func NewCommunity(name string, infoText string) Community {
-	return Community{}
-}
-
-func DeleteCommunity(communityId string) {
-
 }

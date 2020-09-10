@@ -5,6 +5,6 @@ type TagPost struct {
 	QuestionId string `json:"question_id"`
 }
 
-func GetQuestionTags(questionId string) []string {
-	return nil
+func (question Question) GetQuestionTags() ([]string, error) {
+	return nil, nil
 }

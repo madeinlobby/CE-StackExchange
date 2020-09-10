@@ -8,23 +8,22 @@ type Vote struct {
 	Deleted   bool   `json:"deleted"`
 }
 
-func GetAllVotes(deleted ...bool) []Vote {
+func GetAllVotes(deleted ...bool) ([]Vote, error) {
+	return nil, nil
+}
+
+func GetVoteById(voteId string, deleted ...bool) (*Vote, error) {
+	return nil, nil
+}
+
+func NewVote(accountId string, qaId string, isUp bool) error {
 	return nil
 }
 
-func GetVoteById(voteId string, deleted ...bool) Vote {
-	return Vote{}
+func (vote *Vote) DeleteVote() error {
+	return nil
 }
 
-func NewVote(accountId string, qaId string, isUp bool) {
-
-}
-
-func DeleteVote(voteId string) {
-
-}
-
-//TODO: notice me senpai!
-func GetPostVotes(qaId string) (upvotes int, downvotes int) {
-	return 0, 0
+func GetPostVotes(qaId string) (upvotes int, downvotes int, err error) {
+	return 0, 0, nil
 }

@@ -6,22 +6,22 @@ type Tag struct {
 	Deleted bool   `json:"deleted"`
 }
 
-func GetAllTags(deleted ...bool) []Tag {
-	return nil
+func GetAllTags(deleted ...bool) ([]Tag, error) {
+	return nil, nil
 }
 
 func GetTagsByKeyword(keyword string) ([]Tag, error) {
 	return nil, nil
 }
 
-func GetTagById(tagId string, deleted ...bool) Tag {
-	return Tag{}
+func GetTagById(tagId string, deleted ...bool) (*Tag, error) {
+	return nil, nil
 }
 
 func NewTag(name string) error {
 	return nil
 }
 
-func DeleteTag(communityId string) {
-
+func (tag Tag) DeleteTag() error {
+	return nil
 }
