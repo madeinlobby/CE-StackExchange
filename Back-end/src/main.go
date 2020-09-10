@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"github.com/gorilla/mux"
-	"github.com/madeinlobby/CE-StackExchange/Back-end/Controller"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Controller"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"

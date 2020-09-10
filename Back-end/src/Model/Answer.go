@@ -32,15 +32,12 @@ func GetAnswerAccount(answerId string) Account {
 	return GetAccountById(GetAnswerById(answerId).QuestionId)
 }
 
-
 //TODO: notice me senpai!
 func GetQuestionAnswers(questionId string) []Answer {
 	return nil
 }
 
-
 //TODO: notice me senpai!
-func GetAccountAnswers(accountId string) ([]Answer, error){
+func GetAccountAnswers(accountId string) ([]Answer, error) {
 	return nil, nil
 }
-

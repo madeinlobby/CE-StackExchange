@@ -3,7 +3,7 @@ package View
 import (
 	"github.com/dgrijalva/jwt-go"
 	"github.com/google/go-cmp/cmp"
-	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
@@ -248,7 +248,7 @@ func CommentOnAnswer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func CommentOnComment(w http.ResponseWriter, r *http.Request) {
@@ -312,8 +312,8 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 
 	// get the posts. uses the getQuestionInfo and getAnswerInfo functions in PostService.go
 	posts := struct {
-		Questions []questionBasicInfo `yaml:"questions"`
-		Answers   []answerBasicInfo   `yaml:"answers"`
+		Questions []questionBasicInfo `yaml:"array of questions"`
+		Answers   []answerBasicInfo   `yaml:"array of answers"`
 	}{}
 	if requestInfo.Opt != "a" {
 		// adds all questions

@@ -5,7 +5,7 @@ import (
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/google/go-cmp/cmp"
-	"github.com/madeinlobby/CE-StackExchange/Back-end/Model"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"net/http"
 	"time"
 )
@@ -24,15 +24,16 @@ type answerBasicInfo struct {
 }
 
 type questionBasicInfo struct {
-	IsAnswerApproved string `yaml:is answer approved`
-	AskerId          string `yaml:"asker id"`
-	AskerName        string `yaml:"asker name"`
-	QuestionId       string `yaml:"question id"`
-	QuestionTitle    string `yaml:"question title"`
-	QuestionBody     string `yaml:"question body"`
-	Downvotes        int    `yaml:"number of downvotes"`
-	Upvotes          int    `yaml:"number of upvotes"`
-	date             string `yaml:"date of issue"`
+	IsAnswerApproved string   `yaml:"is answer approved"`
+	AskerId          string   `yaml:"asker id"`
+	AskerName        string   `yaml:"asker name"`
+	QuestionId       string   `yaml:"question id"`
+	QuestionTitle    string   `yaml:"question title"`
+	QuestionBody     string   `yaml:"question body"`
+	Downvotes        int      `yaml:"number of downvotes"`
+	Upvotes          int      `yaml:"number of upvotes"`
+	Date             string   `yaml:"date of issue"`
+	Tags             []string `yaml:"tags array"`
 }
 
 type answersOfQuestion struct {
@@ -95,6 +96,11 @@ type userProfileInfo struct {
 	Email         string `yaml:"email"`
 	StudentNumber string `yaml:"student number"`
 	AboutMe       string `yaml:"about me"`
+}
+
+// tag service message protocol definition
+type getListOfTagsRequest struct {
+	Keyword string `yaml:"keyword"`
 }
 
 // checks sign up credentials and returns error if one occurred
