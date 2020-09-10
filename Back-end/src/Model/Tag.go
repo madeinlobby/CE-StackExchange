@@ -18,8 +18,8 @@ func GetTagById(tagId string, deleted ...bool) Tag {
 	return Tag{}
 }
 
-func NewTag(name string) Tag {
-	return Tag{}
+func NewTag(name string) error {
+	return nil
 }
 
 func DeleteTag(communityId string) {

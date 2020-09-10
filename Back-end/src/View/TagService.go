@@ -56,5 +56,37 @@ func GetListOfTags(w http.ResponseWriter, r *http.Request) {
 }
 
 func CreateNewTag(w http.ResponseWriter, r *http.Request) {
+	// extract the current user
+	_, err := getCurrentAccount(r)
+	//currAcc, err := getCurrentAccount(r) // currAcc is not currently needed
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusUnauthorized)
+		return
+	}
 
+	// extract and translate body
+	var body []byte
+	body, err = ioutil.ReadAll(r.Body)
+	if err != nil {
+		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+		return
+	}
+
+	info := createNewTagRequest{}
+	err = yaml.Unmarshal(body, &info)
+	if err != nil {
+		http.Error(w, "error: could not parse body", http.StatusBadRequest)
+		return
+	}
+
+	//TODO: check currAcc reputation to see if they can create a tag or not.
+
+	// processing and returning the result
+	err = Model.NewTag(info.TagName)
+	if err != nil {
+		http.Error(w, "error: could not create the tag", http.StatusInternalServerError)
+		return
+	}
+
+	w.WriteHeader(http.StatusNoContent)
 }

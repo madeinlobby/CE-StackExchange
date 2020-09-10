@@ -103,6 +103,10 @@ type getListOfTagsRequest struct {
 	Keyword string `yaml:"keyword"`
 }
 
+type createNewTagRequest struct {
+	TagName string `yaml:"tag name"`
+}
+
 // checks sign up credentials and returns error if one occurred
 func checkSignupCredentials(credentials signupRequest) error {
 	if !cmp.Equal(Model.GetAccountByUsername(credentials.Username), Model.Account{}) {
