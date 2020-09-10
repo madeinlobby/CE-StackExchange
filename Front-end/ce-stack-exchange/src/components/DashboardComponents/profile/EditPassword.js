@@ -9,24 +9,25 @@ import {
   Divider,
   Box,
   Button,
+  FormHelperText,
 } from "@material-ui/core";
 import Visibility from "@material-ui/icons/Visibility";
 import VisibilityOff from "@material-ui/icons/VisibilityOff";
 
 const useStyles = makeStyles((theme) => ({
-  passwordField : {
-    width : '50%',
-    [theme.breakpoints.down('sm')] : {
-      width : '100%'
-    }
+  passwordField: {
+    width: "50%",
+    [theme.breakpoints.down("sm")]: {
+      width: "100%",
+    },
   },
-  container : {
-    padding : 40,
-    [theme.breakpoints.down('sm')] : {
-      padding : 15
-    }
-  }
-}))
+  container: {
+    padding: 40,
+    [theme.breakpoints.down("sm")]: {
+      padding: 15,
+    },
+  },
+}));
 
 const fields = [
   {
@@ -39,30 +40,80 @@ const fields = [
         <br />
       </>
     ),
+    autoComplete : 'current-password'
   },
   {
     labelWidth: 60,
     label: "رمز جدید",
     bottomSeparator: <br />,
+    autoComplete : 'new-password'
   },
   {
     labelWidth: 90,
     label: "تکرار رمز جدید",
     bottomSeparator: <br />,
+    autoComplete : ''
   },
 ];
 
 export default function InputAdornments() {
-const classes = useStyles();
+  const classes = useStyles();
 
   const [passFields, setPassFields] = React.useState({
     visible0: false,
     value0: "",
+    helper0: "",
+    error0: false,
+
     visible1: false,
-    value1visible1: "",
+    value1: "",
+    helper1: "",
+    error1: false,
+
     visible2: false,
-    value2visible2: "",
+    value2: "",
+    helper2: "",
+    error2: false,
   });
+
+  const isPasswordCorrect = () => {
+    //TODO
+    return true;
+  };
+
+  const submitForm = (e) => {
+    e.preventDefault();
+    if (!isPasswordCorrect) {
+      setPassFields({
+        ...passFields,
+        error0: true,
+        helper0: "رمز عبور صحیح نیست",
+      });
+      return;
+    }
+
+    if (passFields.value1 !== passFields.value2) {
+      setPassFields({
+        ...passFields,
+        error2: true,
+        error1: true,
+        helper2: "رمز عبور و تکرار آن مطابقت ندارند",
+      });
+      return;
+    }
+
+    if(passFields.value1.length < 6){
+      setPassFields({
+        ...passFields,
+        error2: true,
+        error1: true,
+        helper1: "طول رمز عبور باید حداقل ۶ کاراکتر باشد" ,
+      });
+      return;
+    }
+
+    //TODO
+  };
 
   const handleChange = (fieldName) => (event) => {
     setPassFields({
@@ -78,11 +129,18 @@ const classes = useStyles();
     });
   };
 
-  const passField = (index, label, labelWidth, bottomSeparator) => (
+  const passField = (index, label, labelWidth, bottomSeparator, autoComplete) => (
     <>
-      <FormControl variant="outlined" className={classes.passwordField}>
+      <FormControl
+        variant="outlined"
+        className={classes.passwordField}
+        error={passFields["error" + index]}
+      >
         <InputLabel>{label}</InputLabel>
         <OutlinedInput
+          required
+          autoComplete={autoComplete}
+          name={"password"+index}
           value={passFields["value" + index]}
           onChange={handleChange("value" + index)}
           type={passFields["visible" + index] ? "text" : "password"}
@@ -100,6 +158,7 @@ const classes = useStyles();
           }
           labelWidth={labelWidth}
         ></OutlinedInput>
+        <FormHelperText>{passFields["helper" + index]}</FormHelperText>
       </FormControl>
       {bottomSeparator}
     </>
@@ -107,17 +166,32 @@ const classes = useStyles();
 
   return (
     <Paper style={{ marginBottom: 60 }}>
-      <Box display="flex" flexDirection="column" alignItems="flex-start" className={classes.container}>
-        {fields.map((field, index) =>
-          passField(index, field.label, field.labelWidth, field.bottomSeparator)
-        )}
-        <br />
-        <br />
-        <Divider style={{ alignSelf: "stretch" }} />
-        <br />
-        <br />
-        <Button style={{ alignSelf: "flex-end", fontSize: 18 }}>تایید</Button>
-      </Box>
+      <form onSubmit={submitForm}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          alignItems="flex-start"
+          className={classes.container}
+        >
+          {fields.map((field, index) =>
+            passField(
+              index,
+              field.label,
+              field.labelWidth,
+              field.bottomSeparator,
+              field.autoComplete
+            )
+          )}
+          <br />
+          <br />
+          <Divider style={{ alignSelf: "stretch" }} />
+          <br />
+          <br />
+          <Button type="submit" style={{ alignSelf: "flex-end", fontSize: 18 }}>
+            تایید
+          </Button>
+        </Box>
+      </form>
     </Paper>
   );
 }
