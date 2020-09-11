@@ -40,19 +40,19 @@ const fields = [
         <br />
       </>
     ),
-    autoComplete : 'current-password'
+    autoComplete: "current-password",
   },
   {
     labelWidth: 60,
     label: "رمز جدید",
     bottomSeparator: <br />,
-    autoComplete : 'new-password'
+    autoComplete: "new-password",
   },
   {
     labelWidth: 90,
     label: "تکرار رمز جدید",
     bottomSeparator: <br />,
-    autoComplete : ''
+    autoComplete: "",
   },
 ];
 
@@ -81,36 +81,40 @@ export default function InputAdornments() {
     return true;
   };
 
+  const clearErrors = () => {
+    passFields.error0 = false;
+    passFields.error1 = false;
+    passFields.error2 = false;
+    passFields.helper0 = "";
+    passFields.helper1 = "";
+    passFields.helper2 = "";
+  };
+
   const submitForm = (e) => {
     e.preventDefault();
+
+    clearErrors();
+
     if (!isPasswordCorrect) {
-      setPassFields({
-        ...passFields,
-        error0: true,
-        helper0: "رمز عبور صحیح نیست",
-      });
-      return;
+      passFields.error0 = true;
+      passFields.helper0 = "رمز عبور صحیح نیست";
     }
 
     if (passFields.value1 !== passFields.value2) {
-      setPassFields({
-        ...passFields,
-        error2: true,
-        error1: true,
-        helper2: "رمز عبور و تکرار آن مطابقت ندارند",
-      });
-      return;
+      passFields.error2 = true;
+      passFields.error1 = true;
+      passFields.helper2 = "رمز عبور و تکرار آن مطابقت ندارند";
     }
 
-    if(passFields.value1.length < 6){
-      setPassFields({
-        ...passFields,
-        error2: true,
-        error1: true,
-        helper1: "طول رمز عبور باید حداقل ۶ کاراکتر باشد" ,
-      });
-      return;
+    if (passFields.value1.length < 6) {
+      passFields.error2 = true;
+      passFields.error1 = true;
+      passFields.helper1 = "طول رمز عبور باید حداقل ۶ کاراکتر باشد";
     }
+
+    setPassFields({
+      ...passFields,
+    });
 
     //TODO
   };
@@ -129,7 +133,13 @@ export default function InputAdornments() {
     });
   };
 
-  const passField = (index, label, labelWidth, bottomSeparator, autoComplete) => (
+  const passField = (
+    index,
+    label,
+    labelWidth,
+    bottomSeparator,
+    autoComplete
+  ) => (
     <>
       <FormControl
         variant="outlined"
@@ -140,7 +150,7 @@ export default function InputAdornments() {
         <OutlinedInput
           required
           autoComplete={autoComplete}
-          name={"password"+index}
+          name={"password" + index}
           value={passFields["value" + index]}
           onChange={handleChange("value" + index)}
           type={passFields["visible" + index] ? "text" : "password"}

@@ -4,7 +4,7 @@ import AddComment from './add-comment'
 import Answer from './answer'
 import AddAnswer from './add-answer'
 import Comment from './comment'
-import sampleQuestions from './sampleQuestion.json'
+import sampleQuestions from '../../sampleDB.json'
 
 class QuestionPage extends React.Component {
 

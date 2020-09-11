@@ -13,8 +13,22 @@ class AddComment extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            classes: useStyles
+            classes: useStyles,
+            commentValue: '',
+            commentSubmitted: ''
         }
+    }
+
+    onCommentChange = (event) => {
+        this.setState({
+            commentValue: event.target.value
+        })
+    }
+
+    onSubmitComment = () => {
+        this.setState({
+            commentSubmitted: this.state.commentValue
+        })
     }
 
     render() {
@@ -23,6 +37,7 @@ class AddComment extends React.Component {
                 <h4>نظر شما</h4>
                 <div style={{ display: "flex" }}>
                     <TextField
+                        onChange={this.onCommentChange}
                         style={{ marginLeft: 10, marginRight: 10, width: "70%" }}
                         id="outlined-multiline-static"
                         multiline
@@ -31,6 +46,7 @@ class AddComment extends React.Component {
                         variant="outlined"
                     />
                     <Button
+                        onClick={this.onSubmitComment}
                         variant="contained"
                         color="secondary"
                         className={this.state.classes.button}

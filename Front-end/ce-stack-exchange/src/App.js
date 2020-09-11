@@ -8,6 +8,7 @@ import { Paper, Box } from '@material-ui/core';
 import SignUpWindow from "./components/login_and_signup/signup-window"
 import LoginWindow from './components/login_and_signup/login-window';
 import QuestionPage from './components/question_page/question-page';
+import CommunityPage from './components/communities_page/commiunities-page';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,6 +21,12 @@ const useStyles = makeStyles((theme) => ({
       margin: theme.spacing(1),
     },
   },
+  paper: {
+    [theme.breakpoints.down("md")]: {
+      width: "100%"
+    },
+    width: "70%"
+  }
 }));
 
 function App() {
@@ -28,16 +35,21 @@ function App() {
     <div className={classes.root}>
       <PrimarySearchAppBar />
       {/* all content in this div */}
-      <Paper elevation={10} style={{ alignSelf: "center" }} style={{ width: "60%" }}>
-        {/* TODO make this 60% responsive for small displays */}
+      <Paper elevation={10} style={{ alignSelf: "center" }} className={classes.paper}>
         <Box minHeight={window.innerHeight - 300}>
           {/* //TODO you should change this minHeight responsively */}
-          <QuestionPage />
+          {/* <QuestionPage /> */}
+          {/* <SignUpWindow /> */}
+          <CommunityPage />
         </Box>
       </Paper>
       <Footer />
     </div >
   );
 }
+
+//TODO
+//<div>Icons made by <a href="https://www.flaticon.com/authors/freepik" title="Freepik">Freepik</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a></div>
+//the line above should be copied somewhere visible to attribute icons author
 
 export default App;

@@ -126,6 +126,7 @@ export default function PrimarySearchAppBar() {
         >
             <MenuItem onClick={handleMenuClose}>حساب من</MenuItem>
             <MenuItem onClick={handleMenuClose}>فعالیت های من</MenuItem>
+            <MenuItem onClick={handleMenuClose}>خروج</MenuItem>
         </Menu>
     );
 
@@ -174,25 +175,25 @@ export default function PrimarySearchAppBar() {
                     >
                         <MenuIcon />
                     </IconButton> */}
-                    <IconButton>
-                        <svg width="112" height="152" xmlns="http://www.w3.org/2000/svg" onClick={goSomewhere}>
+                    <IconButton onClick={goSomewhere}>
+                        <svg width="112" height="152" xmlns="http://www.w3.org/2000/svg">
                             <g>
                                 <title>:)</title>
                                 <rect x="-1" y="-1" id="canvas_background" fill="transparent" />
                                 <g id="canvasGrid" display="none">
-                                    <rect id="svg_5" width="100%" height="100%" x="0" y="0" stroke-width="0" fill="url(#gridpattern)" />
+                                    <rect id="svg_5" width="100%" height="100%" x="0" y="0" strokeWidth="0" fill="url(#gridpattern)" />
                                 </g>
                             </g>
                             <g id="wholeIcon">
                                 <title>:)</title>
-                                <rect fill="#064c64" stroke="#064c64" stroke-width="1.5" x="23.0625" y="33.84375" width="61.875" height="11.625" id="rect_1" />
-                                <rect fill="#99222e" stroke="#99222e" stroke-width="1.5" x="23.25" y="48.75" width="61.875" height="11.625" id="rect_2" />
-                                <rect fill="#f47318" stroke="#f47318" stroke-width="1.5" x="23.25" y="63.75" width="61.875" height="11.625" id="rect_3" />
-                                <rect fill="#f4af54" stroke="#f4af54" stroke-width="1.5" x="23.25" y="78.75" width="61.875" height="11.625" id="rect_4" />
-                                <rect fill="#e9ddba" stroke="#e9ddba" stroke-width="1.5" x="23.25" y="93.75" width="61.875" height="11.625" id="rect_5" />
-                                <rect stroke="#b1aa97" class="box_side" height="61.125" width="7.125" y="48.39375" x="11.0625" stroke-opacity="null" stroke-width="1.5" fill="#b1aa97" />
-                                <rect stroke="#b1aa97" class="box_bottom" height="7.125" width="85.6875" y="110.26875" x="11.0625" stroke-opacity="null" stroke-width="1.5" fill="#b1aa97" />
-                                <rect stroke="#b1aa97" class="box_side" height="61.125" width="7.125" y="48.39375" x="89.625" stroke-opacity="null" stroke-width="1.5" fill="#b1aa97" />
+                                <rect fill="#064c64" stroke="#064c64" strokeWidth="1.5" x="23.0625" y="33.84375" width="61.875" height="11.625" id="rect_1" />
+                                <rect fill="#99222e" stroke="#99222e" strokeWidth="1.5" x="23.25" y="48.75" width="61.875" height="11.625" id="rect_2" />
+                                <rect fill="#f47318" stroke="#f47318" strokeWidth="1.5" x="23.25" y="63.75" width="61.875" height="11.625" id="rect_3" />
+                                <rect fill="#f4af54" stroke="#f4af54" strokeWidth="1.5" x="23.25" y="78.75" width="61.875" height="11.625" id="rect_4" />
+                                <rect fill="#e9ddba" stroke="#e9ddba" strokeWidth="1.5" x="23.25" y="93.75" width="61.875" height="11.625" id="rect_5" />
+                                <rect stroke="#b1aa97" className="box_side" height="61.125" width="7.125" y="48.39375" x="11.0625" strokeOpacity="null" strokeWidth="1.5" fill="#b1aa97" />
+                                <rect stroke="#b1aa97" className="box_bottom" height="7.125" width="85.6875" y="110.26875" x="11.0625" strokeOpacity="null" strokeWidth="1.5" fill="#b1aa97" />
+                                <rect stroke="#b1aa97" className="box_side" height="61.125" width="7.125" y="48.39375" x="89.625" strokeOpacity="null" strokeWidth="1.5" fill="#b1aa97" />
                             </g>
                         </svg>
                     </IconButton>

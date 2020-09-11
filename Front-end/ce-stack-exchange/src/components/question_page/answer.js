@@ -2,6 +2,10 @@ import React from 'react'
 import { Paper, Tooltip } from '@material-ui/core';
 import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt'
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt'
+import Comment from './comment'
+
+const GREEN_COLOR = "#7fc91e"
+const RED_COLOR = "#b3004a"
 
 class Answer extends React.Component {
     constructor(props) {
@@ -13,21 +17,33 @@ class Answer extends React.Component {
     }
 
     like = () => {
-        this.setState({
-            likeColor: "#498c3a",
-            dislikeColor: "grey"
-        })
-        //TODO
-        //add upvote
+        if (this.state.likeColor == GREEN_COLOR) {
+            this.setState({
+                likeColor: "grey"
+            })
+            //TODO remove upvote
+        } else {
+            this.setState({
+                likeColor: GREEN_COLOR,
+                dislikeColor: "grey"
+            })
+            //TODO add upvote
+        }
     }
 
     dislike = () => {
-        this.setState({
-            dislikeColor: "#498c3a",
-            likeColor: "grey"
-        })
-        //TODO
-        //add downvote
+        if (this.state.dislikeColor == RED_COLOR) {
+            this.setState({
+                dislikeColor: "grey"
+            })
+            //TODO remove downvote
+        } else {
+            this.setState({
+                dislikeColor: RED_COLOR,
+                likeColor: "grey"
+            })
+            //TODO add downvote
+        }
     }
 
     render() {
@@ -52,6 +68,11 @@ class Answer extends React.Component {
                     </div>
 
                 </Paper>
+                {this.props.answer.comments.map((comment) => {
+                    return (
+                        <Comment comment={comment} />
+                    );
+                })}
             </div>
         );
     }

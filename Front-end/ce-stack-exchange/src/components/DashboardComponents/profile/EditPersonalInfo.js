@@ -5,38 +5,24 @@ import ProfilePreview from "../profile/ProfilePreview";
 export default function EditPresonalInfo() {
   const [fields, setFields] = React.useState({
     //TODO : initial value fields
-    fname: "",
+    fname: "علی",
     fnameHelper: "",
     fnameError: false,
 
-    lname: "",
+    lname: "علوی",
     lnameHelper: "",
     lnameError: false,
 
-    username: "",
+    username: "علی76",
     usernameHelper: "",
     usernameError: false,
 
-    email: "",
+    email: "alialavi@gmail.com",
     emailHelper: "",
     emailError: false,
 
-    about: "",
+    about: " ارشد 98 م از خیلی وقته عاشق AI بودم :)",
   });
-
-  const clearErrors = () => {
-    setFields({
-      ...fields,
-      fnameError: false,
-      lnameError: false,
-      emailError: false,
-      usernameError: false,
-      fnameHelper: "",
-      lnameHelper: "",
-      emailHelper: "",
-      usernameHelper: "",
-    });
-  };
 
   const isEmailUnique = () => {
     //TODO
@@ -48,55 +34,45 @@ export default function EditPresonalInfo() {
     return true;
   };
 
+  const clearErrors = () => {
+    fields.fnameError = false;
+    fields.lnameError = false;
+    fields.emailError = false;
+    fields.usernameError = false;
+    fields.fnameHelper = "";
+    fields.lnameHelper = "";
+    fields.emailHelper = "";
+    fields.usernameHelper = "";
+  }
+
   const submitForm = (e) => {
     e.preventDefault();
 
-    //TODO
-    clearErrors();
+    clearErrors()
 
     if (fields.fname.length < 2) {
-      setFields({
-        ...fields,
-        fnameHelper: "طول نام باید حداقل ۲ کاراکتر باشد",
-        fnameError: true,
-      });
-      return;
+      fields.fnameHelper = "طول نام باید حداقل ۲ کاراکتر باشد";
+      fields.fnameError = true;
     }
 
     if (fields.lname.length < 2) {
-      setFields({
-        ...fields,
-        lnameHelper: "طول نام خانوادگی باید حداقل ۲ کاراکتر باشد",
-        lnameError: true,
-      });
-      return;
+      fields.lnameHelper = "طول نام خانوادگی باید حداقل ۲ کاراکتر باشد";
+      fields.lnameError = true;
     }
 
     if (fields.username.length < 4) {
-      setFields({
-        ...fields,
-        usernameHelper: "طول نام کاربری باید حداقل ۴ کاراکتر باشد",
-        usernameError: true,
-      });
-      return;
+      fields.usernameHelper = "طول نام کاربری باید حداقل 4 کاراکتر باشد";
+      fields.usernameError = true;
     }
 
     if (fields.username.match(/^([A-Z]|[a-z]|[0-9])+$/g) == null) {
-      setFields({
-        ...fields,
-        usernameHelper: "تنها از حروف و اعداد انگلیسی استفاده کنید",
-        usernameError: true,
-      });
-      return;
+      fields.usernameHelper = "تنها از حروف و اعداد انگلیسی استفاده کنید";
+      fields.usernameError = true;
     }
 
     if (!isUsernameUnique()) {
-      setFields({
-        ...fields,
-        usenameHelper: "این نام کاربری قبلا ثبت شده است",
-        usernameError: true,
-      });
-      return;
+      fields.usernameHelper = "این نام کاربری قبلا ثبت شده است";
+      fields.usernameError = true;
     }
 
     if (
@@ -104,22 +80,18 @@ export default function EditPresonalInfo() {
         /^([A-Z]|[a-z]|\.|\_|\_|[0-9])+@([A-Z]|[a-z])+\.([A-Z]|[a-z])+/g
       )
     ) {
-      setFields({
-        ...fields,
-        emailHelper: "ایمیل نامعتبر است",
-        emailError: true,
-      });
-      return;
+      fields.emailHelper = "ایمیل نامعتبر است";
+      fields.emailError = true;
     }
 
     if (!isEmailUnique()) {
-      setFields({
-        ...fields,
-        emailHelper: "این ایمیل قبلا ثبت شده است",
-        emailError: true,
-      });
-      return;
+      fields.emailHelper = "این ایمیل قبلا ثبت شده است";
+      fields.emailError = true;
     }
+
+    setFields({
+      ...fields,
+    });
   };
 
   const handleChange = (fieldName) => (event) => {
@@ -150,7 +122,6 @@ export default function EditPresonalInfo() {
                   required
                   variant="outlined"
                   label="نام"
-                  defaultValue="علی"
                   autoComplete="given-name"
                   name="firstName"
                   onChange={handleChange("fname")}
@@ -165,7 +136,6 @@ export default function EditPresonalInfo() {
                   required
                   variant="outlined"
                   label="نام خانوادگی"
-                  defaultValue="علوی"
                   autoComplete="family-name"
                   name="lastName"
                   onChange={handleChange("lname")}
@@ -180,7 +150,6 @@ export default function EditPresonalInfo() {
                   variant="outlined"
                   required
                   label="نام کاربری "
-                  defaultValue="علی76"
                   name="username"
                   autoComplete="username"
                   onChange={handleChange("username")}
@@ -195,7 +164,6 @@ export default function EditPresonalInfo() {
                   required
                   variant="outlined"
                   label="ایمیل"
-                  defaultValue="alialavi@gmail.com"
                   autoComplete="email"
                   name="email"
                   onChange={handleChange("email")}
@@ -210,7 +178,6 @@ export default function EditPresonalInfo() {
                   multiline
                   variant="outlined"
                   label="دیگه چه خبر ؟"
-                  defaultValue=" ارشد 98 م از خیلی وقته عاشق AI بودم :)"
                   onChange={handleChange("about")}
                   value={fields.about}
                 />

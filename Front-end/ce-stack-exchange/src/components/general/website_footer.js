@@ -28,7 +28,7 @@ export default function Footer() {
     const classes = useStyles();
     return (
         <AppBar position="static" color="primary" className={classes.appBar}>
-            <Container maxWidth={0}>
+            <Container maxWidth={"lg"}>
                 <Toolbar>
                     <Typography variant="body1" color="inherit" align="center" style={{ fontSize: 15, align: "center" }}>
                         &copy; ۱۳۹۹ |<a onClick={goToCe} style={{ cursor: "pointer" }}> دانشکده مهندسی کامپیوتر دانشگاه صنعتی شریف</a> | <a onClick={goToGuide} style={{ cursor: "pointer" }}>راهنما</a> | <a onClick={goToAbout} style={{ cursor: "pointer" }}>درباره</a>
