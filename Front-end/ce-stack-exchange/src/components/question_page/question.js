@@ -5,6 +5,9 @@ import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt'
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt'
 import Check from '@material-ui/icons/Check'
 
+const GREEN_COLOR = "#7fc91e"
+const RED_COLOR = "#b3004a"
+
 class QuestionPart extends React.Component {
     constructor(props) {
         super(props)
@@ -15,21 +18,33 @@ class QuestionPart extends React.Component {
     }
 
     like = () => {
-        this.setState({
-            likeColor: "#498c3a",
-            dislikeColor: "grey"
-        })
-        //TODO
-        //add upvote
+        if (this.state.likeColor == GREEN_COLOR) {
+            this.setState({
+                likeColor: "grey"
+            })
+            //TODO remove upvote
+        } else {
+            this.setState({
+                likeColor: GREEN_COLOR,
+                dislikeColor: "grey"
+            })
+            //TODO add upvote
+        }
     }
 
     dislike = () => {
-        this.setState({
-            dislikeColor: "#498c3a",
-            likeColor: "grey"
-        })
-        //TODO
-        //add downvote
+        if (this.state.dislikeColor == RED_COLOR) {
+            this.setState({
+                dislikeColor: "grey"
+            })
+            //TODO remove downvote
+        } else {
+            this.setState({
+                dislikeColor: RED_COLOR,
+                likeColor: "grey"
+            })
+            //TODO add downvote
+        }
     }
 
     render() {

@@ -197,10 +197,11 @@ class SignUpWindow extends React.Component {
     render() {
         return (
             <ThemeProvider theme={theme}>
-                <div style={{ width: "80%" }}>
+                <div style={{ width: "80%", paddingTop: "4em", paddingBottom: "4em" }}>
                     <Container>
-                        <Collapse in={this.state.successAlertOpen}>
-                            <Alert style={{ margin: 20 }} severity="success">
+                        <Collapse in>
+                            {/* <Collapse in={this.state.successAlertOpen}> */}
+                            <Alert style={{ marginBottom: 10, width: "95%" }} severity="success">
                                 <CircularProgress color="inherit" size={20} style={{ marginLeft: 10 }} />
                                 ثبت نام با موفقیت انجام شد!
                             </Alert>
@@ -295,12 +296,19 @@ class SignUpWindow extends React.Component {
                                             variant="outlined"
                                         />
                                     </Grid>
-                                    <Grid container item xs={12} spacing={0}>
-
+                                    <Grid
+                                        container
+                                        item
+                                        xs={10}
+                                        spacing={0}
+                                        style={{ backgroundColor: "red" }}
+                                        alignContent="space-between"
+                                        alignItems="center"
+                                        justify="space-between">
                                         <Button variant="contained" color="secondary" onClick={this.submitRegister}>
                                             ثبت نام
                                             </Button>
-
+                                        <a href="#">ثبت نام کرده‌اید؟ وارد شوید!</a>
                                     </Grid>
                                 </Grid>
                             </div>
