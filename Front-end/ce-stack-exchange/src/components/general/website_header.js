@@ -8,16 +8,15 @@ import InputBase from '@material-ui/core/InputBase';
 import Badge from '@material-ui/core/Badge';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
-import Paper from '@material-ui/core/Paper'
-import { useHistory } from "react-router-dom";
 import "./logostyle.css"
-
-const logoAddress = "https://ir11.uploadboy.com/d/favsy6t87ekz/ubnouvuqjdkoleohtavwrt6h76a6xfafm64azz2645ddwu7m7larl47bujbfw2xhuiyyymoo/logo.png"
+import { withStyles } from '@material-ui/core/styles';
+import Tooltip from '@material-ui/core/Tooltip';
+import { Button, ClickAwayListener } from '@material-ui/core';
+import Zoom from '@material-ui/core/Zoom';
 
 const useStyles = makeStyles((theme) => ({
     grow: {
@@ -61,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
     },
     inputInput: {
         padding: theme.spacing(1, 1, 1, 0),
-        // vertical padding + font size from searchIcon
         paddingLeft: `calc(1em + ${theme.spacing(4)}px)`,
         transition: theme.transitions.create('width'),
         width: '100%',
@@ -83,15 +81,35 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function Header() {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
     const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
-
     const isMenuOpen = Boolean(anchorEl);
     const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
-    //const history = useHistory();
+    const HtmlTooltip = withStyles((theme) => ({
+        tooltip: {
+            backgroundColor: '#ccefff',
+            color: 'rgba(0, 0, 0, 0.87)',
+            width: 400,
+            height: 450,
+            fontSize: theme.typography.pxToRem(12),
+            borderRadius: 10,
+            border: '2px solid #dadde9',
+        },
+    }))(Tooltip);
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleTooltipClose = () => {
+        setOpen(false);
+    };
+
+    const handleTooltipOpen = () => {
+        setOpen(true);
+    };
+
     const goSomewhere = () => {
         window.location.href = "#"
     }
@@ -111,6 +129,10 @@ export default function PrimarySearchAppBar() {
 
     const handleMobileMenuOpen = (event) => {
         setMobileMoreAnchorEl(event.currentTarget);
+    };
+
+    const showAllNotifications = () => {
+        alert("ss")
     };
 
     const menuId = 'primary-search-account-menu';
@@ -167,14 +189,6 @@ export default function PrimarySearchAppBar() {
         <div className={classes.grow}>
             <AppBar position="static">
                 <Toolbar>
-                    {/* <IconButton
-                        edge="start"
-                        className={classes.menuButton}
-                        color="inherit"
-                        aria-label="open drawer"
-                    >
-                        <MenuIcon />
-                    </IconButton> */}
                     <IconButton onClick={goSomewhere}>
                         <svg width="112" height="152" xmlns="http://www.w3.org/2000/svg">
                             <g>
@@ -218,11 +232,40 @@ export default function PrimarySearchAppBar() {
                     </div>
                     <div className={classes.grow} />
                     <div className={classes.sectionDesktop}>
-                        <IconButton aria-label="show 17 new notifications" color="inherit">
-                            <Badge badgeContent={/*TODO*/ "۴"} color="secondary">
-                                <NotificationsIcon />
-                            </Badge>
-                        </IconButton>
+                        <ClickAwayListener onClickAway={handleTooltipClose}>
+                            <div>
+                                <HtmlTooltip
+                                    PopperProps={{
+                                        disablePortal: true,
+                                    }}
+                                    onClose={handleTooltipClose}
+                                    open={open}
+                                    disableFocusListener
+                                    disableHoverListener
+                                    disableTouchListener
+                                    placement="bottom-end"
+                                    arrow
+                                    interactive
+                                    TransitionComponent={Zoom}
+                                    title={
+                                        <React.Fragment>
+                                            <div style={{ padding: 10 }}>
+                                                <Typography color="inherit" align="center">پیام‌های شما</Typography>
+                                            </div>
+                                            <div style={{ display: "flex", justifyContent: "center" }}>
+                                                <Button variant="contained" color="secondary" onClick={showAllNotifications}>لیست کامل پیام ها</Button>
+                                            </div>
+                                        </React.Fragment>
+                                    }
+                                >
+                                    <IconButton aria-label="show 17 new notifications" color="inherit" onClick={handleTooltipOpen}>
+                                        <Badge badgeContent={/*TODO*/ "۴"} color="secondary">
+                                            <NotificationsIcon />
+                                        </Badge>
+                                    </IconButton>
+                                </HtmlTooltip>
+                            </div>
+                        </ClickAwayListener>
                         <IconButton
                             edge="end"
                             aria-label="account of current user"
@@ -247,14 +290,6 @@ export default function PrimarySearchAppBar() {
                     </div>
                 </Toolbar >
             </AppBar >
-            {/* <Paper>
-                <div className={classes.toolbar} />
-                <br />
-                <br />
-                <br />
-                <br />
-                <br />
-            </Paper> */}
             {renderMobileMenu}
             {renderMenu}
         </div >

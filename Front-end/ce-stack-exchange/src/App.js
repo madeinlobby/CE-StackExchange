@@ -3,7 +3,7 @@ import React from 'react';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Footer from "./components/general/website_footer"
-import PrimarySearchAppBar from "./components/general/website_header"
+import Header from "./components/general/website_header"
 import { Paper, Box } from '@material-ui/core';
 import SignUpWindow from "./components/login_and_signup/signup-window"
 import LoginWindow from './components/login_and_signup/login-window';
@@ -22,10 +22,13 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   paper: {
-    [theme.breakpoints.down("md")]: {
-      width: "100%"
+    [theme.breakpoints.down("sm")]: {
+      width: "95%"
     },
-    width: "70%"
+    [theme.breakpoints.between("sm", "md")]: {
+      width: "90%"
+    },
+    width: "65%"
   }
 }));
 
@@ -33,15 +36,17 @@ function App() {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <PrimarySearchAppBar />
-      {/* all content in this div */}
-      <Paper elevation={10} style={{ alignSelf: "center" }} className={classes.paper}>
-        <Box minHeight={window.innerHeight - 300}>
-          {/* //TODO you should change this minHeight responsively */}
-          {/* <QuestionPage /> */}
-          {/* <SignUpWindow /> */}
-          <CommunityPage />
-        </Box>
+      <Header />
+      <Paper elevation={10} style={{ alignSelf: "center", minHeight: window.innerHeight - 288 }} className={classes.paper}>
+
+        {/* <QuestionPage /> */}
+
+        {/* <SignUpWindow /> */}
+
+        {/* <CommunityPage /> */}
+
+        {/* <LoginWindow /> */}
+
       </Paper>
       <Footer />
     </div >
