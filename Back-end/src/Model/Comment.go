@@ -17,16 +17,16 @@ func GetCommentById(commentId string, deleted ...bool) (*Comment, error) {
 	return nil, nil
 }
 
-func (question *Question) CommentOnQuestion(accountId string, text string) (*Comment, error) {
+func (question *Question) AddComment(accountId string, text string) (*Comment, error) {
 	return nil, nil
 }
 
-func (answer *Answer) CommentOnAnswer(accountId string, text string) (*Comment, error) {
+func (answer *Answer) AddComment(accountId string, text string) (*Comment, error) {
 	return nil, nil
 }
 
-func (comment *Comment) CommentOnComment(accountId string, childComment string) error {
-	return nil
+func (comment *Comment) CommentOnComment(accountId string, childComment string) (*Comment, error) {
+	return nil, nil
 }
 
 func (comment *Comment) DeleteComment() error {

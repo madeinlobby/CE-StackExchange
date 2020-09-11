@@ -1,7 +1,6 @@
 package View
 
 import (
-	"github.com/google/go-cmp/cmp"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -9,13 +8,18 @@ import (
 )
 
 func GetAllCommunities(w http.ResponseWriter, _ *http.Request) {
-	communities := Model.GetAllCommunities(false)
-	response, err := yaml.Marshal(&communities)
+	communities, err := Model.GetAllCommunities(false)
+	if err != nil {
+		http.Error(w, "error:"+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	var response []byte
+	response, err = yaml.Marshal(&communities)
 	if err != nil {
 		http.Error(w, "error: could not serialize the result.", http.StatusInternalServerError)
 		return
 	} else {
-		w.WriteHeader(http.StatusOK)
 		_, _ = w.Write(response)
 	}
 }
@@ -39,11 +43,22 @@ func CreateNewCommunity(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// process and return the result
-	if cmp.Equal(Model.GetCommunityByName(params.communityName), Model.Community{}) {
+	var com *Model.Community
+	com, err = Model.GetCommunityByName(params.communityName)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if com != nil {
 		http.Error(w, "error: Community with given name already exists", http.StatusConflict)
 		return
 	}
 
-	Model.NewCommunity(params.communityName, params.description)
+	_, err = Model.NewCommunity(params.communityName, params.description)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
 	w.WriteHeader(http.StatusNoContent)
 }

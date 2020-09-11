@@ -32,7 +32,7 @@ func (question *Question) AddViewCount(addAmount int) error {
 	return nil
 }
 
-func (user *Account) GetAccountQuestions() ([]Question, error) {
+func (user *Account) GetQuestions() ([]Question, error) {
 	return nil, nil
 }
 

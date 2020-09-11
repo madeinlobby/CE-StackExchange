@@ -2,7 +2,6 @@ package View
 
 import (
 	"github.com/dgrijalva/jwt-go"
-	"github.com/google/go-cmp/cmp"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
@@ -33,7 +32,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// create a new account. creating an admin should be by another route. profile image is currently unavailable
-	newAcc := Model.NewAccount(signupCredentials.Username,
+	_, err = Model.NewAccount(signupCredentials.Username,
 		signupCredentials.Password,
 		false,
 		signupCredentials.FirstName,
@@ -42,7 +41,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 		signupCredentials.StudentNumber,
 		"")
 
-	if cmp.Equal(newAcc, Model.Account{}) {
+	if err != nil {
 		http.Error(w, "error: could not create the account", http.StatusInternalServerError)
 		return
 	}
@@ -56,7 +55,6 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: add token to redis
-	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write([]byte(token))
 }
 
@@ -76,8 +74,13 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// check credentials
-	user := Model.GetAccountByUsername(loginCredentials.Username)
-	if cmp.Equal(user, Model.Account{}) {
+	var user *Model.Account
+	user, err = Model.GetAccountByUsername(loginCredentials.Username)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	if user == nil {
 		http.Error(w, "error: invalid username", http.StatusNotFound)
 		return
 	} else if user.Password != loginCredentials.Password {
@@ -94,7 +97,6 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// TODO: add token to redis
-	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write([]byte(token))
 }
 
@@ -140,10 +142,10 @@ func AskQuestion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// ask the question and return the result
-	q := Model.NewQuestion(currAcc.Id, askQuestionInfo.Community,
+	_, err = Model.NewQuestion(currAcc.Id, askQuestionInfo.Community,
 		askQuestionInfo.Title, askQuestionInfo.Body, askQuestionInfo.TagArr)
 
-	if cmp.Equal(q, Model.Question{}) {
+	if err != nil {
 		http.Error(w, "error: could not ask the question", http.StatusInternalServerError)
 		return
 	}
@@ -175,9 +177,9 @@ func AnswerQuestion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// answer the question and return the result
-	a := Model.NewAnswer(currAcc.Id, answerQuestionInfo.QuestionId, answerQuestionInfo.AnswerBody)
+	_, err = Model.NewAnswer(currAcc.Id, answerQuestionInfo.QuestionId, answerQuestionInfo.AnswerBody)
 
-	if cmp.Equal(a, Model.Answer{}) {
+	if err != nil {
 		http.Error(w, "error: could not answer the question", http.StatusInternalServerError)
 		return
 	}
@@ -208,14 +210,25 @@ func CommentOnQuestion(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// getting the question
+	var q *Model.Question
+	q, err = Model.GetQuestionById(commentInfo.QuestionId)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	} else if q == nil {
+		http.Error(w, "error: no such question found", http.StatusNotFound)
+		return
+	}
+
 	// commenting and returning the result
-	comment := Model.CommentOnQuestion(currAcc.Id, commentInfo.QuestionId, commentInfo.Comment)
-	if cmp.Equal(comment, Model.Comment{}) {
+	_, err = q.AddComment(currAcc.Id, commentInfo.Comment)
+	if err != nil {
 		http.Error(w, "error: could not submit the comment", http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func CommentOnAnswer(w http.ResponseWriter, r *http.Request) {
@@ -241,9 +254,20 @@ func CommentOnAnswer(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// getting the answer
+	var a *Model.Answer
+	a, err = Model.GetAnswerById(commentInfo.AnswerId)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	} else if a == nil {
+		http.Error(w, "error: no such answer exists", http.StatusNotFound)
+		return
+	}
+
 	// commenting and returning the result
-	comment := Model.CommentOnAnswer(currAcc.Id, commentInfo.QuestionId, commentInfo.Comment)
-	if cmp.Equal(comment, Model.Comment{}) {
+	_, err = a.AddComment(currAcc.Id, commentInfo.Comment)
+	if err != nil {
 		http.Error(w, "error: could not submit the comment", http.StatusInternalServerError)
 		return
 	}
@@ -274,14 +298,25 @@ func CommentOnComment(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	// getting the comment
+	var parComment *Model.Comment
+	parComment, err = Model.GetCommentById(commentInfo.ParentId)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	} else if parComment == nil {
+		http.Error(w, "error: no such comment exists", http.StatusNotFound)
+		return
+	}
+
 	// commenting and returning the result
-	err = Model.CommentOnComment(currAcc.Id, commentInfo.ParentId, commentInfo.ChildBody)
+	_, err = parComment.CommentOnComment(currAcc.Id, commentInfo.ChildBody)
 	if err != nil {
 		http.Error(w, "error: could not comment on the comment", http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
+	w.WriteHeader(http.StatusNoContent)
 }
 
 func GetUserPosts(w http.ResponseWriter, r *http.Request) {
@@ -301,8 +336,12 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// validate the request info
-	user := Model.GetAccountByUsername(requestInfo.Username)
-	if cmp.Equal(user, Model.Account{}) {
+	var user *Model.Account
+	user, err = Model.GetAccountByUsername(requestInfo.Username)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	} else if user == nil {
 		http.Error(w, "error: no such user exists", http.StatusNotFound)
 		return
 	} else if requestInfo.Opt != "q" && requestInfo.Opt != "a" && requestInfo.Opt != "all" {
@@ -317,27 +356,37 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 	}{}
 	if requestInfo.Opt != "a" {
 		// adds all questions
-		questions, err := Model.GetAccountQuestions(user.Id)
+		questions, err := user.GetQuestions()
 		if err != nil {
 			http.Error(w, "error: could not retrieve questions", http.StatusInternalServerError)
 			return
 		}
 
 		for _, q := range questions {
-			posts.Questions = append(posts.Questions, getQuestionInfo(q))
+			inf, err := getQuestionInfo(&q)
+			if err != nil {
+				http.Error(w, "error: could not retrieve questions", http.StatusInternalServerError)
+				return
+			}
+			posts.Questions = append(posts.Questions, *inf)
 		}
 	}
 
 	if requestInfo.Opt != "q" {
 		// adds all answers
-		answers, err := Model.GetAccountAnswers(user.Id)
+		answers, err := user.GetAnswers()
 		if err != nil {
 			http.Error(w, "error: could not retrieve answers", http.StatusInternalServerError)
 			return
 		}
 
 		for _, a := range answers {
-			posts.Answers = append(posts.Answers, getAnswerInfo(a))
+			inf, err := getAnswerInfo(&a)
+			if err != nil {
+				http.Error(w, "error: could not retrieve answers", http.StatusInternalServerError)
+				return
+			}
+			posts.Answers = append(posts.Answers, *inf)
 		}
 	}
 
@@ -349,7 +398,6 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(out)
 }
 
@@ -377,8 +425,12 @@ func GetUserProfileInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// validate the request
-	user := Model.GetAccountByUsername(request.Username)
-	if cmp.Equal(user, Model.Account{}) {
+	var user *Model.Account
+	user, err = Model.GetAccountByUsername(request.Username)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	} else if user == nil {
 		http.Error(w, "error: no such user exists", http.StatusNotFound)
 		return
 	}

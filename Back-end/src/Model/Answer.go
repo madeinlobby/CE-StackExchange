@@ -30,6 +30,6 @@ func (question *Question) GetQuestionAnswers() ([]Answer, error) {
 	return nil, nil
 }
 
-func (user *Account) GetAccountAnswers() ([]Answer, error) {
+func (user *Account) GetAnswers() ([]Answer, error) {
 	return nil, nil
 }

@@ -24,6 +24,10 @@ func (vote *Vote) DeleteVote() error {
 	return nil
 }
 
-func GetPostVotes(qaId string) (upvotes int, downvotes int, err error) {
+func (question *Question) GetVotes() (upvotes int, downvotes int, err error) {
+	return 0, 0, nil
+}
+
+func (answer *Answer) GetVotes() (upvotes int, downvotes int, err error) {
 	return 0, 0, nil
 }

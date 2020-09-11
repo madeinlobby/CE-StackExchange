@@ -4,7 +4,6 @@ import (
 	"errors"
 	jwtmiddleware "github.com/auth0/go-jwt-middleware"
 	"github.com/dgrijalva/jwt-go"
-	"github.com/google/go-cmp/cmp"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"net/http"
 	"time"
@@ -37,7 +36,7 @@ type questionBasicInfo struct {
 }
 
 type answersOfQuestion struct {
-	question questionBasicInfo
+	question *questionBasicInfo
 	answers  []answerBasicInfo
 }
 
@@ -109,16 +108,28 @@ type createNewTagRequest struct {
 
 // checks sign up credentials and returns error if one occurred
 func checkSignupCredentials(credentials signupRequest) error {
-	if !cmp.Equal(Model.GetAccountByUsername(credentials.Username), Model.Account{}) {
+	user, err := Model.GetAccountByUsername(credentials.Username)
+	if err != nil {
+		return err
+	}
+	if user != nil {
 		return errors.New("error: username is already taken")
 	}
 
-	if !cmp.Equal(Model.GetAccountByEmail(credentials.Email), Model.Account{}) {
-		return errors.New("error: email is already used")
+	user, err = Model.GetAccountByEmail(credentials.Username)
+	if err != nil {
+		return err
+	}
+	if user != nil {
+		return errors.New("error: email is already taken")
 	}
 
-	if !cmp.Equal(Model.GetAccountByStudentNumber(credentials.StudentNumber), Model.Account{}) {
-		return errors.New("error: student number is already used")
+	user, err = Model.GetAccountByStudentNumber(credentials.Username)
+	if err != nil {
+		return err
+	}
+	if user != nil {
+		return errors.New("error: student number is already taken")
 	}
 
 	return nil
@@ -153,19 +164,22 @@ func extractJWTToken(r *http.Request) (*jwt.Token, error) {
 }
 
 // util function to current account from JWT token
-func getCurrentAccount(r *http.Request) (Model.Account, error) {
+func getCurrentAccount(r *http.Request) (*Model.Account, error) {
 	// get the token
 	token, err := extractJWTToken(r)
 	if err != nil {
-		return Model.Account{}, err
+		return nil, err
 	}
 
 	username := token.Claims.(jwt.MapClaims)["username"].(string)
 
-	var currentAcc Model.Account
-	currentAcc = Model.GetAccountByUsername(username, false)
-	if cmp.Equal(currentAcc, Model.Account{}) {
-		return Model.Account{}, errors.New("no such account")
+	var currentAcc *Model.Account
+	currentAcc, err = Model.GetAccountByUsername(username, false)
+	if currentAcc == nil {
+		return nil, errors.New("no such account")
+	}
+	if err != nil {
+		return nil, err
 	}
 
 	return currentAcc, nil

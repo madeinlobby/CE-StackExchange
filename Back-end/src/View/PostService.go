@@ -1,7 +1,6 @@
 package View
 
 import (
-	"github.com/google/go-cmp/cmp"
 	"github.com/gorilla/mux"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
 	"gopkg.in/yaml.v2"
@@ -11,16 +10,22 @@ import (
 func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 	// checking if the question exists or not
 	id := mux.Vars(r)["id"]
-	q := Model.GetQuestionById(id)
-	if cmp.Equal(q, Model.Question{}) {
-		w.WriteHeader(404)
-		_, _ = w.Write([]byte("error: no such question exists."))
+	q, err := Model.GetQuestionById(id)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusNotFound)
 		return
 	}
 
 	// returning the result
-	info := getQuestionInfo(q)
-	result, err := yaml.Marshal(&info)
+	var info *questionBasicInfo
+	var result []byte
+	info, err = getQuestionInfo(q)
+	if err != nil {
+		http.Error(w, "error: failed at marshaling the result", http.StatusInternalServerError)
+		return
+	}
+
+	result, err = yaml.Marshal(&info)
 	if err != nil {
 		http.Error(w, "error: failed at marshaling the result", http.StatusInternalServerError)
 		return
@@ -33,18 +38,33 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 	// checking if the question exists or not
 	id := mux.Vars(r)["id"]
-	q := Model.GetQuestionById(id)
-	if cmp.Equal(q, Model.Question{}) {
-		w.WriteHeader(404)
-		_, _ = w.Write([]byte("error: no such question exists."))
+	q, err := Model.GetQuestionById(id)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	} else if q == nil {
+		http.Error(w, "error: no such question exists", http.StatusNotFound)
 		return
 	}
 
 	// processing and returning the result
-	qAnswers := answersOfQuestion{}
-	qAnswers.question = getQuestionInfo(q)
-	for _, answer := range Model.GetQuestionAnswers(q.Id) {
-		qAnswers.answers = append(qAnswers.answers, getAnswerInfo(answer))
+	var qAnswers = &answersOfQuestion{}
+	var ans []Model.Answer
+	qAnswers.question, err = getQuestionInfo(q)
+	ans, err = q.GetQuestionAnswers()
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	for _, answer := range ans {
+		var ansInf *answerBasicInfo
+		ansInf, err = getAnswerInfo(&answer)
+		if err != nil {
+			http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+			return
+		}
+		qAnswers.answers = append(qAnswers.answers, *ansInf)
 	}
 
 	result, err := yaml.Marshal(&qAnswers)
@@ -53,58 +73,87 @@ func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(result)
 }
 
 func GetAnswerInfo(w http.ResponseWriter, r *http.Request) {
 	// checking if the answer exists or not
 	id := mux.Vars(r)["id"]
-	a := Model.GetAnswerById(id)
-	if cmp.Equal(a, Model.Question{}) {
+	a, err := Model.GetAnswerById(id)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	} else if a == nil {
 		http.Error(w, "error: no such answer exists.", http.StatusNotFound)
 		return
 	}
 
 	// processing and returning the result
-	info := getAnswerInfo(a)
-	response, err := yaml.Marshal(&info)
+	var info *answerBasicInfo
+	var response []byte
+	info, err = getAnswerInfo(a)
+	if err != nil {
+		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
+		return
+	}
+	response, err = yaml.Marshal(info)
 	if err != nil {
 		http.Error(w, "error: failed at marshaling the result.", http.StatusInternalServerError)
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(response)
 }
 
-func getAnswerInfo(answer Model.Answer) answerBasicInfo {
-	upvotes, downvotes := Model.GetPostVotes(answer.Id)
-	return answerBasicInfo{
+func getAnswerInfo(answer *Model.Answer) (*answerBasicInfo, error) {
+	var user *Model.Account
+	var upvotes, downvotes int
+	var err error
+
+	// get the necessary info
+	upvotes, downvotes, err = answer.GetVotes()
+	user, err = Model.GetAccountById(answer.AccountId)
+	if err != nil {
+		return nil, err
+	}
+
+	return &answerBasicInfo{
 		AccountId:       answer.AccountId,
-		AccountUsername: Model.GetAccountById(answer.AccountId).Username,
+		AccountUsername: user.Username,
 		AnswerBody:      answer.Text,
 		Downvotes:       downvotes,
 		Upvotes:         upvotes,
 		WasHelpful:      answer.WasHelpful,
 		date:            answer.Date,
-	}
+	}, nil
 }
 
-func getQuestionInfo(q Model.Question) questionBasicInfo {
-	upvotes, downvotes := Model.GetPostVotes(q.Id)
-	return questionBasicInfo{
-		q.IsAnswerApproved,
-		q.AccountId,
-		Model.GetAccountById(q.AccountId).Username,
-		q.Id,
-		q.Title,
-		q.Text,
-		downvotes,
-		upvotes,
-		q.Date,
-		Model.GetQuestionTags(q.Id),
+func getQuestionInfo(q *Model.Question) (*questionBasicInfo, error) {
+	var user *Model.Account
+	var tags []string
+	var upvotes, downvotes int
+	var err error
+
+	// getting the necessary info
+	tags, err = q.GetQuestionTags()
+	user, err = Model.GetAccountById(q.AccountId)
+	upvotes, downvotes, err = q.GetVotes()
+	if err != nil {
+		return nil, err
 	}
+
+	return &questionBasicInfo{
+		IsAnswerApproved: q.IsAnswerApproved,
+		AskerId:          q.AccountId,
+		AskerName:        user.Username,
+		QuestionId:       q.Id,
+		QuestionTitle:    q.Title,
+		QuestionBody:     q.Text,
+		Downvotes:        downvotes,
+		Upvotes:          upvotes,
+		Date:             q.Date,
+		Tags:             tags,
+	}, nil
 }
 
 func GetPostCluster(w http.ResponseWriter, r *http.Request) {
