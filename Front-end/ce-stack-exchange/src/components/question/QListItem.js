@@ -1,9 +1,9 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Chip, Grid } from "@material-ui/core";
-const green = "#32a852";
-const darkGray = "#919993";
-const gray = "#f0f0f0"
+const GREEN = "#32a852";
+const DARK_GRAY = "#919993";
+const GRAY = "#f0f0f0"
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -37,8 +37,8 @@ export default function QListItem({Q}) {
       className={classes.cardsContainer}
       bgcolor={bgColor}
     >
-      <body1 style={{color:(bgColor===green?'white':color)}}>{value}</body1>
-      <body1 style={{color:(bgColor===green?'white':color)}}>{label}</body1>
+      <body1 style={{color:(bgColor===GREEN?'white':color)}}>{value}</body1>
+      <body1 style={{color:(bgColor===GREEN?'white':color)}}>{label}</body1>
     </Box>
   );
 
@@ -54,15 +54,15 @@ export default function QListItem({Q}) {
       width={225}
       mr={2}
     >
-      {QCardInfo(gray, darkGray, "transparent", "vote", Q.votes)}
+      {QCardInfo(GRAY, DARK_GRAY, "transparent", "vote", Q.votes)}
       {QCardInfo(
-        Q.answered ? green : gray,
-        Q.answered ? green : darkGray,
-        Q.approved ? green : "transparent",
+        Q.answered ? GREEN : GRAY,
+        Q.answered ? GREEN : DARK_GRAY,
+        Q.approved ? GREEN : "transparent",
         "answer",
         Q.answers
       )}
-      {QCardInfo(gray,darkGray, "transparent", "bounty", Q.bounty)}
+      {QCardInfo(GRAY,DARK_GRAY, "transparent", "bounty", Q.bounty)}
     </Box>
   );
 

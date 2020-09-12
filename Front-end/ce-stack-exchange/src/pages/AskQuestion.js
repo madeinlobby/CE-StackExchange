@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DashboardPage() {
+export default function AskQuestionPage() {
   const classes = useStyles();
 
   return (

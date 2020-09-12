@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DashboardPage({ setNavOpenState }) {
+export default function DashboardHeader({ setNavOpenState }) {
   const classes = useStyles();
 
   return (

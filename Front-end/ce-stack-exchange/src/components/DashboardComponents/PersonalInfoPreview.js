@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
       }
 }));
 
-export default function Profile() {
+export default function PersonalInfoPreview() {
   const classes = useStyles();
 
   const getAvatarText = (name) => {
