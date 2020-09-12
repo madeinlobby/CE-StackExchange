@@ -31,7 +31,6 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(result)
 }
 
@@ -132,12 +131,18 @@ func getQuestionInfo(q *Model.Question) (*questionBasicInfo, error) {
 	var user *Model.Account
 	var tags []string
 	var upvotes, downvotes int
+	var ans []Model.Answer
 	var err error
 
 	// getting the necessary info
 	tags, err = q.GetQuestionTags()
 	user, err = Model.GetAccountById(q.AccountId)
 	upvotes, downvotes, err = q.GetVotes()
+	if err != nil {
+		return nil, err
+	}
+
+	ans, err = q.GetQuestionAnswers()
 	if err != nil {
 		return nil, err
 	}
@@ -153,6 +158,7 @@ func getQuestionInfo(q *Model.Question) (*questionBasicInfo, error) {
 		Upvotes:          upvotes,
 		Date:             q.Date,
 		Tags:             tags,
+		NumOfAns:  		  len(ans),
 	}, nil
 }
 

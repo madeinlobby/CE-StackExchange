@@ -50,7 +50,7 @@ post service:
       - number of upvotes
       - date of issue
       - tags array
-      # TODO : number of answers
+      - number of answers
 
   get answers of a question:
     service description: returns an array of answer's basic infos plus basic info of the question itself.

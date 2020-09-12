@@ -33,6 +33,7 @@ type questionBasicInfo struct {
 	Upvotes          int      `yaml:"number of upvotes"`
 	Date             string   `yaml:"date of issue"`
 	Tags             []string `yaml:"tags array"`
+	NumOfAns         int      `yaml:"number of answers"`
 }
 
 type answersOfQuestion struct {
