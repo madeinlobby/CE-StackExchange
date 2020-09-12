@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/gorilla/mux"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Controller"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
+	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Resources"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"log"
@@ -21,13 +23,7 @@ type Service struct {
 	response           string
 }
 
-// this is used to config back-end server which is at Config/Back-end.yaml
-type config struct {
-	ServerPort   int    `yaml:"server port"`
-	JwtSecretKey string `yaml:"jwt secret key"`
-}
-
-var ServerConfig config = config{}
+var ServerConfig = Resources.Config{}
 
 func getConfigs() error {
 	configFile, fileErr := ioutil.ReadFile("../Config/Back-end.yaml")
@@ -39,14 +35,23 @@ func getConfigs() error {
 }
 
 func main() {
+	// get router and add endpoints
 	r := mux.NewRouter()
 
 	Controller.HandleServices(r)
 
+	// get server configs
 	err := getConfigs()
 	if err != nil {
 		log.Fatal(err)
 	}
+
+	// init database
+	err = Model.InitDatabase(&ServerConfig)
+	if err != nil {
+		panic(err)
+	}
+	defer Model.CloseDatabase()
 
 	fmt.Println("listening on port: " + strconv.Itoa(ServerConfig.ServerPort))
 	panic(http.ListenAndServe(":"+strconv.Itoa(ServerConfig.ServerPort), r))
