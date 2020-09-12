@@ -218,7 +218,7 @@ user service:
       url: /user/profile
       http method: GET
       header: [token] # non required
-      parameters: [username] # can later be changed to user ID
+      parameters: [username] # can later be changed to user ID #params
       response:
         - error message # only if an error occurs
         - is for own # specifies whether if the user asked for their own page or not
@@ -235,7 +235,7 @@ user service:
       url: /user/posts
       http method: GET
       header: [] # non required
-      parameters:
+      parameters: #params
         - error message # only if an error occurs
         - username # can later be changed to user ID
         - option (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
@@ -252,7 +252,7 @@ tag service:
     url: /tags
     http method: GET
     header: [] # non required
-    parameters:
+    parameters: #params
       - keyword
     response:
       - error message # only if an error occurs
