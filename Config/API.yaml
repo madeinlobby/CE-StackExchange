@@ -253,7 +253,7 @@ tag service:
     http method: GET
     header: [] # non required
     parameters:
-      - keyword
+      - keyword # "" by default
     response:
       - error message # only if an error occurs
       - tag array
