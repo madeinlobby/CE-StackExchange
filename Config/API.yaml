@@ -50,6 +50,7 @@ post service:
       - number of upvotes
       - date of issue
       - tags array
+      # TODO : number of answers
 
   get answers of a question:
     service description: returns an array of answer's basic infos plus basic info of the question itself.
@@ -267,6 +268,6 @@ tag service:
     response:
       - error message # only if an error occurs
 
-#todo : get user reputation log 
+#TODO : get user reputation log 
      #header including start date, end date, start index, end index and their default values
      #response : total reputation, list of reputation logs

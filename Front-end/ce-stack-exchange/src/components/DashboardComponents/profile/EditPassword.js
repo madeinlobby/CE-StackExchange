@@ -56,7 +56,7 @@ const fields = [
   },
 ];
 
-export default function InputAdornments() {
+export default function EditPassword() {
   const classes = useStyles();
 
   const [passFields, setPassFields] = React.useState({
