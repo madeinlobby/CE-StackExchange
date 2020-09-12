@@ -16,13 +16,15 @@ class CommunityPage extends React.Component {
 
     render() {
         return (
-            <div style={{
-                display: 'flex',
-                flexWrap: 'wrap',
-                justifyContent: 'space-around',
-                overflow: 'hidden',
-            }}>
-                <GridList>
+            <div>
+                <GridList style={{
+                    display: 'flex',
+                    flexWrap: 'wrap',
+                    justifyContent: 'space-between',
+                    overflow: 'hidden',
+                    padding: 10
+
+                }}>
                     {this.SampleCommunities.map((community) => {
                         return (
                             <CommunityCard name={community.name} description={community.discription} img={community.imgurl} />

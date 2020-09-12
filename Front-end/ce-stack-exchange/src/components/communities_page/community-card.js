@@ -8,9 +8,9 @@ const styles = theme => ({
             width: "100%"
         },
         [theme.breakpoints.between("sm", "md")]: {
-            width: "47%"
+            width: "45%"
         },
-        width: "23%",
+        width: "22%",
         margin: 10,
     },
     media: {
