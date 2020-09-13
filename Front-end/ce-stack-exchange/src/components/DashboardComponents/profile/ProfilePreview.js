@@ -3,25 +3,33 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Card, CardContent, Divider, Typography } from "@material-ui/core";
 import PersonalInfoPreview from "../PersonalInfoPreview";
 
-//sample description
-const description = "ورودی ارشد 98 م از خیلی وقته عاشق AI بودم :)";
-
 const useStyles = makeStyles((theme) => ({
-  card : {
+  card: {
     marginTop: -15,
-    marginBottom : 10
-  }
+    marginBottom: 10,
+  },
 }));
 
-export default function ProfilePreview() {
+export default function ProfilePreview({
+  username,
+  firstname,
+  lastname,
+  aboutMe,
+}) {
   const classes = useStyles();
 
   return (
     <Card className={classes.card}>
-      <CardContent style={{display:'flex', flexDirection:'column'}}>
-        <PersonalInfoPreview />
+      <CardContent style={{ display: "flex", flexDirection: "column" }}>
+        <PersonalInfoPreview
+          username={username}
+          firstname={firstname}
+          lastname={lastname}
+        />
         <Divider />
-        <Typography variant="overline" style={{alignSelf:'center'}}>{description}</Typography>
+        <Typography variant="overline" style={{ alignSelf: "center" }}>
+          {aboutMe}
+        </Typography>
       </CardContent>
     </Card>
   );

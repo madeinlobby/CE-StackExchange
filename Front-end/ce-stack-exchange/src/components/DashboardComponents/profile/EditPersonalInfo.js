@@ -2,26 +2,31 @@ import React from "react";
 import { Grid, Paper, TextField, Button } from "@material-ui/core";
 import ProfilePreview from "../profile/ProfilePreview";
 
-export default function EditPresonalInfo() {
+export default function EditPresonalInfo({
+  username,
+  firstname,
+  lastname,
+  email,
+  aboutMe,
+}) {
   const [fields, setFields] = React.useState({
-    //TODO : initial value fields
-    fname: "علی",
+    fname: firstname,
     fnameHelper: "",
     fnameError: false,
 
-    lname: "علوی",
+    lname: lastname,
     lnameHelper: "",
     lnameError: false,
 
-    username: "علی76",
+    username: username,
     usernameHelper: "",
     usernameError: false,
 
-    email: "alialavi@gmail.com",
+    email: email,
     emailHelper: "",
     emailError: false,
 
-    about: " ارشد 98 م از خیلی وقته عاشق AI بودم :)",
+    about: aboutMe,
   });
 
   const isEmailUnique = () => {
@@ -43,12 +48,12 @@ export default function EditPresonalInfo() {
     fields.lnameHelper = "";
     fields.emailHelper = "";
     fields.usernameHelper = "";
-  }
+  };
 
   const submitForm = (e) => {
     e.preventDefault();
 
-    clearErrors()
+    clearErrors();
 
     if (fields.fname.length < 2) {
       fields.fnameHelper = "طول نام باید حداقل ۲ کاراکتر باشد";
@@ -104,7 +109,12 @@ export default function EditPresonalInfo() {
   return (
     <Grid container spacing={2}>
       <Grid item lg={4} xs={12}>
-        <ProfilePreview />
+        <ProfilePreview
+          username={username}
+          firstname={firstname}
+          lastname={lastname}
+          aboutMe={aboutMe}
+        />
       </Grid>
       <Grid item lg={8} xs={12}>
         <Paper style={{ marginBottom: 60 }}>
