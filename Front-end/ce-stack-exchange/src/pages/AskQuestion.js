@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Box,
   Grid,
@@ -42,16 +42,14 @@ const useStyles = makeStyles((theme) => ({
 
 export default function AskQuestionPage() {
   const classes = useStyles();
+  let allTags = [];
 
   const [questionForm, setQuestionForm] = useState({
     title: "",
     body: "",
   });
 
-  const [tags, setTags] = useState({
-    tagsList: [],
-  });
-
+  const [tags, setTags] = useState([]);
   const [autoCompleteLoading, setAutoCompleteLoading] = useState(false);
   const [postLoading, setPostLoading] = useState(false);
 
@@ -62,15 +60,8 @@ export default function AskQuestionPage() {
     });
   };
 
-  const handleTagsChange = (event, values) => {
-    setTags({
-      ...tags,
-      tagsList: values.map((item) => item),
-    });
-  };
-
   const onOpen = () => {
-    if (tags.tagsList.length === 0) {
+    if (allTags.length === 0) {
       setAutoCompleteLoading(true);
     }
   };
@@ -81,9 +72,64 @@ export default function AskQuestionPage() {
     }
   };
 
-  const submit = () => {
-    setPostLoading(true);
-  };
+  useEffect(() => {
+    if (autoCompleteLoading) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch("url" + "/tags", {
+            header: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer" + localStorage.getItem("token"),
+            },
+          });
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          const data = await response.json();
+          allTags = data["tag array"];
+          setAutoCompleteLoading(false);
+
+          //TODO : catch error message
+        } catch (error) {
+          //TODO : handle errors
+        }
+      };
+
+      fetchData();
+    }
+  }, [autoCompleteLoading]);
+
+  useEffect(() => {
+    if (postLoading) {
+      const fetchData = async () => {
+        try {
+          const response = await fetch("url" + "/user/actions/ask", {
+            method: "POST",
+            header: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer" + localStorage.getItem("token"),
+            },
+            body: JSON.stringify({
+              community: localStorage.getItem("community"),
+              title: questionForm.title,
+              ["question body"]: questionForm.body,
+              ["tags array"]: tags,
+            }),
+          });
+          if (!response.ok) {
+            throw Error(response.statusText);
+          }
+          const data = await response.json();
+          //TODO : redirect to new question page
+          //TODO : catch error message
+        } catch (error) {
+          //TODO : handle errors
+        }
+
+        fetchData();
+      };
+    }
+  }, [postLoading]);
 
   return (
     <Grid container style={{ padding: 50 }}>
@@ -92,7 +138,6 @@ export default function AskQuestionPage() {
           سوالتو بپرس
         </Typography>
       </Grid>
-
       <Grid item xs={12} md={9}>
         <Paper>
           <Grid container style={{ padding: 30 }} spacing={2}>
@@ -122,15 +167,16 @@ export default function AskQuestionPage() {
                 style={{ width: "100%", marginBottom: 20 }}
               ></TextField>
             </Grid>
-
             <Grid item xs={12}>
               <Autocomplete
                 onOpen={onOpen}
                 onClose={onClose}
                 loading={autoCompleteLoading}
-                onChange={handleTagsChange}
+                onChange={(event, values) =>
+                  setTags(values.map((item) => item))
+                }
                 className={classes.tagSearch}
-                options={tags.tagsList}
+                options={allTags}
                 autoHighlight
                 getOptionLabel={(option) => option.label}
                 renderOption={(option) => (
@@ -173,7 +219,7 @@ export default function AskQuestionPage() {
       >
         <div style={{ position: "relative" }}>
           <Button
-            onClick={submit}
+            onClick={() => setPostLoading(true)}
             variant="contained"
             color="secondary"
             disabled={postLoading}
