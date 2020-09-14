@@ -1,9 +1,9 @@
 package View
 
 import (
+	"encoding/json"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
 	"time"
@@ -18,7 +18,7 @@ func Signup(w http.ResponseWriter, r *http.Request) {
 	}
 
 	signupCredentials := signupRequest{}
-	err = yaml.Unmarshal(body, &signupCredentials)
+	err = json.Unmarshal(body, &signupCredentials)
 	if err != nil {
 		http.Error(w, "error: could not parse request's body", http.StatusBadRequest)
 		return
@@ -67,7 +67,7 @@ func Login(w http.ResponseWriter, r *http.Request) {
 	}
 
 	loginCredentials := loginRequest{}
-	err = yaml.Unmarshal(body, &loginCredentials)
+	err = json.Unmarshal(body, &loginCredentials)
 	if err != nil {
 		http.Error(w, "error: could not parse body "+err.Error(), http.StatusBadRequest)
 		return
@@ -135,7 +135,7 @@ func AskQuestion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	askQuestionInfo := askQuestionRequest{}
-	err = yaml.Unmarshal(body, &askQuestionInfo)
+	err = json.Unmarshal(body, &askQuestionInfo)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
@@ -170,7 +170,7 @@ func AnswerQuestion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	answerQuestionInfo := answerQuestionRequest{}
-	err = yaml.Unmarshal(body, &answerQuestionInfo)
+	err = json.Unmarshal(body, &answerQuestionInfo)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
@@ -204,7 +204,7 @@ func CommentOnQuestion(w http.ResponseWriter, r *http.Request) {
 	}
 
 	commentInfo := commentOnPostRequest{}
-	err = yaml.Unmarshal(body, &commentInfo)
+	err = json.Unmarshal(body, &commentInfo)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
@@ -248,7 +248,7 @@ func CommentOnAnswer(w http.ResponseWriter, r *http.Request) {
 	}
 
 	commentInfo := commentOnPostRequest{}
-	err = yaml.Unmarshal(body, &commentInfo)
+	err = json.Unmarshal(body, &commentInfo)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
@@ -292,7 +292,7 @@ func CommentOnComment(w http.ResponseWriter, r *http.Request) {
 	}
 
 	commentInfo := commentOnCommentRequest{}
-	err = yaml.Unmarshal(body, &commentInfo)
+	err = json.Unmarshal(body, &commentInfo)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
@@ -329,7 +329,7 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 	}
 
 	requestInfo := getUserPostsRequest{}
-	err = yaml.Unmarshal(body, &requestInfo)
+	err = json.Unmarshal(body, &requestInfo)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
@@ -351,8 +351,8 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 
 	// get the posts. uses the getQuestionInfo and getAnswerInfo functions in PostService.go
 	posts := struct {
-		Questions []questionBasicInfo `yaml:"array of questions"`
-		Answers   []answerBasicInfo   `yaml:"array of answers"`
+		Questions []questionBasicInfo `json:"array of questions"`
+		Answers   []answerBasicInfo   `json:"array of answers"`
 	}{}
 	if requestInfo.Opt != "a" {
 		// adds all questions
@@ -392,7 +392,7 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 
 	// returns the result
 	var out []byte
-	out, err = yaml.Marshal(&posts)
+	out, err = json.Marshal(&posts)
 	if err != nil {
 		http.Error(w, "error: could not serialize the result", http.StatusInternalServerError)
 		return
@@ -418,7 +418,7 @@ func GetUserProfileInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	request := getUserProfileInfoRequest{}
-	err = yaml.Unmarshal(body, &request)
+	err = json.Unmarshal(body, &request)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
@@ -447,7 +447,7 @@ func GetUserProfileInfo(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var result []byte
-	result, err = yaml.Marshal(&response)
+	result, err = json.Marshal(&response)
 	if err != nil {
 		http.Error(w, "error: could not serialize the result", http.StatusInternalServerError)
 		return

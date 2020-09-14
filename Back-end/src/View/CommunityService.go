@@ -1,8 +1,8 @@
 package View
 
 import (
+	"encoding/json"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
 )
@@ -15,7 +15,7 @@ func GetAllCommunities(w http.ResponseWriter, _ *http.Request) {
 	}
 
 	var response []byte
-	response, err = yaml.Marshal(&communities)
+	response, err = json.Marshal(&communities)
 	if err != nil {
 		http.Error(w, "error: could not serialize the result.", http.StatusInternalServerError)
 		return
@@ -37,7 +37,7 @@ func CreateNewCommunity(w http.ResponseWriter, r *http.Request) {
 		communityName string
 		description   string
 	}{}
-	if yaml.Unmarshal(body, &params) != nil {
+	if json.Unmarshal(body, &params) != nil {
 		http.Error(w, "error: could not read body", http.StatusBadRequest)
 		return
 	}

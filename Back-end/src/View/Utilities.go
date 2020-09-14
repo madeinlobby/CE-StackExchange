@@ -13,29 +13,29 @@ var secretKey = []byte("Xp2s5v8y/B?E(H+MbQeThVmYq3t6w9z$C&F)J@NcRfUjXnZr4u7x!A%D
 
 // post service message protocol definition
 type answerBasicInfo struct {
-	QuestionId      string `yaml:"question id"`
-	QuestionTitle   string `yaml:"question title"`
-	AccountId       string `yaml:"user id"`
-	AccountUsername string `yaml:"user username"`
-	AnswerBody      string `yaml:"answer body"`
-	Downvotes       int    `yaml:"number of downvotes"`
-	Upvotes         int    `yaml:"number of upvotes"`
-	WasHelpful      bool   `yaml:"was helpful"`
-	date            string `yaml:"date of issue"`
+	QuestionId      string `json:"question id"`
+	QuestionTitle   string `json:"question title"`
+	AccountId       string `json:"user id"`
+	AccountUsername string `json:"user username"`
+	AnswerBody      string `json:"answer body"`
+	Downvotes       int    `json:"number of downvotes"`
+	Upvotes         int    `json:"number of upvotes"`
+	WasHelpful      bool   `json:"was helpful"`
+	Date            string `json:"date of issue"`
 }
 
 type questionBasicInfo struct {
-	IsAnswerApproved string   `yaml:"is answer approved"`
-	AskerId          string   `yaml:"asker id"`
-	AskerName        string   `yaml:"asker name"`
-	QuestionId       string   `yaml:"question id"`
-	QuestionTitle    string   `yaml:"question title"`
-	QuestionBody     string   `yaml:"question body"`
-	Downvotes        int      `yaml:"number of downvotes"`
-	Upvotes          int      `yaml:"number of upvotes"`
-	Date             string   `yaml:"date of issue"`
-	Tags             []string `yaml:"tags array"`
-	NumOfAns         int      `yaml:"number of answers"`
+	IsAnswerApproved string   `json:"is answer approved"`
+	AskerId          string   `json:"asker id"`
+	AskerName        string   `json:"asker name"`
+	QuestionId       string   `json:"question id"`
+	QuestionTitle    string   `json:"question title"`
+	QuestionBody     string   `json:"question body"`
+	Downvotes        int      `json:"number of downvotes"`
+	Upvotes          int      `json:"number of upvotes"`
+	Date             string   `json:"date of issue"`
+	Tags             []string `json:"tags array"`
+	NumOfAns         int      `json:"number of answers"`
 }
 
 type answersOfQuestion struct {
@@ -45,68 +45,68 @@ type answersOfQuestion struct {
 
 // user service message protocol definition
 type signupRequest struct {
-	Username      string `yaml:"username"`
-	Password      string `yaml:"password"`
-	Email         string `yaml:"email"`
-	StudentNumber string `yaml:"student number"`
-	FirstName     string `yaml:"first name"`
-	LastName      string `yaml:"last name"`
+	Username      string `json:"username"`
+	Password      string `json:"password"`
+	Email         string `json:"email"`
+	StudentNumber string `json:"student number"`
+	FirstName     string `json:"first name"`
+	LastName      string `json:"last name"`
 }
 
 type loginRequest struct {
-	Username string `yaml:"username"`
-	Password string `yaml:"password"`
+	Username string `json:"username"`
+	Password string `json:"password"`
 }
 
 type askQuestionRequest struct {
-	Community string   `yaml:"community"`
-	Title     string   `yaml:"title"`
-	Body      string   `yaml:"question body"`
-	TagArr    []string `yaml:"tags array"`
+	Community string   `json:"community"`
+	Title     string   `json:"title"`
+	Body      string   `json:"question body"`
+	TagArr    []string `json:"tags array"`
 }
 
 type answerQuestionRequest struct {
-	AnswerBody string `yaml:"answer body"`
-	QuestionId string `yaml:"question id"`
+	AnswerBody string `json:"answer body"`
+	QuestionId string `json:"question id"`
 }
 
 type commentOnPostRequest struct {
-	AnswerId   string `yaml:"answer id"`
-	QuestionId string `yaml:"question id"`
-	Comment    string `yaml:"comment body"`
+	AnswerId   string `json:"answer id"`
+	QuestionId string `json:"question id"`
+	Comment    string `json:"comment body"`
 }
 
 type commentOnCommentRequest struct {
-	ParentId  string `yaml:"parent comment id"`
-	ChildBody string `yaml:"new comment body"`
+	ParentId  string `json:"parent comment id"`
+	ChildBody string `json:"new comment body"`
 }
 
 type getUserPostsRequest struct {
-	Username string `yaml:"username"`
-	Opt      string `yaml:"option"`
+	Username string `json:"username"`
+	Opt      string `json:"option"`
 }
 
 type getUserProfileInfoRequest struct {
-	Username string `yaml:"username"`
+	Username string `json:"username"`
 }
 
 type userProfileInfo struct {
-	IsForOwn      bool   `yaml:"is for own"`
-	Username      string `yaml:"username"`
-	FirstName     string `yaml:"first name"`
-	LastName      string `yaml:"last name"`
-	Email         string `yaml:"email"`
-	StudentNumber string `yaml:"student number"`
-	AboutMe       string `yaml:"about me"`
+	IsForOwn      bool   `json:"is for own"`
+	Username      string `json:"username"`
+	FirstName     string `json:"first name"`
+	LastName      string `json:"last name"`
+	Email         string `json:"email"`
+	StudentNumber string `json:"student number"`
+	AboutMe       string `json:"about me"`
 }
 
 // tag service message protocol definition
 type getListOfTagsRequest struct {
-	Keyword string `yaml:"keyword"`
+	Keyword string `json:"keyword"`
 }
 
 type createNewTagRequest struct {
-	TagName string `yaml:"tag name"`
+	TagName string `json:"tag name"`
 }
 
 // checks sign up credentials and returns error if one occurred

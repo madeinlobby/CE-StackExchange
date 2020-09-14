@@ -1,9 +1,9 @@
 package View
 
 import (
+	"encoding/json"
 	"github.com/gorilla/mux"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
-	"gopkg.in/yaml.v2"
 	"net/http"
 )
 
@@ -25,7 +25,7 @@ func GetQuestionInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	result, err = yaml.Marshal(&info)
+	result, err = json.Marshal(&info)
 	if err != nil {
 		http.Error(w, "error: failed at marshaling the result", http.StatusInternalServerError)
 		return
@@ -66,7 +66,7 @@ func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 		qAnswers.answers = append(qAnswers.answers, *ansInf)
 	}
 
-	result, err := yaml.Marshal(&qAnswers)
+	result, err := json.Marshal(&qAnswers)
 	if err != nil {
 		http.Error(w, "error: failed at marshaling the result.", http.StatusInternalServerError)
 		return
@@ -95,7 +95,7 @@ func GetAnswerInfo(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
 		return
 	}
-	response, err = yaml.Marshal(info)
+	response, err = json.Marshal(info)
 	if err != nil {
 		http.Error(w, "error: failed at marshaling the result.", http.StatusInternalServerError)
 		return

@@ -1,9 +1,9 @@
 package View
 
 import (
+	"encoding/json"
 	"github.com/ghemawat/stream"
 	"github.com/madeinlobby/CE-StackExchange/Back-end/src/Model"
-	"gopkg.in/yaml.v2"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -18,7 +18,7 @@ func GetListOfTags(w http.ResponseWriter, r *http.Request) {
 	}
 
 	info := getListOfTagsRequest{}
-	err = yaml.Unmarshal(body, &info)
+	err = json.Unmarshal(body, &info)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
@@ -46,7 +46,7 @@ func GetListOfTags(w http.ResponseWriter, r *http.Request) {
 	}
 
 	var result []byte
-	result, err = yaml.Marshal(tagNames)
+	result, err = json.Marshal(tagNames)
 	if err != nil {
 		http.Error(w, "error: could not marshal the result", http.StatusInternalServerError)
 		return
@@ -73,7 +73,7 @@ func CreateNewTag(w http.ResponseWriter, r *http.Request) {
 	}
 
 	info := createNewTagRequest{}
-	err = yaml.Unmarshal(body, &info)
+	err = json.Unmarshal(body, &info)
 	if err != nil {
 		http.Error(w, "error: could not parse body", http.StatusBadRequest)
 		return
