@@ -25,18 +25,18 @@ export default function Profile() {
 
   useEffect(() => {
     const fetchData = async () => {
+      var url = new URL("url"),
+        params = { username: localStorage.getItem("current-username") };
+      Object.keys(params).forEach((key) =>
+        url.searchParams.append(key, params[key])
+      );
       try {
-        const response = await fetch(
-          "url" +
-            "/user/profile" +
-            `?username=${localStorage.getItem("current-username")}`,
-          {
-            header: {
-              "Content-Type": "application/json",
-              "Authorization": "Bearer" + localStorage.getItem("token"),
-            },
-          }
-        );
+        const response = await fetch(url, {
+          header: {
+            "Content-Type": "application/json",
+            "Authorization": "Bearer" + localStorage.getItem("token"),
+          },
+        });
 
         if (!response.ok) {
           throw Error(response.statusText);
