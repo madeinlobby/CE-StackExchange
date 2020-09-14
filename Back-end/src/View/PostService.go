@@ -108,6 +108,7 @@ func getAnswerInfo(answer *Model.Answer) (*answerBasicInfo, error) {
 	var user *Model.Account
 	var upvotes, downvotes int
 	var err error
+	var q *Model.Question
 
 	// get the necessary info
 	upvotes, downvotes, err = answer.GetVotes()
@@ -116,7 +117,14 @@ func getAnswerInfo(answer *Model.Answer) (*answerBasicInfo, error) {
 		return nil, err
 	}
 
+	q, err = answer.GetQuestionOfAnswer()
+	if err != nil {
+		return nil, err
+	}
+
 	return &answerBasicInfo{
+		QuestionId:      q.Id,
+		QuestionTitle:   q.Title,
 		AccountId:       answer.AccountId,
 		AccountUsername: user.Username,
 		AnswerBody:      answer.Text,
@@ -158,7 +166,7 @@ func getQuestionInfo(q *Model.Question) (*questionBasicInfo, error) {
 		Upvotes:          upvotes,
 		Date:             q.Date,
 		Tags:             tags,
-		NumOfAns:  		  len(ans),
+		NumOfAns:         len(ans),
 	}, nil
 }
 

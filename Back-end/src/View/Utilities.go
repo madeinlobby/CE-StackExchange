@@ -13,6 +13,8 @@ var secretKey = []byte("Xp2s5v8y/B?E(H+MbQeThVmYq3t6w9z$C&F)J@NcRfUjXnZr4u7x!A%D
 
 // post service message protocol definition
 type answerBasicInfo struct {
+	QuestionId      string `yaml:"question id"`
+	QuestionTitle   string `yaml:"question title"`
 	AccountId       string `yaml:"user id"`
 	AccountUsername string `yaml:"user username"`
 	AnswerBody      string `yaml:"answer body"`

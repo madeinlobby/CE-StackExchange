@@ -30,7 +30,22 @@ community service:
       - error message # only if an error occurs
 
 ---
+#question basic info :
+# isAnswerApproved
+# question id
+# question title
+# number of votes
+# date of issue
+# tags array
+# number of answers
 
+#answer basic info :
+# isAnswerApproved
+# question id
+# question title
+# number of votes
+# date of issue
+# tags array
 post service:
   get basic information of a question:
     service description: returns basic info (info used to create a summary of a post i.e in home pages).
@@ -71,6 +86,8 @@ post service:
     parameters: [] #non required
     response:
       - error message # only if an error occurs
+      - question title
+      - question id
       - user's id
       - user's username
       - answer's body
@@ -148,7 +165,7 @@ user service:
     response:
       - error message # only if an error occurs
 
-  comment on an answer :
+  comment on an answer:
     service description: used to comment on an answer
     url: /user/actions/comment/on_answer
     http method: POST
@@ -241,30 +258,14 @@ user service:
         - option (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
       response:
         - an array of posts (post basic info)
-        
-      #question basic info : 
-      # isAnswerApproved
-      # question id
-      # question title
-      # number of votes
-      # date of issue
-      # tags array
-      # number of answers
-      
-      #answer basic info : 
-      # isAnswerApproved
-      # question id
-      # question title
-      # number of votes
-      # date of issue
-      # tags array
+
 ---
 
 tag service:
   get list of tags:
     service description: |
-     used to retrieve available tags. because upon issuing a question, only valid tags are allowed.
-     you can also pass a keyword by which tags would be filtered. only tags with a meaningfull distance from the keyword would be returned.
+      used to retrieve available tags. because upon issuing a question, only valid tags are allowed.
+      you can also pass a keyword by which tags would be filtered. only tags with a meaningfull distance from the keyword would be returned.
     url: /tags
     http method: GET
     header: [] # non required
@@ -284,6 +285,6 @@ tag service:
     response:
       - error message # only if an error occurs
 
-#TODO : get user reputation log 
-     #header including start date, end date, start index, end index and their default values
-     #response : total reputation, list of reputation logs
+      #TODO : get user reputation log
+      #header including start date, end date, start index, end index and their default values
+      #response : total reputation, list of reputation logs
