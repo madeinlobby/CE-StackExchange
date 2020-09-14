@@ -81,11 +81,6 @@ type commentOnCommentRequest struct {
 	ChildBody string `json:"new comment body"`
 }
 
-type getUserPostsRequest struct {
-	Username string `json:"username"`
-	Opt      string `json:"option"`
-}
-
 type getUserProfileInfoRequest struct {
 	Username string `json:"username"`
 }
@@ -101,10 +96,6 @@ type userProfileInfo struct {
 }
 
 // tag service message protocol definition
-type getListOfTagsRequest struct {
-	Keyword string `json:"keyword"`
-}
-
 type createNewTagRequest struct {
 	TagName string `json:"tag name"`
 }

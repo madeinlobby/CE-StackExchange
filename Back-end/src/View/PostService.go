@@ -131,7 +131,7 @@ func getAnswerInfo(answer *Model.Answer) (*answerBasicInfo, error) {
 		Downvotes:       downvotes,
 		Upvotes:         upvotes,
 		WasHelpful:      answer.WasHelpful,
-		date:            answer.Date,
+		Date:            answer.Date,
 	}, nil
 }
 
