@@ -241,7 +241,23 @@ user service:
         - option (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
       response:
         - an array of posts (post basic info)
-
+        
+      #question basic info : 
+      # isAnswerApproved
+      # question id
+      # question title
+      # number of votes
+      # date of issue
+      # tags array
+      # number of answers
+      
+      #answer basic info : 
+      # isAnswerApproved
+      # question id
+      # question title
+      # number of votes
+      # date of issue
+      # tags array
 ---
 
 tag service:
