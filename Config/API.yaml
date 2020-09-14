@@ -232,10 +232,10 @@ user service:
         essentially the same info used to create the profile info page.
         if the user asks for their own username, their own profile info would be returned
         if the user for another user profile, slightly different info would be returned
-      url: /user/profile
+      url: /user/profile?username=$username # username passed as query
       http method: GET
       header: [token] # non required
-      parameters: [username] # can later be changed to user ID #params
+      parameters: []
       response:
         - error message # only if an error occurs
         - is for own # specifies whether if the user asked for their own page or not
@@ -249,14 +249,12 @@ user service:
 
     get user posts:
       service description: returns the posts that user asked and/or answered on.
-      url: /user/posts
+      url: /user/posts?username=$username&option=$option # option specifies the posts to return: q => asked only, a => answered only, all => both.
       http method: GET
       header: [] # non required
-      parameters: #params
-        - error message # only if an error occurs
-        - username # can later be changed to user ID
-        - option (q | a | all) # specifies the posts to return: q => asked only, a => answered only, all => both.
+      parameters: [] # non required
       response:
+        - error message # only if an error occurs
         - an array of posts (post basic info)
 
 ---
@@ -266,11 +264,10 @@ tag service:
     service description: |
       used to retrieve available tags. because upon issuing a question, only valid tags are allowed.
       you can also pass a keyword by which tags would be filtered. only tags with a meaningfull distance from the keyword would be returned.
-    url: /tags
+    url: /tags?keyword=$keyword # default value: ""
     http method: GET
     header: [] # non required
-    parameters: #params
-      - keyword # "" by default
+    parameters: [] # non required
     response:
       - error message # only if an error occurs
       - tag array

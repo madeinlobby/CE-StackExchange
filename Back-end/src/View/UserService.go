@@ -320,31 +320,29 @@ func CommentOnComment(w http.ResponseWriter, r *http.Request) {
 }
 
 func GetUserPosts(w http.ResponseWriter, r *http.Request) {
-	// extract and translate body
-	var body []byte
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+	// extract query
+	query := r.URL.Query()
+	usernames, found := query["username"]
+	if !found || len(usernames[0]) < 1 {
+		http.Error(w, "error: username not specified in url", http.StatusBadRequest)
 		return
 	}
-
-	requestInfo := getUserPostsRequest{}
-	err = json.Unmarshal(body, &requestInfo)
-	if err != nil {
-		http.Error(w, "error: could not parse body", http.StatusBadRequest)
+	options, found := query["option"]
+	if !found || len(options[0]) < 1 {
+		http.Error(w, "error: option not specified in url", http.StatusBadRequest)
 		return
 	}
+	var username, option = usernames[0], options[0]
 
 	// validate the request info
-	var user *Model.Account
-	user, err = Model.GetAccountByUsername(requestInfo.Username)
+	user, err := Model.GetAccountByUsername(username)
 	if err != nil {
 		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
 		return
 	} else if user == nil {
 		http.Error(w, "error: no such user exists", http.StatusNotFound)
 		return
-	} else if requestInfo.Opt != "q" && requestInfo.Opt != "a" && requestInfo.Opt != "all" {
+	} else if option != "q" && option != "a" && option != "all" {
 		http.Error(w, "error: incorrect option", http.StatusBadRequest)
 		return
 	}
@@ -354,7 +352,7 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 		Questions []questionBasicInfo `json:"array of questions"`
 		Answers   []answerBasicInfo   `json:"array of answers"`
 	}{}
-	if requestInfo.Opt != "a" {
+	if option != "a" {
 		// adds all questions
 		questions, err := user.GetQuestions()
 		if err != nil {
@@ -372,7 +370,7 @@ func GetUserPosts(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 
-	if requestInfo.Opt != "q" {
+	if option != "q" {
 		// adds all answers
 		answers, err := user.GetAnswers()
 		if err != nil {
@@ -409,24 +407,18 @@ func GetUserProfileInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// extract and translate body
-	var body []byte
-	body, err = ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+	// extract query
+	query := r.URL.Query()
+	usernames, found := query["username"]
+	if !found || len(usernames[0]) < 1 {
+		http.Error(w, "error: username not specified in url", http.StatusBadRequest)
 		return
 	}
-
-	request := getUserProfileInfoRequest{}
-	err = json.Unmarshal(body, &request)
-	if err != nil {
-		http.Error(w, "error: could not parse body", http.StatusBadRequest)
-		return
-	}
+	username := usernames[0]
 
 	// validate the request
 	var user *Model.Account
-	user, err = Model.GetAccountByUsername(request.Username)
+	user, err = Model.GetAccountByUsername(username)
 	if err != nil {
 		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
 		return
@@ -453,6 +445,5 @@ func GetUserProfileInfo(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.WriteHeader(http.StatusOK)
 	_, _ = w.Write(result)
 }

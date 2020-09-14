@@ -10,23 +10,17 @@ import (
 )
 
 func GetListOfTags(w http.ResponseWriter, r *http.Request) {
-	// extract and translate body
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
-		http.Error(w, "error: could not read body", http.StatusInternalServerError)
+	// extract query parameters
+	query := r.URL.Query()
+	keywords, found := query["keyword"]
+	if !found || len(keywords[0]) < 1 {
+		http.Error(w, "error: keyword not specified in url", http.StatusBadRequest)
 		return
 	}
-
-	info := getListOfTagsRequest{}
-	err = json.Unmarshal(body, &info)
-	if err != nil {
-		http.Error(w, "error: could not parse body", http.StatusBadRequest)
-		return
-	}
+	keyword := keywords[0]
 
 	// processing and returning the result
-	var tags []Model.Tag
-	tags, err = Model.GetTagsByKeyword(info.Keyword)
+	tags, err := Model.GetTagsByKeyword(keyword)
 	if err != nil {
 		http.Error(w, "error: could not retrieve tags", http.StatusInternalServerError)
 		return
