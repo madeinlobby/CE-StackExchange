@@ -8,75 +8,129 @@ import {
   Grid,
   Divider,
 } from "@material-ui/core";
-import QListItem from "../../components/question/QListItem";
+import QListItem from "../../components/question&answer/QListItem";
+import AListItem from "../../components/question&answer/AListItem";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 import { makeStyles } from '@material-ui/core/styles'
 
 //sample qs
 const Qs = [
   {
-    title: "چرا جاوا امکان ارث بری از چند کلاس را نمیدهد؟",
-    answered: true,
-    approved: false,
-    tags: [
+    'title': "چرا جاوا امکان ارث بری از چند کلاس را نمیدهد؟",
+    'number of answers': 2,
+    'isAnswerApproved': false,
+    'tags array': [
       {
-        label: "جاوا",
-        href: "#java",
+        'label': "جاوا",
+        'href': "#java",
       },
       {
-        label: "شیء گرایی",
-        href: "#object-orientated",
+        'label': "شیء گرایی",
+        'href': "#object-orientated",
       },
       {
-        label: "ای پی",
-        href: "#AP",
+        'label': "ای پی",
+        'href': "#AP",
       },
     ],
-    questioner: "علوی علوی",
-    time: "1398/12/12 09:30",
-    votes: 0,
-    bounty: 25,
-    answers: 5,
+    'number of downvotes' : 0,
+    "date of issue": "1398/12/12 09:30",
+    'number of upvotes': 2,
   },
   {
-    title: "کسی میتونه این سوالو حل کنه لطفا :) ؟",
-    answered: false,
-    approved: false,
-    tags: [
+    'title': "کسی میتونه این سوالو حل کنه لطفا :) ؟",
+    'number of answers': 0,
+    'isAnswerApproved': false,
+    'tags array': [
       {
-        label: "ریاضیات گسسته",
-        href: "#Discrete-Mathematics",
+        'label': "ریاضیات گسسته",
+        'href': "#Discrete-Mathematics",
       },
       {
-        label: "نظریه اعداد",
-        href: "#number-theory",
+        'label': "نظریه اعداد",
+        'href': "#number-theory",
       },
     ],
-    questioner: "علوی علوی",
-    time: "1399/03/30 19:22",
-    votes: -1,
-    bounty: 40,
-    answers: 0,
+    'number of downvotes' : 5,
+    'date of issue': "1399/03/30 19:22",
+    'number of upvotes': 1,
   },
   {
-    title: "چجوری میشه تو ریکت با اسم یه فیلد از آبجکت بهش دسترسی داشت؟",
-    answered: true,
-    approved: true,
-    tags: [
+    'title': "چجوری میشه تو ریکت با اسم یه فیلد از آبجکت بهش دسترسی داشت؟",
+    'number of answers': 5,
+    'isAnswerApproved': true,
+    'tags array': [
       {
-        label: "فرانت اند",
-        href: "#Front-end",
+        'label': "فرانت اند",
+        'href': "#Front-end",
       },
       {
-        label: "ریکت",
-        href: "#Reactjs",
+        'label': "ریکت",
+        'href': "#Reactjs",
       },
     ],
-    questioner: "علوی علوی",
-    time: "1398/06/16 02:00",
-    votes: 8,
-    bounty: 30,
-    answers: 2,
+    'number of downvotes' : 5,
+    'date of issue': "1398/06/16 02:00",
+    'number of upvotes': 8,
+  },
+];
+
+//sample As
+const As = [
+  {
+    'title': "چرا جاوا امکان ارث بری از چند کلاس را نمیدهد؟",
+    'isAnswerApproved': false,
+    'tags array': [
+      {
+        'label': "جاوا",
+        'href': "#java",
+      },
+      {
+        'label': "شیء گرایی",
+        'href': "#object-orientated",
+      },
+      {
+        'label': "ای پی",
+        'href': "#AP",
+      },
+    ],
+    'number of downvotes' : 0,
+    "date of issue": "1398/12/12 09:30",
+    'number of upvotes': 2,
+  },
+  {
+    'title': "کسی میتونه این سوالو حل کنه لطفا :) ؟",
+    'isAnswerApproved': false,
+    'tags array': [
+      {
+        'label': "ریاضیات گسسته",
+        'href': "#Discrete-Mathematics",
+      },
+      {
+        'label': "نظریه اعداد",
+        'href': "#number-theory",
+      },
+    ],
+    'number of downvotes' : 5,
+    'date of issue': "1399/03/30 19:22",
+    'number of upvotes': 1,
+  },
+  {
+    'title': "چجوری میشه تو ریکت با اسم یه فیلد از آبجکت بهش دسترسی داشت؟",
+    'isAnswerApproved': true,
+    'tags array': [
+      {
+        'label': "فرانت اند",
+        'href': "#Front-end",
+      },
+      {
+        'label': "ریکت",
+        'href': "#Reactjs",
+      },
+    ],
+    'number of downvotes' : 5,
+    'date of issue': "1398/06/16 02:00",
+    'number of upvotes': 8,
   },
 ];
 
@@ -126,7 +180,7 @@ export default function Activities() {
               {Qs.map((q) => (
                 <>
                 <TableRow>
-                  <QListItem Q={q} />
+                  <QListItem Q={q} isForOwn={false}/>
                 </TableRow>
                 <Divider light/>
                 </>
@@ -142,10 +196,10 @@ export default function Activities() {
           </Typography>
           <TableContainer style={{ width: "100%" }}>
             <Table style={{ overflow: "hidden" }}>
-              {Qs.map((q) => (
+              {As.map((a) => (
                 <>
                 <TableRow>
-                  <QListItem Q={q} />
+                  <AListItem A={a}/>
                 </TableRow>
                 <Divider light/>
                 </>
