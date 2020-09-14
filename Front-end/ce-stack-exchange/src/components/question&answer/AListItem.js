@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Chip, Grid } from "@material-ui/core";
 import DoneIcon from "@material-ui/icons/Done";
 
-const GREEN = "#31945c";
+const GREEN = "#5eba7d";
 const DARK_GRAY = "#919993";
 const GRAY = "#f0f0f0";
 
@@ -20,14 +20,14 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 5,
     },
   },
-  doneIcon : {
+  doneIcon: {
     [theme.breakpoints.up("md")]: {
-        fontSize : 60
-      },
-  }
+      fontSize: 60,
+    },
+  },
 }));
 
-export default function AListItem({A}) {
+export default function AListItem({ A }) {
   const classes = useStyles();
 
   const ACardInfo = (borderColor, color, children) => (
@@ -44,7 +44,7 @@ export default function AListItem({A}) {
       className={classes.cardsContainer}
     >
       {children.map((child) => (
-        <body1 style={{ color: color , fontWeight : 1000}}>{child}</body1>
+        <body1 style={{ color: color, fontWeight: 1000 }}>{child}</body1>
       ))}
     </Box>
   );
@@ -61,14 +61,12 @@ export default function AListItem({A}) {
       width={155}
       mr={2}
     >
-      {ACardInfo(
-        'transparent',
-        A.isAnswerApproved ? GREEN : GRAY,
-        [<DoneIcon className={classes.doneIcon}/>]
-      )}
+      {ACardInfo("transparent", A.isAnswerApproved ? GREEN : GRAY, [
+        <DoneIcon className={classes.doneIcon} />,
+      ])}
       {ACardInfo(GRAY, DARK_GRAY, [
-        "vote",
         A["number of upvotes"] - A["number of downvotes"],
+        "vote",
       ])}
     </Box>
   );

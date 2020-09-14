@@ -1,7 +1,7 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { Box, Typography, Chip, Grid } from "@material-ui/core";
-const GREEN = "#31945c";
+const GREEN = "#5eba7d";
 const DARK_GRAY = "#919993";
 const GRAY = "#f0f0f0";
 
@@ -38,7 +38,14 @@ export default function QListItem({ Q, isForOwn }) {
       bgcolor={bgColor}
     >
       {children.map((child) => (
-        <body1 style={{ color: bgColor === GREEN ? "white" : color, fontWeight: 1000 }}>{child}</body1>
+        <body1
+          style={{
+            color: bgColor === GREEN ? "white" : color,
+            fontWeight: 1000,
+          }}
+        >
+          {child}
+        </body1>
       ))}
     </Box>
   );
@@ -59,16 +66,12 @@ export default function QListItem({ Q, isForOwn }) {
         Q["number of answers"] !== 0 ? GREEN : GRAY,
         Q["number of answers"] !== 0 ? GREEN : DARK_GRAY,
         Q["isAnswerApproved"] ? GREEN : "transparent",
-        ["answer",
-        Q["number of answers"]]
+        [Q["number of answers"], "answer"]
       )}
-      {QCardInfo(
-        GRAY,
-        DARK_GRAY,
-        "transparent",
-        ["vote",
-        Q["number of upvotes"] - Q["number of downvotes"]]
-      )}
+      {QCardInfo(GRAY, DARK_GRAY, "transparent", [
+        Q["number of upvotes"] - Q["number of downvotes"],
+        "vote",
+      ])}
     </Box>
   );
 
