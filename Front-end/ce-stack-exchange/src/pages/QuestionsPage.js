@@ -1,7 +1,7 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import PrimarySearchAppBar from "../components/general/website_header";
 import Footer from "../components/general/website_footer";
+import Header from "../components/general/website_header";
 import {
   Container,
   Box,
@@ -12,10 +12,11 @@ import {
   TableContainer,
   Table,
   TableRow,
+  CircularProgress,
 } from "@material-ui/core";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Pagination from "@material-ui/lab/Pagination";
-import QListItem from "../components/question/QListItem";
+import QListItem from "../components/question&answer/QListItem";
 
 //sample tag list
 const tags = [
@@ -45,16 +46,6 @@ const tags = [
   },
 ];
 
-function countryToFlag(isoCode) {
-  return typeof String.fromCodePoint !== "undefined"
-    ? isoCode
-        .toUpperCase()
-        .replace(/./g, (char) =>
-          String.fromCodePoint(char.charCodeAt(0) + 127397)
-        )
-    : isoCode;
-}
-
 const useStyles = makeStyles((theme) => ({
   container: {
     marginTop: 50,
@@ -74,11 +65,19 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function MainPage() {
+export default function QuestionsPage() {
   const classes = useStyles();
+
+  const [questions, setQuestions] = useState({
+    startIndex: 0,
+    endIndex: 12,
+    loading: true,
+    list: [],
+  });
+
   return (
     <>
-      <PrimarySearchAppBar />
+      <Header />
       <Container className={classes.container} maxWidth="md">
         <Box display="flex" justifyContent="space-evenly">
           <Typography variant="h5">آخرین پرسش ها</Typography>
@@ -102,18 +101,35 @@ export default function MainPage() {
             <TextField {...params} label="جستجو ..." variant="outlined" />
           )}
         />
-        <TableContainer style={{ width: "100%" }}>
-          <Table style={{ overflow: "hidden" }}>
-            {Qs.map((q) => (
-              <>
-                <Divider light />
-                <TableRow>
-                  <QListItem Q={q} />
-                </TableRow>
-              </>
-            ))}
-          </Table>
-        </TableContainer>
+        {questions.loading ? (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              padding: 80,
+            }}
+          >
+            <CircularProgress
+              color="secondary"
+              size={80}
+              value="progress"
+            ></CircularProgress>
+          </div>
+        ) : (
+          <TableContainer style={{ width: "100%" }}>
+            <Table style={{ overflow: "hidden" }}>
+              {questions.list.map((q) => (
+                <>
+                  <Divider light />
+                  <TableRow>
+                    <QListItem Q={q} />
+                  </TableRow>
+                </>
+              ))}
+            </Table>
+          </TableContainer>
+        )}
         <div className={classes.paginationContainer}>
           <Pagination count={10} variant="outlined" shape="rounded" />
         </div>

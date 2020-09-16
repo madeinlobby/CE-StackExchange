@@ -1,10 +1,13 @@
 import React from "react";
-import { Box, AppBar } from "@material-ui/core";
+import { Box } from "@material-ui/core";
 import NavBar from "../components/DashboardComponents/NavigationBar/NavBar";
-import Credits from "../views/dashboardViews/Credits";
 import { makeStyles } from "@material-ui/core/styles";
 import DashboardHeader from "../components/DashboardComponents/DashboardHeader";
+import { Route, Switch } from "react-router-dom";
 import Profile from "../views/dashboardViews/Profile";
+import Activities from "../views/dashboardViews/Activities";
+import Credits from "../views/dashboardViews/Credits";
+import PageNotFound from "../pages/errors/PageNotFound";
 
 const useStyles = makeStyles((theme) => ({
   content: {
@@ -31,7 +34,13 @@ export default function DashboardPage() {
       <DashboardHeader setNavOpenState={setNavOpenState} />
       <NavBar openState={navOpen} setNavOpenState={setNavOpenState} />
       <div className={classes.content}>
-        <Profile></Profile>
+        <Switch>
+          <Route path="/users/" component={Credits} exact />
+          <Route path="/users/profile" component={Profile} />
+          <Route path="/users/activities" component={Activities} />
+          <Route path="/users/credits" component={Credits} />
+          <Route component={PageNotFound} />
+        </Switch>
       </div>
     </Box>
   );

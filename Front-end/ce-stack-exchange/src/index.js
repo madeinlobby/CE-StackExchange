@@ -1,5 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
@@ -8,16 +9,16 @@ import { ThemeProvider } from "@material-ui/core/styles";
 import { create } from "jss";
 import rtl from "jss-rtl";
 import { StylesProvider, jssPreset } from "@material-ui/core/styles";
-import Vazir from './Vazir.woff'
+import Vazir from "./Vazir.woff";
 import { CssBaseline } from "@material-ui/core";
 
 //configure jss
 const jss = create({ plugins: [...jssPreset().plugins, rtl()] });
 
 const vazir = {
-  fontFamily: 'Vazir',
-  fontStyle: 'normal',
-  fontDisplay: 'swap',
+  fontFamily: "Vazir",
+  fontStyle: "normal",
+  fontDisplay: "swap",
   fontWeight: 400,
   src: `
     url(${Vazir}) format('woff')
@@ -27,12 +28,12 @@ const vazir = {
 const theme = createMuiTheme({
   direction: "rtl",
   typography: {
-    fontFamily: 'Vazir'
+    fontFamily: "Vazir",
   },
   overrides: {
     MuiCssBaseline: {
-      '@global': {
-        '@font-face': [vazir],
+      "@global": {
+        "@font-face": [vazir],
       },
     },
   },
@@ -41,17 +42,20 @@ const theme = createMuiTheme({
       main: "#ffb300",
     },
     secondary: {
-      main: "#115293"
-    }
+      main: "#115293",
+    },
   },
 });
 
 ReactDOM.render(
   <StylesProvider jss={jss}>
     <ThemeProvider theme={theme}>
-      <CssBaseline /> {
+      <CssBaseline />{" "}
+      {
         <React.StrictMode>
-          <App />
+          <BrowserRouter>
+            <App />
+          </BrowserRouter>
         </React.StrictMode>
       }
     </ThemeProvider>
