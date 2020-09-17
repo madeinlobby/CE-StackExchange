@@ -17,6 +17,7 @@ import {
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Pagination from "@material-ui/lab/Pagination";
 import QListItem from "../components/question&answer/QListItem";
+import { Link } from "react-router-dom";
 
 //sample tag list
 const tags = [
@@ -82,9 +83,11 @@ export default function QuestionsPage() {
         <Box display="flex" justifyContent="space-evenly">
           <Typography variant="h5">آخرین پرسش ها</Typography>
           <div style={{ flexGrow: 1 }} />
-          <Button variant="contained" color="secondary">
-            سوال بپرس
-          </Button>
+          <Link to="/ask" style={{ textDecoration: "none" }}>
+            <Button variant="contained" color="secondary">
+              سوال بپرس
+            </Button>
+          </Link>
         </Box>
         <Autocomplete
           className={classes.tagSearch}
