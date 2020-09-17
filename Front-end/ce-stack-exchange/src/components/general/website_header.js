@@ -132,7 +132,27 @@ export default function Header() {
     };
 
     const showAllNotifications = () => {
-        alert("ss")
+        alert("لیست کامل پیام ها")
+        //TODO:
+        //go to all notifications page
+    };
+
+    const goToMyProfile = () => {
+        alert("حساب من")
+        //TODO:
+        //go to my profile
+    };
+
+    const goToMyActivities = () => {
+        alert("فعالیت های من")
+        //TODO:
+        //go to my activities
+    };
+
+    const logout = () => {
+        alert("خروج")
+        //TODO:
+        //logout
     };
 
     const menuId = 'primary-search-account-menu';
@@ -146,9 +166,9 @@ export default function Header() {
             open={isMenuOpen}
             onClose={handleMenuClose}
         >
-            <MenuItem onClick={handleMenuClose}>حساب من</MenuItem>
-            <MenuItem onClick={handleMenuClose}>فعالیت های من</MenuItem>
-            <MenuItem onClick={handleMenuClose}>خروج</MenuItem>
+            <MenuItem onClick={goToMyProfile}>حساب من</MenuItem>
+            <MenuItem onClick={goToMyActivities}>فعالیت های من</MenuItem>
+            <MenuItem onClick={logout}>خروج</MenuItem>
         </Menu>
     );
 
@@ -163,7 +183,7 @@ export default function Header() {
             open={isMobileMenuOpen}
             onClose={handleMobileMenuClose}
         >
-            <MenuItem>
+            <MenuItem onClick={showAllNotifications}>
                 <IconButton aria-label="show 11 new notifications" color="inherit">
                     <Badge badgeContent={11} color="secondary">
                         <NotificationsIcon />

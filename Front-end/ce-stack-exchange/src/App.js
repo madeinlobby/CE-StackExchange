@@ -1,5 +1,4 @@
 import React from 'react';
-// import logo from './logo.svg';
 import './App.css';
 import { makeStyles } from '@material-ui/core/styles';
 import Footer from "./components/general/website_footer"
@@ -37,9 +36,19 @@ function App() {
   return (
     <div className={classes.root}>
       <Header />
-      <Paper elevation={10} style={{ alignSelf: "center", minHeight: window.innerHeight - 288 }} className={classes.paper}>
+      <Paper
+        elevation={10}
+        style={{
+          alignSelf: "center",
+          minHeight: window.innerHeight - 288,
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "space-around"
+        }}
+        className={classes.paper}
+      >
 
-        {/* <QuestionPage /> */}
+        <QuestionPage />
 
         {/* <SignUpWindow /> */}
 
