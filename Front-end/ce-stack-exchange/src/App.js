@@ -1,13 +1,13 @@
-import React from "react";
-import { Route, Switch } from "react-router-dom";
-import "./App.css";
-import { makeStyles } from "@material-ui/core/styles";
-
-import HomePage from "./pages/HomePage";
-import QuestionsPage from "./pages/QuestionsPage";
-import AskQuestion from "./pages/AskQuestion";
-import Dashboard from "./pages/Dashboard";
-import PageNotFound from "./pages/errors/PageNotFound";
+import React from 'react';
+import './App.css';
+import { makeStyles } from '@material-ui/core/styles';
+import Footer from "./components/general/website_footer"
+import Header from "./components/general/website_header"
+import { Paper, Box } from '@material-ui/core';
+import SignUpWindow from "./components/login_and_signup/signup-window"
+import LoginWindow from './components/login_and_signup/login-window';
+import QuestionPage from './components/question_page/question-page';
+import CommunityPage from './components/communities_page/commiunities-page';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -34,11 +34,21 @@ const useStyles = makeStyles((theme) => ({
 function App() {
   const classes = useStyles();
   return (
-    //   <div className={classes.root}>
+    // <div className={classes.root}>
     //   <Header />
-    //   <Paper elevation={10} style={{ alignSelf: "center", minHeight: window.innerHeight - 288 }} className={classes.paper}>
+    //   <Paper
+    //     elevation={10}
+    //     style={{
+    //       alignSelf: "center",
+    //       minHeight: window.innerHeight - 288,
+    //       display: "flex",
+    //       flexDirection: "column",
+    //       justifyContent: "space-around"
+    //     }}
+    //     className={classes.paper}
+    //   >
 
-    //     {/* <QuestionPage /> */}
+    //     <QuestionPage />
 
     //     {/* <SignUpWindow /> */}
 

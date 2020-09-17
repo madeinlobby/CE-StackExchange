@@ -2,21 +2,52 @@ import React from 'react'
 import { Paper, Container, ThemeProvider, Collapse, CircularProgress } from '@material-ui/core';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles, withStyles } from "@material-ui/core/styles";
 import { createMuiTheme } from "@material-ui/core/styles";
 import Vazir from '../../Vazir.woff'
 import { Grid } from "@material-ui/core"
 import { Alert } from "@material-ui/lab"
+import conversation from '../../resources/conversation.png'
+import idea from '../../resources/idea.png'
+import questionmark from '../../resources/questionmark.png'
 
-
-const useStyles = makeStyles((theme) => ({
+const styles = theme => ({
     root: {
         "& .MuiTextField-root": {
             margin: theme.spacing(1),
             width: "25ch",
         }
+    },
+    form: {
+        [theme.breakpoints.down("sm")]: {
+            width: "100%"
+        },
+        [theme.breakpoints.between("sm", "md")]: {
+            width: "50%"
+        },
+        width: "100%",
+    },
+    image: {
+        [theme.breakpoints.down("sm")]: {
+            width: 0
+        },
+        maxWidth: "70%",
+        maxHeight: '70%',
+        marginTop: 20,
+        marginBottom: 20,
+        filter: "blur(0.6px)",
+        opacity: 0.5
+    },
+    TextField: {
+        [theme.breakpoints.down("sm")]: {
+            width: "100%",
+        },
+        [theme.breakpoints.between("sm", "md")]: {
+            width: "45%",
+        },
+        width: "45%",
     }
-}));
+});
 
 const vazir = {
     fontFamily: 'Vazir',
@@ -54,7 +85,6 @@ class SignUpWindow extends React.Component {
     constructor(props) {
         super(props)
         this.state = {
-            classes: useStyles,
             username: "",
             password: "",
             confirmPassword: "",
@@ -195,129 +225,135 @@ class SignUpWindow extends React.Component {
     }
 
     render() {
+        const { classes } = this.props;
         return (
-            <ThemeProvider theme={theme}>
-                <div style={{ width: "80%", paddingTop: "4em", paddingBottom: "4em" }}>
-                    <Container>
-                        <Collapse in>
-                            {/* <Collapse in={this.state.successAlertOpen}> */}
-                            <Alert style={{ marginBottom: 10, width: "95%" }} severity="success">
-                                <CircularProgress color="inherit" size={20} style={{ marginLeft: 10 }} />
+            <div style={{ display: "flex", justifyContent: "space-between", padding: "3em" }}>
+                <ThemeProvider theme={theme}>
+                    <div className={classes.form} style={{ display: "flex", justifyContent: "space-around", flexDirection: "row" }}>
+                        <Container>
+                            <Collapse in={this.state.successAlertOpen}>
+                                {/* <Collapse in={this.state.successAlertOpen}> */}
+                                <Alert style={{ marginBottom: 10, width: "95%" }} severity="success">
+                                    <CircularProgress color="inherit" size={20} style={{ marginLeft: 10 }} />
                                 ثبت نام با موفقیت انجام شد!
                             </Alert>
-                        </Collapse>
-                        <form className={this.state.classes.root} noValidate autoComplete="off">
-                            <div>
-                                <Grid container spacing={5}>
-                                    <Grid container item xs={12} spacing={3}>
-                                        <TextField
-                                            autoComplete
-                                            color="secondary"
-                                            style={{ margin: 10 }}
-                                            onChange={this.handleUsernameChange}
-                                            required
-                                            error={this.state.isUsernameError}
-                                            id={this.state.usernameBorder}
-                                            helperText={this.state.usernameHelper}
-                                            className="username"
-                                            label="نام کاربری"
-                                            variant="outlined"
-                                        />
-                                        <TextField
-                                            autoComplete
-                                            color="secondary"
-                                            style={{ margin: 10 }}
-                                            onChange={this.handleEmailChange}
-                                            required
-                                            id={this.state.emailBorder}
-                                            error={this.state.isEmailError}
-                                            helperText={this.state.emailHelper}
-                                            className="email"
-                                            label="ایمیل"
-                                            variant="outlined"
-                                        />
-                                    </Grid>
-                                    <Grid container item xs={12} spacing={3}>
-                                        <TextField
-                                            autoComplete
-                                            color="secondary"
-                                            style={{ margin: 10 }}
-                                            onChange={this.handleFirstnameChange}
-                                            required
-                                            id={this.state.firstnameBorder}
-                                            error={this.state.isFirstnameError}
-                                            helperText={this.state.firstnameHelper}
-                                            className="firstName"
-                                            label="نام"
-                                            variant="outlined"
-                                        />
-                                        <TextField
-                                            autoComplete
-                                            color="secondary"
-                                            style={{ margin: 10 }}
-                                            onChange={this.handleLastnameChange}
-                                            required
-                                            id={this.state.lastnameBorder}
-                                            error={this.state.isLastnameError}
-                                            helperText={this.state.lastnameHelper}
-                                            className="lastName"
-                                            label="نام خانوادگی"
-                                            variant="outlined"
-                                        />
-                                    </Grid>
-                                    <Grid container item xs={12} spacing={3}>
-                                        <TextField
-                                            autoComplete
-                                            color="secondary"
-                                            style={{ margin: 10 }}
-                                            onChange={this.handlePasswordChange}
-                                            required
-                                            id={this.state.passwordBorder}
-                                            error={this.state.isPasswordError}
-                                            className="password"
-                                            label="رمز عبور"
-                                            type="password"
-                                            helperText={this.state.passwordHelper}
-                                            variant="outlined"
-                                        />
+                            </Collapse>
+                            <form className={classes.root} noValidate autoComplete="off">
+                                <div>
+                                    <Grid container spacing={5} alignContent="space-around">
+                                        <Grid container item spacing={3} alignContent="space-around">
+                                            <TextField
+                                                autoComplete
+                                                color="secondary"
+                                                style={{ margin: 10 }}
+                                                onChange={this.handleUsernameChange}
+                                                required
+                                                error={this.state.isUsernameError}
+                                                id={this.state.usernameBorder}
+                                                helperText={this.state.usernameHelper}
+                                                className={classes.TextField}
+                                                label="نام کاربری"
+                                                variant="outlined"
+                                            />
+                                            <TextField
+                                                autoComplete
+                                                color="secondary"
+                                                style={{ margin: 10 }}
+                                                onChange={this.handleEmailChange}
+                                                required
+                                                id={this.state.emailBorder}
+                                                error={this.state.isEmailError}
+                                                helperText={this.state.emailHelper}
+                                                className={classes.TextField}
+                                                label="ایمیل"
+                                                variant="outlined"
+                                            />
+                                        </Grid>
+                                        <Grid container item spacing={3} alignContent="space-around">
+                                            <TextField
+                                                autoComplete
+                                                color="secondary"
+                                                style={{ margin: 10 }}
+                                                onChange={this.handleFirstnameChange}
+                                                required
+                                                id={this.state.firstnameBorder}
+                                                error={this.state.isFirstnameError}
+                                                helperText={this.state.firstnameHelper}
+                                                className={classes.TextField}
+                                                label="نام"
+                                                variant="outlined"
+                                            />
+                                            <TextField
+                                                autoComplete
+                                                color="secondary"
+                                                style={{ margin: 10 }}
+                                                onChange={this.handleLastnameChange}
+                                                required
+                                                id={this.state.lastnameBorder}
+                                                error={this.state.isLastnameError}
+                                                helperText={this.state.lastnameHelper}
+                                                className={classes.TextField}
+                                                label="نام خانوادگی"
+                                                variant="outlined"
+                                            />
+                                        </Grid>
+                                        <Grid container item spacing={3} alignContent="space-around">
+                                            <TextField
+                                                autoComplete
+                                                color="secondary"
+                                                style={{ margin: 10 }}
+                                                onChange={this.handlePasswordChange}
+                                                required
+                                                id={this.state.passwordBorder}
+                                                error={this.state.isPasswordError}
+                                                className={classes.TextField}
+                                                label="رمز عبور"
+                                                type="password"
+                                                helperText={this.state.passwordHelper}
+                                                variant="outlined"
+                                            />
 
-                                        <TextField
-                                            autoComplete
-                                            color="secondary"
-                                            style={{ margin: 10 }}
-                                            onChange={this.handleConfirmPasswordChange}
-                                            required
-                                            id={this.state.confirmPasswordBorder}
-                                            error={this.state.isConfirmPasswordError}
-                                            helperText={this.state.confirmPasswordHelper}
-                                            className="confirmPassword"
-                                            label="تکرار رمز عبور"
-                                            type="password"
-                                            variant="outlined"
-                                        />
-                                    </Grid>
-                                    <Grid
-                                        container
-                                        item
-                                        xs={10}
-                                        spacing={0}
-                                        style={{ backgroundColor: "red" }}
-                                        alignContent="space-between"
-                                        alignItems="center"
-                                        justify="space-between">
-                                        <Button variant="contained" color="secondary" onClick={this.submitRegister}>
-                                            ثبت نام
+                                            <TextField
+                                                autoComplete
+                                                color="secondary"
+                                                style={{ margin: 10 }}
+                                                onChange={this.handleConfirmPasswordChange}
+                                                required
+                                                id={this.state.confirmPasswordBorder}
+                                                error={this.state.isConfirmPasswordError}
+                                                helperText={this.state.confirmPasswordHelper}
+                                                className={classes.TextField}
+                                                label="تکرار رمز عبور"
+                                                type="password"
+                                                variant="outlined"
+                                            />
+                                        </Grid>
+                                        <Grid
+                                            container
+                                            item
+                                            xs={10}
+                                            spacing={0}
+                                            // style={{ backgroundColor: "red" }}
+                                            alignContent="space-between"
+                                            alignItems="center"
+                                            justify="space-between">
+                                            <Button variant="contained" color="secondary" onClick={this.submitRegister}>
+                                                ثبت نام
                                             </Button>
-                                        <a href="#">ثبت نام کرده‌اید؟ وارد شوید!</a>
+                                            <a href="#">ثبت نام کرده‌اید؟ وارد شوید!</a>
+                                        </Grid>
                                     </Grid>
-                                </Grid>
-                            </div>
-                        </form>
-                    </Container>
+                                </div>
+                            </form>
+                        </Container>
+                    </div>
+                </ThemeProvider>
+                <div style={{ display: "flex", justifyContent: "center" }}>
+                    <img src={conversation} className={classes.image} />
                 </div>
-            </ThemeProvider>
+            </div>
         );
     }
 }
 
-export default SignUpWindow
+export default withStyles(styles)(SignUpWindow)
