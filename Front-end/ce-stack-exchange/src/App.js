@@ -1,8 +1,14 @@
-import React from "react";
+import React from 'react';
+import './App.css';
+import { makeStyles } from '@material-ui/core/styles';
+import Footer from "./components/general/website_footer"
+import Header from "./components/general/website_header"
+import { Paper, Box } from '@material-ui/core';
+import SignUpWindow from "./components/login_and_signup/signup-window"
+import LoginWindow from './components/login_and_signup/login-window';
+import QuestionPage from './components/question_page/question-page';
+import CommunityPage from './components/communities_page/commiunities-page';
 import { Route, Switch } from "react-router-dom";
-import "./App.css";
-import { makeStyles } from "@material-ui/core/styles";
-
 import HomePage from "./pages/HomePage";
 import QuestionsPage from "./pages/QuestionsPage";
 import AskQuestion from "./pages/AskQuestion";
