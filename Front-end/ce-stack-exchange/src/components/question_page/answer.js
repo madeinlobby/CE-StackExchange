@@ -3,6 +3,7 @@ import { Paper, Tooltip } from '@material-ui/core';
 import ThumbDownAlt from '@material-ui/icons/ThumbDownAlt'
 import ThumbUpAlt from '@material-ui/icons/ThumbUpAlt'
 import Comment from './comment'
+import AddComment from './add-comment';
 
 const GREEN_COLOR = "#7fc91e"
 const RED_COLOR = "#b3004a"
@@ -68,11 +69,15 @@ class Answer extends React.Component {
                     </div>
 
                 </Paper>
+                <div>
+                    <h5>نظرات</h5>
+                </div>
                 {this.props.answer.comments.map((comment) => {
                     return (
                         <Comment comment={comment} />
                     );
                 })}
+                <AddComment />
             </div>
         );
     }
