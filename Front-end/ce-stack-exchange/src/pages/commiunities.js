@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Signup() {
+function Communities() {
     const classes = useStyles();
     return (
         <div>
@@ -64,4 +64,4 @@ function Signup() {
     );
 }
 
-export default SignUp;
+export default Communities;
