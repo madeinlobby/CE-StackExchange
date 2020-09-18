@@ -8,6 +8,12 @@ import SignUpWindow from "./components/login_and_signup/signup-window"
 import LoginWindow from './components/login_and_signup/login-window';
 import QuestionPage from './components/question_page/question-page';
 import CommunityPage from './components/communities_page/commiunities-page';
+import { Route, Switch } from "react-router-dom";
+import HomePage from "./pages/HomePage";
+import QuestionsPage from "./pages/QuestionsPage";
+import AskQuestion from "./pages/AskQuestion";
+import Dashboard from "./pages/Dashboard";
+import PageNotFound from "./pages/errors/PageNotFound";
 
 const useStyles = makeStyles((theme) => ({
   root: {
