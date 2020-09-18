@@ -16,6 +16,27 @@ type Account struct {
 	Deleted         bool   `json:"deleted"`
 }
 
+func initAccountTable() error {
+	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS accounts
+		(
+			user_id           serial PRIMARY KEY,
+			username          varchar(50) UNIQUE  NOT NULL,
+			password          varchar(50)         NOT NULL,
+			student_number    char(9) UNIQUE      NOT NULL,
+			email             varchar(200) UNIQUE NOT NULL,
+			is_user_admin     boolean             NOT NULL,
+			first_name        varchar(50)         NOT NULL,
+			last_name         varchar(50)         NOT NULL,
+			about_me          text,
+			date_of_issue     date                NOT NULL DEFAULT current_date,
+			profile_image_url text,
+			reputation        int8                         DEFAULT 0,
+			deleted           boolean                      DEFAULT false
+		);
+	`)
+	return err
+}
+
 func GetAllAccounts(deleted ...bool) ([]Account, error) {
 	return nil, nil
 }

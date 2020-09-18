@@ -1,0 +1,122 @@
+CREATE TABLE IF NOT EXISTS accounts
+(
+    user_id           serial PRIMARY KEY,
+    username          varchar(50) UNIQUE  NOT NULL,
+    password          varchar(50)         NOT NULL,
+    student_number    char(9) UNIQUE      NOT NULL,
+    email             varchar(200) UNIQUE NOT NULL,
+    is_user_admin     boolean             NOT NULL,
+    first_name        varchar(50)         NOT NULL,
+    last_name         varchar(50)         NOT NULL,
+    about_me          text,
+    date_of_issue     date                NOT NULL DEFAULT current_date,
+    profile_image_url text,
+    reputation        int8                         DEFAULT 0,
+    deleted           boolean                      DEFAULT false
+);
+
+CREATE TABLE IF NOT EXISTS communities
+(
+    community_id   serial PRIMARY KEY,
+    community_name varchar(100) NOT NULL UNIQUE,
+    description    text,
+    is_deleted     boolean      NOT NULL DEFAULT False,
+    date_of_issue  date         NOT NULL DEFAULT current_date
+);
+
+CREATE TABLE IF NOT EXISTS questions
+(
+    question_id        serial PRIMARY KEY,
+    user_id            int8 NOT NULL,
+    community_id       int8 NOT NULL,
+    question_title     text NOT NULL,
+    question_body      text NOT NULL,
+    date_of_issue      date NOT NULL DEFAULT current_date,
+    view_count         int8 NOT NULL DEFAULT 0,
+    is_deleted         boolean       DEFAULT False,
+    is_answer_approved boolean       DEFAULT False,
+    Foreign Key (user_id)
+        references accounts (user_id),
+    FOREIGN KEY (community_id)
+        references communities (community_id)
+);
+
+CREATE TABLE IF NOT EXISTS answers
+(
+    answer_id          serial PRIMARY KEY,
+    user_id            int8 NOT NULL,
+    question_id        int8 NOT NULL,
+    answer_body        text NOT NULL,
+    date_of_issue      date NOT NULL DEFAULT current_date,
+    is_answer_approved boolean,
+    is_deleted         boolean       DEFAULT false,
+    FOREIGN KEY (user_id)
+        REFERENCES accounts (user_id),
+    foreign key (question_id)
+        references questions (question_id)
+);
+
+CREATE TABLE IF NOT EXISTS approvals
+(
+    approval_id   serial PRIMARY KEY,
+    answer_id     int8    NOT NULL,
+    date_of_issue date    NOT NULL DEFAULT current_date,
+    is_deleted    boolean NOT NULL DEFAULT False,
+    FOREIGN KEY (answer_id)
+        references answers (answer_id)
+);
+
+CREATE TABLE IF NOT EXISTS bookmarks
+(
+    bookmark_id   serial primary key,
+    user_id       int8    not null,
+    question_id   int8    not null,
+    date_of_issue date    not null default current_date,
+    is_deleted    boolean not null default false,
+    foreign key (user_id) references accounts (user_id),
+    foreign key (question_id) references questions (question_id)
+);
+
+CREATE TABLE IF NOT EXISTS comments
+(
+    comment_id    serial primary key,
+    user_id       int8    NOT NULL,
+    question_id   int8,
+    answer_id     int8,
+    comment_body  text    NOT NULL,
+    date_of_issue date    not null default current_date,
+    is_deleted    boolean not null default false,
+    foreign key (user_id) references accounts (user_id),
+    foreign key (question_id) references questions (question_id),
+    foreign key (answer_id) references answers (answer_id)
+);
+
+CREATE TABLE IF NOT EXISTS tags
+(
+    tag_id        serial primary key,
+    tag_name      varchar(100) NOT NULL UNIQUE,
+    date_of_issue date         not null default current_date,
+    is_deleted    boolean      not null default false
+);
+
+CREATE TABLE If Not Exists tag_questions
+(
+    question_id int8 not null,
+    tag_id      int8 not null,
+    foreign key (question_id) references questions (question_id),
+    foreign key (tag_id) references tags (tag_id)
+);
+
+CREATE TABLE IF NOT EXISTS votes
+(
+    vote_id       serial primary key,
+    user_id       int8    not null,
+    question_id   int8,
+    answer_id     int8,
+    is_upvote     boolean Not Null,
+    date_of_issue date    not null default current_date,
+    is_deleted    boolean not null default false,
+    foreign key (user_id) references accounts (user_id),
+    foreign key (question_id) references questions (question_id),
+    foreign key (answer_id) references answers (answer_id)
+);
