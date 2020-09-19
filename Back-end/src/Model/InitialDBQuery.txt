@@ -1,3 +1,5 @@
+-- initial query that creates the tables and some other initial queries
+
 CREATE TABLE IF NOT EXISTS accounts
 (
     user_id           serial PRIMARY KEY,
