@@ -13,16 +13,6 @@ import (
 	"strconv"
 )
 
-//the blueprint by which methods can be added to the Config/API.yaml
-type Service struct {
-	ServiceDescription string
-	Url                string
-	HttpMethod         string
-	Header             []string
-	Parameters         []string
-	response           string
-}
-
 var ServerConfig = Resources.Config{}
 
 func getConfigs() error {

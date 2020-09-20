@@ -4,13 +4,31 @@ type Answer struct {
 	Id         string `json:"id"`
 	AccountId  string `json:"account_id"`
 	QuestionId string `json:"question_id"`
-	Text       string `json:"text"`
+	Body       string `json:"text"`
 	Date       string `json:"date"`
 	Deleted    bool   `json:"deleted"`
-	WasHelpful bool   `json:"was_helpful"`
+	IsApproved bool   `json:"was_helpful"`
 }
 
-func GetAllAnswers(deleted ...bool) ([]Answer, error) {
+func initAnswerTable() error {
+	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS answers
+		(
+		answer_id          serial PRIMARY KEY,
+		user_id            int8 NOT NULL,
+		question_id        int8 NOT NULL,
+		answer_body        text NOT NULL,
+		date_of_issue      date NOT NULL DEFAULT current_date,	
+		is_answer_approved boolean,
+		is_deleted         boolean       DEFAULT false,
+		FOREIGN KEY (user_id)	REFERENCES accounts (user_id),
+		foreign key (question_id)	references questions (question_id)
+		);
+	`)
+	return err
+}
+
+func GetAllAnswers() ([]Answer, error) {
+
 	return nil, nil
 }
 

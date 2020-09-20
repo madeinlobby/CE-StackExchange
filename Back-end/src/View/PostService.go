@@ -127,10 +127,10 @@ func getAnswerInfo(answer *Model.Answer) (*answerBasicInfo, error) {
 		QuestionTitle:   q.Title,
 		AccountId:       answer.AccountId,
 		AccountUsername: user.Username,
-		AnswerBody:      answer.Text,
+		AnswerBody:      answer.Body,
 		Downvotes:       downvotes,
 		Upvotes:         upvotes,
-		WasHelpful:      answer.WasHelpful,
+		WasHelpful:      answer.IsApproved,
 		Date:            answer.Date,
 	}, nil
 }
@@ -144,7 +144,7 @@ func getQuestionInfo(q *Model.Question) (*questionBasicInfo, error) {
 
 	// getting the necessary info
 	tags, err = q.GetQuestionTags()
-	user, err = Model.GetAccountById(q.AccountId)
+	user, err = Model.GetAccountById(q.UserId)
 	upvotes, downvotes, err = q.GetVotes()
 	if err != nil {
 		return nil, err
@@ -157,7 +157,7 @@ func getQuestionInfo(q *Model.Question) (*questionBasicInfo, error) {
 
 	return &questionBasicInfo{
 		IsAnswerApproved: q.IsAnswerApproved,
-		AskerId:          q.AccountId,
+		AskerId:          q.UserId,
 		AskerName:        user.Username,
 		QuestionId:       q.Id,
 		QuestionTitle:    q.Title,

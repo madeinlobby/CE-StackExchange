@@ -81,10 +81,6 @@ type commentOnCommentRequest struct {
 	ChildBody string `json:"new comment body"`
 }
 
-type getUserProfileInfoRequest struct {
-	Username string `json:"username"`
-}
-
 type userProfileInfo struct {
 	IsForOwn      bool   `json:"is for own"`
 	Username      string `json:"username"`

@@ -8,6 +8,21 @@ type Bookmark struct {
 	Deleted    bool   `json:"deleted"`
 }
 
+func initBookmarkTable() error {
+	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS bookmarks
+		(
+			bookmark_id   serial primary key,
+			user_id       int8    not null,
+			question_id   int8    not null,
+			date_of_issue date    not null default current_date,
+			is_deleted    boolean not null default false,
+			foreign key (user_id) references accounts (user_id),
+			foreign key (question_id) references questions (question_id)
+		);
+	`)
+	return err
+}
+
 func GetAllBookmarks(deleted ...bool) ([]Bookmark, error) {
 	return nil, nil
 }
