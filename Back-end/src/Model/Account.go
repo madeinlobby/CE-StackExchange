@@ -50,7 +50,7 @@ func GetAccountById(accountId string, deleted ...bool) (*Account, error) {
 	}
 
 	// retrieving and processing the result
-	var user Account
+	var user = Account{}
 	r := db.QueryRow(`SELECT * FROM accounts WHERE user_id = $1 AND deleted = $2`, accountId, isDeleted)
 	err := r.Scan(&user.Id, &user.Username, &user.Password, &user.StudentNumber,
 		&user.Email, &user.IsAdmin, &user.FirstName, &user.LastName, &user.AboutMe,
@@ -74,7 +74,7 @@ func GetAccountByUsername(username string, deleted ...bool) (*Account, error) {
 	}
 
 	// retrieving and processing the result
-	var user Account
+	var user = Account{}
 	r := db.QueryRow(`SELECT * FROM accounts WHERE username = $1 AND deleted = $2`, username, isDeleted)
 	err := r.Scan(&user.Id, &user.Username, &user.Password, &user.StudentNumber,
 		&user.Email, &user.IsAdmin, &user.FirstName, &user.LastName, &user.AboutMe,
@@ -98,7 +98,7 @@ func GetAccountByEmail(accountEmail string, deleted ...bool) (*Account, error) {
 	}
 
 	// retrieving and processing the result
-	var user Account
+	var user = Account{}
 	r := db.QueryRow(`SELECT * FROM accounts WHERE email = $1 AND deleted = $2`, accountEmail, isDeleted)
 	err := r.Scan(&user.Id, &user.Username, &user.Password, &user.StudentNumber,
 		&user.Email, &user.IsAdmin, &user.FirstName, &user.LastName, &user.AboutMe,
@@ -122,7 +122,7 @@ func GetAccountByStudentNumber(accountStudentNumber string, deleted ...bool) (*A
 	}
 
 	// retrieving and processing the result
-	var user Account
+	var user = Account{}
 	r := db.QueryRow(`SELECT * FROM accounts WHERE student_number = $1 AND deleted = $2`, accountStudentNumber, isDeleted)
 	err := r.Scan(&user.Id, &user.Username, &user.Password, &user.StudentNumber,
 		&user.Email, &user.IsAdmin, &user.FirstName, &user.LastName, &user.AboutMe,
@@ -154,7 +154,7 @@ func NewAccount(username string, password string, isAdmin bool, firstName string
 		username, password, studentNumber, email, isAdmin, firstName, lastName, imageUrl)
 
 	// retrieves the created account and returns the result
-	var newUser Account
+	var newUser = Account{}
 	err := r.Scan(&newUser.Id, &newUser.Username, &newUser.Password, &newUser.StudentNumber,
 		&newUser.Email, &newUser.IsAdmin, &newUser.FirstName, &newUser.LastName, &newUser.AboutMe,
 		&newUser.CreationDate, &newUser.ProfileImageUrl, &newUser.Reputation, &newUser.Deleted)
@@ -176,8 +176,14 @@ func (user *Account) EditAboutMe(aboutMe string) error {
 	return r.Scan(&user.AboutMe)
 }
 
+// updates is_deleted and updates the value in the given object
 func (user *Account) DeleteAccount() error {
-	return nil
+	r := db.QueryRow(`UPDATE accounts 
+							SET accounts.is_deleted = TRUE
+							WHERE user_id = $1
+							RETURNING accounts.is_deleted					
+	`, user.Id)
+	return r.Scan(&user.Deleted)
 }
 
 // updates entry and updates the value in given object if successful
@@ -220,7 +226,7 @@ func (user *Account) EditAccountImage(imageUrl string) error {
 	return r.Scan(&user.ProfileImageUrl)
 }
 
-func (user *Account) AddAccountReputation(addAmount int) error {
+func (user *Account) AddReputation(addAmount int) error {
 	r := db.QueryRow(`UPDATE accounts 
 							SET reputation = $2
 							WHERE user_id = $1
@@ -234,7 +240,7 @@ func (answer *Answer) GetAnswerAccount() (*Account, error) {
 							WHERE user_id = $1
 	`, answer.AccountId)
 
-	var user Account
+	var user = Account{}
 	err := r.Scan(&user.Id, &user.Username, &user.Password, &user.StudentNumber,
 		&user.Email, &user.IsAdmin, &user.FirstName, &user.LastName, &user.AboutMe,
 		&user.CreationDate, &user.ProfileImageUrl, &user.Reputation, &user.Deleted)

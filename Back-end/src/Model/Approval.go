@@ -1,5 +1,10 @@
 package Model
 
+import (
+	"database/sql"
+	"errors"
+)
+
 type Approval struct {
 	Id       string `json:"id"`
 	AnswerId string `json:"answer_id"`
@@ -21,18 +26,49 @@ func initApprovalTable() error {
 	return err
 }
 
-func GetAllApprovals(deleted ...bool) ([]Approval, error) {
-	return nil, nil
-}
-
 func GetApprovalById(approvalId string, deleted ...bool) (*Approval, error) {
-	return nil, nil
+	// checking if the deleted config is specified
+	var isDeleted = false
+	if len(deleted) != 0 {
+		isDeleted = deleted[0]
+	}
+
+	// retrieving and processing the result
+	var approval = Approval{}
+	r := db.QueryRow(`SELECT * FROM approvals WHERE approval_id = $1 AND deleted = $2`, approvalId, isDeleted)
+	err := r.Scan(&approval.Id, &approval.AnswerId, &approval.Date, &approval.Deleted)
+
+	switch err {
+	case sql.ErrNoRows:
+		return nil, errors.New("there is no such approval")
+	case nil:
+		return &approval, nil
+	default:
+		return nil, err
+	}
 }
 
 func NewApproval(answerId string) (*Approval, error) {
-	return nil, nil
+	// add new approval
+	r := db.QueryRow(`INSERT INTO approvals (answer_id)
+					  values ($1) returning *;`, answerId)
+
+	// retrieves the created approval and returns the result
+	var newApproval = Approval{}
+	err := r.Scan(&newApproval.Id, &newApproval.AnswerId, &newApproval.Date, &newApproval.Deleted)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &newApproval, nil
 }
 
 func (app *Approval) DeleteApproval() error {
-	return nil
+	r := db.QueryRow(`UPDATE approvals 
+							SET approvals.is_deleted = TRUE
+							WHERE approval_id = $1
+							RETURNING approvals.is_deleted					
+	`, app.Id)
+	return r.Scan(&app.Deleted)
 }
