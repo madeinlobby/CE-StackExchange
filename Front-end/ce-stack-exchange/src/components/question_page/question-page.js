@@ -23,7 +23,6 @@ class QuestionPage extends React.Component {
   render() {
     return (
       <>
-        <Header />
         <div style={{ padding: 10 }}>
           <QuestionPart question={this.sampleQuestion} />
           <h3>نظرات</h3>
@@ -38,7 +37,6 @@ class QuestionPage extends React.Component {
           <h2>پاسخ شما</h2>
           <AddAnswer />
         </div>
-        <Footer />
       </>
     );
   }

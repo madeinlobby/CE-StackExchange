@@ -16,7 +16,6 @@ class CommunityPage extends React.Component {
   render() {
     return (
       <div>
-        <Header />
         <GridList
           style={{
             display: "flex",
@@ -36,7 +35,6 @@ class CommunityPage extends React.Component {
             );
           })}
         </GridList>
-        <Footer />
       </div>
     );
   }

@@ -1,10 +1,10 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import { makeStyles } from '@material-ui/core/styles';
-import Footer from "./components/general/website_footer"
-import Header from "./components/general/website_header"
+import Footer from "../components/general/website_footer"
+import Header from "../components/general/website_header"
 import { Paper } from '@material-ui/core';
-import SignUpWindow from "./components/login_and_signup/signup-window"
+import SignUpWindow from "../components/login_and_signup/signup-window"
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Signup() {
+export default function Signup() {
     const classes = useStyles();
     return (
         <div>
@@ -64,4 +64,3 @@ function Signup() {
     );
 }
 
-export default SignUp;

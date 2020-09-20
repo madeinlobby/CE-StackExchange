@@ -1,8 +1,8 @@
 import React from 'react';
-import './App.css';
+import '../App.css';
 import { makeStyles } from '@material-ui/core/styles';
-import Footer from "./components/general/website_footer"
-import Header from "./components/general/website_header"
+import Footer from "../components/general/website_footer"
+import Header from "../components/general/website_header"
 import { Paper } from '@material-ui/core';
 import QuestionPage from '../components/question_page/question-page';
 
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Signup() {
+export default function Question() {
     const classes = useStyles();
     return (
         <div>
@@ -64,4 +64,3 @@ function Signup() {
     );
 }
 
-export default SignUp;

@@ -8,7 +8,6 @@ import {
 } from "@material-ui/core";
 import React from "react";
 import Image from "../resources/HomePage.gif";
-// import "animate.css/animate.min.css";
 import ScrollAnimation from "react-animate-on-scroll";
 import "./animation.css";
 import question from "../resources/question.jpg";
@@ -16,6 +15,35 @@ import answer from "../resources/answer.png";
 import reputation from "../resources/reputation.png";
 import bounty from "../resources/bounty.png";
 import Footer from "../components/general/website_footer";
+import { Link } from "react-router-dom";
+
+const tutorialBoxes = [
+  {
+    title: "سوال داری ؟!",
+    body:
+      " تو سه سوت یه سوال پست کن و متخصصین اون امر ! سریعا به کمکت میان =)))",
+    right: false,
+    img: question,
+  },
+  {
+    title: "جواب سوالیو میدونی ؟",
+    body: " زیر همون سوال پستش کن و اعتبار کسب کن =)))))",
+    right: true,
+    img: answer,
+  },
+  {
+    title: "اعتبار کسب کردی ؟!",
+    body: " بیشتر B)عتبار اعتبار میاره :) هر چی بیشتر دسترسی ها و قدرت شما هم",
+    right: false,
+    img: reputation,
+  },
+  {
+    title: " شب امتحان ؟ :) سریع جواب میخوای ؟",
+    body: "  میتونی برای بهترین پاسخ اعتبار جایزه بذاری !",
+    right: true,
+    img: bounty,
+  },
+];
 
 const useStyles = makeStyles((theme) => ({
   wrapper: {
@@ -47,10 +75,54 @@ const useStyles = makeStyles((theme) => ({
   subTitle: {
     color: "white",
   },
+  tutorialBox: {
+    borderRadius: 10,
+    padding: 20,
+  },
+  tutorialImg: {
+    width: "auto",
+    height: 200,
+    margin: 50,
+  },
+  tutuorialTxt: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "center",
+  },
+  buttonContainer: {
+    position: "absolute",
+    top: "90%",
+  },
 }));
 
 export default function HomePage() {
   const classes = useStyles();
+
+  const TutorialBox = (props) => (
+    <Grid item xs={12}>
+      <ScrollAnimation animateIn="bounceInUp">
+        <Paper elevation={5} className={classes.tutorialBox}>
+          <Grid container direction={props.right ? "row-reverse" : "row"}>
+            <Grid item>
+              <img src={props.img} className={classes.tutorialImg} />
+            </Grid>
+            <Grid item className={classes.tutuorialTxt}>
+              <Typography
+                variant="h4"
+                style={{ marginBottom: 20 }}
+                align={props.right ? "right" : "left"}
+              >
+                {props.title}
+              </Typography>
+              <Typography variant="h6" align={props.right ? "right" : "left"}>
+                {props.body}
+              </Typography>
+            </Grid>
+          </Grid>
+        </Paper>
+      </ScrollAnimation>
+    </Grid>
+  );
 
   return (
     <div className={classes.wrapper}>
@@ -64,22 +136,29 @@ export default function HomePage() {
             container
             direction="row"
             spacing={1}
-            style={{
-              position: "absolute",
-              top: "90%",
-            }}
+            className={classes.buttonContainer}
             justify="center"
           >
             <Grid item>
-              <Button variant="contained">ورود / عضویت</Button>
+              <Link
+                to="login"
+                style={{ textDecoration: "none", color: "black" }}
+              >
+                <Button variant="contained">ورود / عضویت</Button>
+              </Link>
             </Grid>
             <Grid item>
-              <Button
-                variant="outlined"
-                style={{ color: "white", borderColor: "white" }}
+              <Link
+                to="questions"
+                style={{ textDecoration: "none", color: "black" }}
               >
-                دیدن سایت
-              </Button>
+                <Button
+                  variant="outlined"
+                  style={{ color: "white", borderColor: "white" }}
+                >
+                  دیدن سایت
+                </Button>
+              </Link>
             </Grid>
           </Grid>
         </div>
@@ -93,156 +172,14 @@ export default function HomePage() {
             paddingBottom: 80,
           }}
         >
-          <Grid item xs={12}>
-            <ScrollAnimation animateIn="bounceInUp">
-              <Paper
-                elevation={5}
-                style={{
-                  borderRadius: 10,
-                  padding: 20,
-                }}
-              >
-                <Grid container>
-                  <Grid item>
-                    <img
-                      src={question}
-                      style={{ width: 200, height: 200, margin: 50 }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography variant="h4" style={{ marginBottom: 20 }}>
-                      سوال داری ؟!
-                    </Typography>
-                    <Typography variant="h6">
-                      تو سه سوت یه سوال پست کن و متخصصین اون امر ! سریعا به کمکت
-                      میان =)))
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </ScrollAnimation>
-          </Grid>
-          <Grid item xs={12}>
-            <ScrollAnimation animateIn="bounceInUp">
-              <Paper
-                elevation={5}
-                style={{
-                  borderRadius: 10,
-                  padding: 20,
-                }}
-              >
-                <Grid container justify="flex-end">
-                  <Grid
-                    item
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography
-                      variant="h4"
-                      style={{ marginBottom: 20 }}
-                      align="right"
-                    >
-                      جواب سوالیو میدونی ؟
-                    </Typography>
-                    <Typography variant="h6" align="right">
-                      زیر همون سوال پستش کن و اعتبار کسب کن =)))))
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <img
-                      src={answer}
-                      style={{ width: "auto", height: 200, margin: 50 }}
-                    />
-                  </Grid>
-                </Grid>
-              </Paper>
-            </ScrollAnimation>
-          </Grid>
-          <Grid item xs={12}>
-            <ScrollAnimation animateIn="bounceInUp">
-              <Paper
-                elevation={5}
-                style={{
-                  borderRadius: 10,
-                  padding: 20,
-                }}
-              >
-                <Grid container>
-                  <Grid item>
-                    <img
-                      src={reputation}
-                      style={{ width: "auto", height: 200, margin: 50 }}
-                    />
-                  </Grid>
-                  <Grid
-                    item
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography variant="h4" style={{ marginBottom: 20 }}>
-                      اعتبار کسب کردی ؟!
-                    </Typography>
-                    <Typography variant="h6">
-                      اعتبار اعتبار میاره :) هر چی بیشتر دسترسی ها و قدرت شما هم
-                      بیشتر B)
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Paper>
-            </ScrollAnimation>
-          </Grid>
-          <Grid item xs={12}>
-            <ScrollAnimation animateIn="bounceInUp">
-              <Paper
-                elevation={5}
-                style={{
-                  borderRadius: 10,
-                  padding: 20,
-                }}
-              >
-                <Grid container justify="flex-end">
-                  <Grid
-                    item
-                    style={{
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <Typography
-                      variant="h4"
-                      style={{ marginBottom: 20 }}
-                      align="right"
-                    >
-                      شب امتحان ؟ :) سریع جواب میخوای ؟
-                    </Typography>
-                    <Typography variant="h6" align="right">
-                      میتونی برای بهترین پاسخ اعتبار جایزه بذاری !
-                    </Typography>
-                  </Grid>
-                  <Grid item>
-                    <img
-                      src={bounty}
-                      style={{ width: "auto", height: 200, margin: 50 }}
-                    />
-                  </Grid>
-                </Grid>
-              </Paper>
-            </ScrollAnimation>
-          </Grid>
+          {tutorialBoxes.map((tb) => (
+            <TutorialBox
+              title={tb.title}
+              body={tb.body}
+              right={tb.right}
+              img={tb.img}
+            />
+          ))}
         </Grid>
       </div>
       <Footer />

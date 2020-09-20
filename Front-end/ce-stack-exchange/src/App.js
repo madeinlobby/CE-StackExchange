@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import Footer from "./components/general/website_footer"
 import Header from "./components/general/website_header"
 import { Paper, Box } from '@material-ui/core';
-import SignUpWindow from "./components/login_and_signup/signup-window"
-import LoginWindow from './components/login_and_signup/login-window';
-import QuestionPage from './components/question_page/question-page';
-import CommunityPage from './components/communities_page/commiunities-page';
+import SignUpWindow from "./pages/signup"
+import LoginWindow from './pages/login';
+import Question from './pages/questionPage';
+import Communities from './pages/commiunities';
 import { Route, Switch } from "react-router-dom";
 import HomePage from "./pages/HomePage";
 import QuestionsPage from "./pages/QuestionsPage";
@@ -60,7 +60,11 @@ function App() {
         <Route path="/" component={HomePage} exact />
         <Route path="/questions" component={QuestionsPage} />
         <Route path="/ask" component={AskQuestion} />
-        <Route path="/users" component={Dashboard} />
+        <Route path="/users/" component={Dashboard} />
+        <Route path="/signup" component={SignUpWindow} />
+        <Route path="/login" component={LoginWindow} />
+        <Route path="/question" component={Question} />
+        <Route path="/communities" component={Communities} />
         <Route component={PageNotFound} />
       </Switch>
     </div>
