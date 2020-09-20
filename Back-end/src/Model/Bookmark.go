@@ -55,7 +55,7 @@ func NewBookmark(accountId string, questionId string) (*Bookmark, error) {
 	r := db.QueryRow(`INSERT INTO bookmarks (user_id, question_id)
 					  values ($1, $2) returning *;`, accountId, questionId)
 
-	// retrieves the created account and returns the result
+	// retrieves the created bookmark and returns the result
 	var newBookmark = Bookmark{}
 	err := r.Scan(&newBookmark.Id, &newBookmark.AccountId, &newBookmark.Date, &newBookmark.Deleted)
 

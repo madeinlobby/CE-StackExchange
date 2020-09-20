@@ -53,7 +53,7 @@ func NewApproval(answerId string) (*Approval, error) {
 	r := db.QueryRow(`INSERT INTO approvals (answer_id)
 					  values ($1) returning *;`, answerId)
 
-	// retrieves the created account and returns the result
+	// retrieves the created approval and returns the result
 	var newApproval = Approval{}
 	err := r.Scan(&newApproval.Id, &newApproval.AnswerId, &newApproval.Date, &newApproval.Deleted)
 
