@@ -226,7 +226,7 @@ func (user *Account) EditAccountImage(imageUrl string) error {
 	return r.Scan(&user.ProfileImageUrl)
 }
 
-func (user *Account) AddAccountReputation(addAmount int) error {
+func (user *Account) AddReputation(addAmount int) error {
 	r := db.QueryRow(`UPDATE accounts 
 							SET reputation = $2
 							WHERE user_id = $1

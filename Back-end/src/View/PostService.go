@@ -143,7 +143,7 @@ func getQuestionInfo(q *Model.Question) (*questionBasicInfo, error) {
 	var err error
 
 	// getting the necessary info
-	tags, err = q.GetQuestionTags()
+	tags, err = q.GetTags()
 	user, err = Model.GetAccountById(q.UserId)
 	upvotes, downvotes, err = q.GetVotes()
 	if err != nil {
