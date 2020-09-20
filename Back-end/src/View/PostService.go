@@ -50,7 +50,7 @@ func GetAnswersOfQuestion(w http.ResponseWriter, r *http.Request) {
 	var qAnswers = &answersOfQuestion{}
 	var ans []Model.Answer
 	qAnswers.question, err = getQuestionInfo(q)
-	ans, err = q.GetQuestionAnswers()
+	ans, err = q.GetAnswers()
 	if err != nil {
 		http.Error(w, "error: "+err.Error(), http.StatusInternalServerError)
 		return
@@ -150,7 +150,7 @@ func getQuestionInfo(q *Model.Question) (*questionBasicInfo, error) {
 		return nil, err
 	}
 
-	ans, err = q.GetQuestionAnswers()
+	ans, err = q.GetAnswers()
 	if err != nil {
 		return nil, err
 	}
