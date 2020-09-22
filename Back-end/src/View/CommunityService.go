@@ -8,7 +8,7 @@ import (
 )
 
 func GetAllCommunities(w http.ResponseWriter, _ *http.Request) {
-	communities, err := Model.GetAllCommunities(false)
+	communities, err := Model.GetAllCommunities()
 	if err != nil {
 		http.Error(w, "error:"+err.Error(), http.StatusInternalServerError)
 		return

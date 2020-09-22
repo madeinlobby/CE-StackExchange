@@ -13,6 +13,28 @@ type Community struct {
 	Date        string
 }
 
+func GetAllCommunities() ([]Community, error) {
+	r, err := db.Query(`SELECT * FROM communities`)
+	if err != nil {
+		return nil, err
+	}
+
+	// scans the rows from r
+	var communities []Community
+	for r.Next() {
+		var scannedCommunity = Community{}
+		err = r.Scan(&scannedCommunity.Id, &scannedCommunity.Name,
+			&scannedCommunity.Description, &scannedCommunity.Date, &scannedCommunity.Deleted)
+		if err != nil {
+			return nil, errors.New("error in fetching the communities")
+		}
+
+		communities = append(communities, scannedCommunity)
+	}
+
+	return communities, nil
+}
+
 func initCommunityTable() error {
 	_, err := db.Exec(`CREATE TABLE IF NOT EXISTS communities
 		(

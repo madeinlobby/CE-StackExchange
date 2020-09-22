@@ -123,7 +123,7 @@ func (user *Account) GetQuestions() ([]Question, error) {
 			&scannedQuestion.Title, &scannedQuestion.Text, &scannedQuestion.Date,
 			&scannedQuestion.ViewCount, &scannedQuestion.Deleted, &scannedQuestion.IsAnswerApproved)
 		if err != nil {
-			return nil, errors.New("error fetching the answers")
+			return nil, errors.New("error fetching the questions")
 		}
 
 		questions = append(questions, scannedQuestion)
