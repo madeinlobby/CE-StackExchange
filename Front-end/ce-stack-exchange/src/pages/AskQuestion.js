@@ -14,6 +14,7 @@ import Image from "../resources/QBG.png";
 import Autocomplete from "@material-ui/lab/Autocomplete";
 import Header from "../components/general/website_header";
 import Footer from "../components/general/website_footer";
+import RichTextEditor from "../components/question&answer/RichTextEditor";
 
 const useStyles = makeStyles((theme) => ({
   submitButton: {
@@ -163,13 +164,9 @@ export default function AskQuestionPage() {
                 </Typography>
               </Grid>
               <Grid item xs={12}>
-                <TextField
-                  rows={18}
-                  onChange={handleChange("body")}
-                  variant="outlined"
-                  multiline
-                  style={{ width: "100%", marginBottom: 20 }}
-                ></TextField>
+                <Paper variant="outlined" style={{ width: "100%", marginBottom: 20 }}>
+                  <RichTextEditor />
+                </Paper>
               </Grid>
               <Grid item xs={12}>
                 <Autocomplete
