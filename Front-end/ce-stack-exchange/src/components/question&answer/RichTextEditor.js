@@ -62,6 +62,17 @@ class RichTextEditor extends Component {
             emoji: {
               emojis: emojis,
             },
+            options : ['inline', 'blockType', 'list', 'textAlign', 'colorPicker', 'link', 'emoji', 'image', 'history'],
+            blockType : {
+              inDropdown : false,
+              options : ['Blockquote'],
+            },
+            list: {
+              options: ['unordered', 'ordered'],
+            },
+            textAlign: {
+              options: ['left', 'right'],
+            },
           }}
           mention={{
             separator: " ",
